@@ -1,0 +1,39 @@
+\documentclass[12pt, a4paper]{article}
+\title{Circular dichroism calculations in plasmonic nanoparticle assemblies using the \texttt{cda} package\\
+-- reproducing figures from the literature}
+\author{Baptiste Augui\'e}    
+\date{\today}
+\usepackage{siunitx}    
+\usepackage{graphicx}    
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\maketitle
+
+\bibliographystyle{plain}
+
+<% library(cda); library(ggplot2)
+lf <- list.files(pattern="\\.pdf$", rec=TRUE)
+lf <- lf[!grepl("circular_dichroism.pdf", lf)]
+%>
+
+<% for (i in seq_along(lf)) { -%>
+
+\pagebreak
+
+<%=cat("\\section{Figure ", lf[i], "}", sep="") %>
+\begin{figure}[!Hb]
+  \centering
+  \includegraphics[width=\textwidth]{<%=cat(lf[i]) %>}
+  \caption{<%=cat("plot ", lf[i], sep="") %>}
+\end{figure}
+
+<% } -%>
+
+\pagebreak
+\nocite{*}
+\bibliography{refs}
+
+\end{document}
+

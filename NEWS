@@ -1,0 +1,28 @@
+
+cda 1.1.2 (2011-10-07) 
+
+* fixed implicit conversion of sqrt(2) to sqrt(2.0) for Solaris
+* fixed .onLoad function
+
+cda 1.1.1 (2011-09-04) (ftp error)
+cda 1.1 (2011-09-04) 
+----------------------------------------
+
+USER-VISIBLE CHANGES:
+
+* New dependency on randtoolbox (Halton sequences for Quasi-Monte Carlo angular averaging.
+
+ENHANCEMENTS:
+
+* Choice of three methods for angular averaging: regular grid, Gauss Legendre Quadrature, Quasi-Monte Carlo (default). N now refers to the  number of integration points (GL may use a slightly higher number of points, rounded as ceiling[sqrt(N)]).
+
+* added tests/ subdirectory, featuring numerical tests of consistency.
+
+BUG FIXES:
+
+* Removed Encoding: UTF-8 from Description
+
+cda 1.0 (2011-05-15) 
+----------------------------------------
+
+Initial CRAN release.

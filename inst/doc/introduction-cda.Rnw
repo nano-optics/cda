@@ -1,0 +1,137 @@
+\documentclass[12pt, a4paper]{article}
+\title{Introduction to the \texttt{cda} package}
+\author{Baptiste Augui\'e}    
+\date{\today}
+\usepackage{siunitx}    
+\usepackage[utf8]{inputenc}
+\SweaveOpts{pdf=TRUE, echo=FALSE, fig=FALSE, eps=FALSE, cache=FALSE, tidy=T}
+%\VignetteIndexEntry{introduction-cda}
+\begin{document}
+
+\bibliographystyle{plain}
+
+\setkeys{Gin}{width=0.6\textwidth}
+
+\maketitle
+\begin{abstract}
+  The \texttt{cda} package implements the coupled-dipole approximation for electromagnetic scattering by sparse collections of subwavelength particles, with a particular focus on plasmonic nanoparticles in the visible regime. The interaction matrix is formed in \texttt{C++} code for speed; convenient wrapper functions are provided at the \texttt{R} level to calculate the extinction, scattering, and absorption of light by particles with linearly and circularly polarised light. Functions are also provided to calculate orientation-averaged circular dichroism, and display clusters of nanoparticles in three dimensions using \texttt{RGL} or \texttt{povray}.
+\end{abstract}
+
+<<setup,cache=FALSE>>=
+library(cda)
+library(ggplot2)
+theme_set(theme_minimal())
+## ls("package:cda")
+options(demo.ask=FALSE)
+## wavelengths
+wvl <- seq(400,900)
+## dielectric function
+gold <- epsAu(wvl)
+vp <- viewport(width=unit(4,"in"), height=unit(4, "in"))
+@
+\begin{figure}[!ht]
+\centering 
+\includegraphics[width=\textwidth]{clusters_3d}
+\caption{Rendering of particle clusters using \texttt{RGL} or \texttt{povray}. The figures may be reproduced with \texttt{demo(clusters\_3d)}.}
+\label{fig:clusters3d}
+\end{figure}
+
+\section{Extinction of linearly polarised light}
+%
+<<sdimer_linear, cache=TRUE>>=
+demo(dimer_linear, echo=FALSE)
+@ 
+\begin{figure}[!ht]
+\centering
+<<dimer_linear, fig=TRUE>>=
+print(p)
+@
+\caption{\texttt{demo(dimer\_linear)} from the cda package. Extinction spectra of a dimer of gold nanorods excited by linearly polarised light, with varying separation. The two rods are parallel, with a distance varied from \SI{200}{nm} to \SI{400}{nm}. The particle shape is described by a prolate ellipsoid of semi-axes \SI{50}{nm} and \SI{30}{nm}, immersed in a homogeneous medium of refractive index \num{1.5} (glass).}
+\label{fig:dimerlinear}
+\end{figure}
+%
+Figure~\ref{fig:dimerlinear} presents the extinction spectrum of a dimer of gold nanorods excited by linearly polarised light. The code for \verb+demo(dimer_linear)+ calls the functions
+%
+\begin{itemize}
+  \item \verb+makeRodChain(N=2, pitch = 0.5, a = 0.05, b = 0.03, c = b)+ to create the dimer cluster of two prolate ellipsoids
+  \item \verb+linear_extinction_spectrum(cluster, material = gold, n = 1.33)+ to solve the electromagnetic scattering of linearly polarised light.
+\end{itemize}
+%
+Some values such as the particle size are set by default. 
+
+When the incident electric field is along the long axis of the particles, the coupling between the two longitudinal localised plasmon resonances (LSPR) yields a blue-shift of the resonance. Conversely, the transverse LSPR red-shift with decreasing interparticle separation.
+
+\begin{figure}[!ht]
+\centering
+<<sdiffractive_chain, cache=TRUE>>=
+demo(diffractive_chain, echo=FALSE)
+@ 
+<<diffractive_chain, fig=TRUE>>=
+print(p)
+@
+\caption{\texttt{demo(diffractive\_chain)} from the cda package. A linear chain of $N=1, 10, 50$ ellipsoidal gold particles with regular spacing \SI{500}{nm} is modelled. The extinction cross-section is calculated for linearly polarised light along the short and long axis of the particles.}
+\label{fig:diffractivechain}
+\end{figure}
+
+To simulate a diffractive chain, we simply call the same functions with a larger number of particles in the cluster. The code for figure~\ref{fig:diffractivechain} is in \verb+demo(diffractive_chain)+. We note the appearance of a peak associated with light diffraction for chains with a sufficient number of particles, and polarisation orthogonal to the chain axis\cite{AB09,AB10,AB08}. 
+%
+<<slattice_sum, cache=TRUE>>=
+demo(lattice_sum, echo=FALSE)
+@
+\begin{figure}[!ht]
+\centering
+<<lattice_sum, fig=TRUE>>=
+print(p)
+@
+\caption{\texttt{demo(lattice\_sum)} from the cda package. The truncated evaluation of the lattice sum $S$ is compared with the rigorous, converged solution obtained by an Ewald-type summation.}
+\label{fig:latticesum}
+\end{figure}
+%
+For infinite, two-dimensional arrays of identical particles illuminated at normal incidence, a lattice sum can be used to write the self-consistent effective polarizability of the particles $\alpha^* = \frac{1}{1/\alpha - S}$. The code in \verb+demo(lattice_sum)+ (figure~\ref{fig:latticesum}) uses the following functions,
+%
+\begin{itemize}
+  \item \verb+array_factor(wavelength, N, pitch)+ to calculate a truncated sum of dipole sources.
+  \item \verb+interpolate.fun(G0$wavelength, G0$Gxx)+ to interpolate the (complex) tabulated results of the rigorous calculation made available with \verb+data(G0)+.
+\end{itemize}
+%
+
+% \clearpage
+\section{Circular dichroism}
+<<sdimer_cd, cache=TRUE>>=
+demo(dimer_cd, echo=FALSE)
+@
+\begin{figure}[!ht]
+\centering
+<<dimer_cd, fig=TRUE>>=
+print(p)
+@
+\caption{\texttt{demo(dimer\_cd)} from the cda package. A chiral cluster of two nanorods is used with a separation $d=\SI{200}{nm}$ and dihedral angle $\varphi=\pm\pi/4$. Opposite handedness yields a mirror-image circular dichroism spectrum.}
+\label{fig:dimercd}
+\end{figure}
+
+Calculations of circular dichroism in chiral assemblies of plasmonic nanoparticles are demonstrated in two examples. First, the code in \texttt{demo(dimer\_cd)} illustrates the optical activity of a dimer of gold nanorods arranged in a chiral configuration\cite{AA11}. Specifically, it uses the pre-defined functions,
+%
+\begin{itemize}
+  \item \verb+makeDimerCluster(d, phi = pi/4, psi = 0, right = TRUE, ...)+ to define a chiral dimer cluster with inter-particle distance $d$, dihedral angle $\varphi$, and tilt $\psi$.
+  \item \verb+circular_dichroism_spectrum(clust, gold, n=1.33)+ solves the electromagnetic scattering of circularly polarised light, performing angular averaging over incident light directions.
+\end{itemize}
+%
+<<shelix_cd, cache=TRUE>>=
+demo(helix_cd, echo=FALSE)
+@
+\begin{figure}[!ht]
+\centering
+<<helix_cd, fig=TRUE>>=
+print(p)
+@
+\caption{\texttt{demo(helix\_cd)} from the cda package. The extinction, scattering and absorption spectra of a helical arrangement of gold nanospheres are simulated, with varying number of particles.}
+\label{fig:helixcd}
+\end{figure}
+Finally, the code in \texttt{demo(helix\_cd)} uses the function \texttt{makeSpheresCluster(N, radius, R0, pitch,delta, right=TRUE)} to generate a helical cluster of nanospheres\cite{GA11,A11}. Circular dichroism spectra are obtained, with the separated contribution from absorption and scattering.
+
+
+% \nocite{*}
+\bibliography{refs}
+
+\end{document}
+
