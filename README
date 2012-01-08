@@ -1,0 +1,1 @@
+Given a set of ellipsoidal nanoparticles (positions and sizes), calculates the polarizability tensor for the dipoles associated with each particle, and solves the coupled-dipole equations by direct inversion of the interaction matrix. Retardation is included in the interaction.
