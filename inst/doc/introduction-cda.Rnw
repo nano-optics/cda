@@ -27,7 +27,6 @@ options(demo.ask=FALSE)
 wvl <- seq(400,900)
 ## dielectric function
 gold <- epsAu(wvl)
-vp <- viewport(width=unit(4,"in"), height=unit(4, "in"))
 @
 \begin{figure}[!ht]
 \centering 

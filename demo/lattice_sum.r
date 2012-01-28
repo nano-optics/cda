@@ -1,6 +1,7 @@
 ## comparison of numerical approximation to the lattice sum for a 2D array of dipoles and its converged solution
 
 library(cda)
+library(ggplot2)
 
 data(G0)
 

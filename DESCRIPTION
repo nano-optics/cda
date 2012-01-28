@@ -16,8 +16,8 @@ Version: 1.1.2
 BuildVignettes: false
 Date: 2011-09-04
 Depends: methods, Rcpp (>= 0.9.5), RcppArmadillo (>= 0.2.3), plyr,
-        ggplot2, statmod, randtoolbox
-Suggests: dielectric, rgl, gridExtra
+       statmod, randtoolbox, reshape2, grid
+Suggests: dielectric, rgl, gridExtra, ggplot2
 RcppModules: cda, cd, linear, array
 Collate: 'array.factor.R' 'cd.r' 'cda-package.r' 'epsilon.r' 'linear.r'
         'polarizability.R' 'positions.R' 'povray.r' 'rgl.r' 'themes.r'
