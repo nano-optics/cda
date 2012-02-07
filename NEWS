@@ -1,4 +1,8 @@
 
+cda 1.1.3 (2012-02-07) 
+
+* fixed bugs for ggplot2-0.9.0
+
 cda 1.1.2 (2011-10-07) 
 
 * fixed implicit conversion of sqrt(2) to sqrt(2.0) for Solaris
