@@ -15,7 +15,7 @@
 ##' @param smooth smoothing
 ##' @param ... additional params 
 ##' @return an rgl mesh 
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 ##' @examples
 ##' \dontrun{ require(rgl) ;  ee <- rgl.ellipsoid()
 ##' shapelist3d(ee) }
@@ -47,7 +47,7 @@ rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
 ##' @param angles matrix of Euler angles
 ##' @param ... additional params
 ##' @return rgl mesh
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 ##' @examples
 ##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)
 ##' sizes <- clust.equalsizes(0.04,0.02,0.02,NROW(cl$positions))

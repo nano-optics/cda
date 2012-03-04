@@ -7,7 +7,7 @@
 ##' @param lambda.p plasma wavelength
 ##' @param mu.p damping constant
 ##' @return data.frame
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 ##' @references
 ##' Principles of surface-enhanced Raman spectroscopy and related plasmonic effects
 ##' Eric C. Le Ru and Pablo G. Etchegoin, published by Elsevier, Amsterdam (2009).
@@ -46,7 +46,7 @@ epsAg <- function(lambda, epsilon.infty = 4,
 ##' @references
 ##' Principles of surface-enhanced Raman spectroscopy and related plasmonic effects
 ##' Eric C. Le Ru and Pablo G. Etchegoin, published by Elsevier, Amsterdam (2009).
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 ##' require(dielectric) ; data(AuJC)
 ##' wvl <- seq(300, 900)
 ##' gold <- epsAu(wvl)

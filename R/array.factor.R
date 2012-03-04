@@ -8,7 +8,7 @@
 ##' @param N half number of dipoles along one side
 ##' @param pitch pitch in microns
 ##' @return S
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 array_factor <- function(wavelength, N, pitch){
 
   k <- 2*pi/wavelength

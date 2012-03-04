@@ -14,7 +14,7 @@
 ##' @param n surrounding medium
 ##' @param kuwata logical, use Kuwata or Clausius Mossotti
 ##' @return matrix of polarizability
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 1.33, kuwata= TRUE) 
 {
   if(kuwata){
@@ -44,7 +44,7 @@ polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 
 ##' @param b semi-axis in um
 ##' @param c semi-axis in um
 ##' @return shape factor along a
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 La <- function (a = 0.05, b = a, c = a) 
 {
   ## scaled version to help convergence
@@ -71,7 +71,7 @@ La <- function (a = 0.05, b = a, c = a)
 ##' @param L shape factor
 ##' @param epsilon.medium medium permittivity
 ##' @return polarizability
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 alpha_kuwata <-
 function (lambda, epsilon, V, axis, L, epsilon.medium = 1.33^2) 
 {

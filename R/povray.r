@@ -7,7 +7,7 @@
 ##' @param sizes matrix of particle sizes
 ##' @param out output filename
 ##' @return side-effect only
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 particles.povray <- function(positions,
                       angles,
                       sizes, out="positions.pov"){
@@ -29,7 +29,7 @@ cat(paste("object{ Particle scale <", apply(round(sizes, 5), 1, paste, collapse=
 ##' @param radius radius of inner cylinder
 ##' @param out output filename
 ##' @return side-effect only (note append=TRUE)
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 curve.povray <- function(positions, size=0.005, radius, 
                        out="positions.pov"){
 

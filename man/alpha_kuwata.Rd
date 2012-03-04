@@ -30,6 +30,6 @@
   prescription from Kuwata
 }
 \author{
-  baptiste Auguié
+  baptiste Auguie
 }
 

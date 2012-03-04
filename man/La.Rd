@@ -21,6 +21,6 @@
   calculates the shape factor for a general ellipsoid
 }
 \author{
-  baptiste Auguié
+  baptiste Auguie
 }
 

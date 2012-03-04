@@ -12,7 +12,7 @@
 ##' @param c c
 ##' @param N N
 ##' @return matrix Nx3
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 clust.equalsizes <- function(a, b, c, N)
 ldply(1:N, function(.) data.frame(a=a, b=b, c=c))
 
@@ -26,7 +26,7 @@ ldply(1:N, function(.) data.frame(a=a, b=b, c=c))
 ##' @param psi psi
 ##' @param N N
 ##' @return matrix Nx3
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 clust.equalangles <- function(phi=0, theta=0, psi=0, N)
 cbind(phi=rep(phi, N), theta=rep(theta, N), psi=rep(psi, N))
 
@@ -42,7 +42,7 @@ cbind(phi=rep(phi, N), theta=rep(theta, N), psi=rep(psi, N))
 ##' @param n.smooth  number of interpolation points (for plotting purposes)
 ##' @param right logical, handedness
 ##' @return list with r,  sizes,  invalpha,  angles, R0 and smooth interp. points
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 ##' @examples 
 ##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3) ; str(cl)
 ##' \dontrun{require(rgl)
@@ -95,7 +95,7 @@ helix <- function(R0=0.5, pitch=0.6, N=5,
 ##' @param theta angular position along cylinder
 ##' @param right logical, handedness
 ##' @return matrix N x 3
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 helix.zt <- function (R0 = 0.5, pitch = 0.6, z=runif(100,-0.5,0.5), theta=runif(100,0,2*pi), right = TRUE) {
   x = R0 * cos(theta)
   y = R0 * sin(theta)
@@ -127,7 +127,7 @@ helix.zt <- function (R0 = 0.5, pitch = 0.6, z=runif(100,-0.5,0.5), theta=runif(
 ##' @param delta0 initial phase helix
 ##' @param right logical, handedness
 ##' @return list of positions, sizes and angles
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeSpheresCluster <- function(radius = 0.005, N, R0=0.5, pitch=0.6, 
                                delta=pi/8, delta0=0, right=TRUE){
 
@@ -151,7 +151,7 @@ makeSpheresCluster <- function(radius = 0.005, N, R0=0.5, pitch=0.6,
 ##' @param c semi axis
 ##' @param right logical,  handedness
 ##' @return list with r,  sizes,  angles
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeDimerCluster <- function(d=a, 
                              phi=pi/4, psi=0,
                              a=35e-3, b=12e-3, c=b,
@@ -179,7 +179,7 @@ makeDimerCluster <- function(d=a,
 ##' @param b semi axis
 ##' @param right handedness
 ##' @return list with r,  sizes,  angles
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeDimerDihedral <- function(d=a, 
                              dihedral=0, alpha1=0, alpha2=0,
                              a=35e-3, b=12e-3, 
@@ -203,7 +203,7 @@ makeDimerDihedral <- function(d=a,
 ##' @param b semi axis
 ##' @param c semi axis
 ##' @return list with r,  sizes, angles
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeRodChain <- function(N, pitch=0.5, a=50e-3, b=30e-3,c=b){
 
   r <- as.matrix(expand.grid(x=0, y=seq(1,N) * pitch, z=0))
@@ -230,7 +230,7 @@ makeRodChain <- function(N, pitch=0.5, a=50e-3, b=30e-3,c=b){
 ##' @param seed random seed for reproducibility
 ##' @param ... ignored arguments
 ##' @return list 
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeHelixCluster <- function(N=5, R0=12e-3, pitch=15e-3, 
                              delta=pi/2, delta0=0, right=TRUE,
                              a=0.005, b=a, c=a,
@@ -269,7 +269,7 @@ makeHelixCluster <- function(N=5, R0=12e-3, pitch=15e-3,
 ##' @param b b
 ##' @param c c
 ##' @return cluster
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 makeHelixCluster.zt <- function(z = runif(10, -0.5, 0.5), theta = runif(10, 0, 2 * pi),
                              R0 = 0.5, pitch = 6, delta0=0, 
                              right = TRUE, 

@@ -1,5 +1,4 @@
-\name{cda}
-\alias{cda}
+\name{cda-module}
 \title{
 	Rcpp module: cda
 }

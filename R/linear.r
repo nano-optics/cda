@@ -11,7 +11,7 @@
 ##' @param n medium refractive index
 ##' @param progress logical, display progress bar
 ##' @return data.frame
-##' @author baptiste Auguié
+##' @author baptiste Auguie
 linear_extinction_spectrum <- function(cluster, material, n=1.33, progress=FALSE){
   
   k0 <- 2*pi/material$wavelength
