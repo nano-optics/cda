@@ -18,19 +18,19 @@ using namespace std;
     
     // create the "meter"
     int ii=0;
-    printf("%3.0f%% [",fraction*100);
+     Rprintf("%3.0f%% [",fraction*100);
     // part  that's full already
     for ( ; ii < dotz;ii++) {
-      printf("=");
+      Rcpp::Rcout << "=";
     }
     // remaining part (spaces)
     for ( ; ii < totaldotz;ii++) {
-      printf(" ");
+       Rprintf(" ");
     }
     // and back to line begin - 
     // do not forget the fflush to avoid output buffering problems!
-    printf("]\r");
-    fflush(stdout);
+    Rprintf("]\r");
+    // fflush(stdout);
   }
   
  arma::mat euler(const double phi, const double theta, const double psi)

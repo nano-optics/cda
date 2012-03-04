@@ -152,7 +152,7 @@ arma::mat circular_dichroism_spectrum(const arma::colvec kn, const arma::cx_mat&
   {
 
     int N = kn.n_elem, Nr = R.n_rows, ll;
-    // cout << N << "\n";
+    // Rcpp::Rcout << N << "\n";
     arma::mat res(N,4);
     arma::cx_mat beta(3,Nr);
     arma::colvec tmp(4);
@@ -172,7 +172,7 @@ arma::mat circular_dichroism_spectrum(const arma::colvec kn, const arma::cx_mat&
       res(ll,3) = tmp(2) - tmp(3); // cd abs
     }
     if(progress == 1)
-      cout<<"\n";
+      Rcpp::Rcout << "\n";
 
     return res ;
   } 
@@ -184,7 +184,7 @@ arma::mat circular_dichroism_spectrum2(const arma::colvec kn, const arma::cx_mat
   {
 
     int N = kn.n_elem, Nr = R.n_rows, ll;
-    // cout << N << "\n";
+    // Rcpp::Rcout << N << "\n";
     arma::mat res(N,4);
     arma::cx_mat beta(3,Nr);
     arma::colvec tmp(4);
@@ -204,7 +204,7 @@ arma::mat circular_dichroism_spectrum2(const arma::colvec kn, const arma::cx_mat
       res(ll,3) = tmp(2) - tmp(3); // cd abs
     }
     if(progress == 1)
-      cout<<"\n";
+      Rcpp::Rcout << "\n";
 
     return res ;
   } 

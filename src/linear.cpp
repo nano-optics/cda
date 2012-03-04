@@ -45,7 +45,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 {
   
   int N = kn.n_elem, Nr = R.n_rows, ll;
-  // cout << N << "\n";
+  // Rcpp::Rcout << N << "\n";
   arma::mat res(N,2);
   arma::cx_mat beta(3,Nr);
   arma::colvec tmp(2);
@@ -61,7 +61,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
       res(ll,1) = tmp(1);
   }
   if(progress == 1)
-    cout<<"\n";
+    Rcpp::Rcout <<"\n";
   
   return res ;
 } 
