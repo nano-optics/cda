@@ -142,37 +142,35 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
     return res ;
    } 
 
-// arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
-// 				      const arma::mat& Euler, const arma::mat& Angles, \
-// 				      const int full, const int progress)
-//   {
+arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
+				      const arma::mat& Euler, const arma::mat& Angles, \
+				      const int full, const int progress)
+  {
 
-//     const int NAngles = Angles.n_rows;
-//     int N = kn.n_elem, Nr = R.n_rows, ll;
-//     // Rcpp::Rcout << N << "\n";
-//     arma::mat res(N,4);
-//     arma::cx_mat beta(3,Nr);
-//     arma::cube tmp(Nangles, 4);
-//     arma::cx_mat A(3*Nr,3*Nr), polar(3*Nr,3*Nr);
+    const int NAngles = Angles.n_rows;
+    int N = kn.n_elem, Nr = R.n_rows, ll;
+    // Rcpp::Rcout << N << "\n";
+    arma::cube res(NAngles, 4, N);
+    arma::cx_mat beta(3,Nr);
+    arma::mat tmp(NAngles, 4);
+    arma::cx_mat A(3*Nr,3*Nr), polar(3*Nr,3*Nr);
 
-//     for(ll=0; ll<N; ll++){ // loop over kn   
-//       if(progress == 1)
-// 	progress_bar(ll+1,N);
-//       beta = reshape(Beta.row(ll), 3, Nr, 1); 
-//       A = interaction_matrix(R, kn[ll], beta, Euler, full);
-//       polar = diagonal_polarisability(beta, Euler);
-//       tmp = dispersion(R, A, polar, kn[ll], Angles);
+    for(ll=0; ll<N; ll++){ // loop over kn   
+      if(progress == 1)
+	progress_bar(ll+1,N);
+      beta = reshape(Beta.row(ll), 3, Nr, 1); 
+      A = interaction_matrix(R, kn[ll], beta, Euler, full);
+      // polar = diagonal_polarisability(beta, Euler);
+      // tmp = dispersion(R, A, polar, kn[ll], Angles);
+      tmp = dispersion(R, A, Beta, kn[ll], Angles, Euler);
 
-//       res.slice(0) = 0.5*(tmp(ll,0) + tmp(1)); // extinction 
-//       res(ll,1) = 0.5*(tmp(2) + tmp(3)); // absorption
-//       res(ll,2) = tmp(0) - tmp(1); // cd ext
-//       res(ll,3) = tmp(2) - tmp(3); // cd abs
-//     }
-//     if(progress == 1)
-//       Rcpp::Rcout << "\n";
+      res.slice(ll) = tmp; 
+    }
+    if(progress == 1)
+      Rcpp::Rcout << "\n";
 
-//     return res ;
-//   } 
+    return res ;
+  } 
 
 
 
@@ -183,5 +181,6 @@ RCPP_MODULE(linear){
 		 "Returns the extinction spectra for x and y polarisation at fixed incidence" ) ;
        function( "dispersion", &dispersion, \
        		 "Returns the abs and ext xsec for x and y polarisation at multiple angles of incidence" ) ;
-    
+       function( "dispersion_spectrum", &dispersion_spectrum,		\
+       		 "Returns the abs and ext xsec for x and y polarisation at multiple angles of incidence" ) ;
 }
