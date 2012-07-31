@@ -68,59 +68,81 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 
 
 // // calculation for multiple angles of incidence
-// arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
-// 			const double kn, const arma::mat& Angles)
-//   {
-//     const int N = R.n_rows, NAngles = Angles.n_rows;
-//     //constants
-//     const arma::cx_double i = arma::cx_double(0,1);
-//     const double pi = arma::math::pi();
-//     arma::mat Rot(3,3);
+// in progress, not functional
+// R: positions
+// A: interaction matrix
+// invalpha: inverse polarisabilities
+// kn: wavevector
+// Angles: incident angles
+ arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
+ 			const double kn, const arma::mat& Angles, const arma::mat& Euler)
+   {
+     const int N = R.n_rows, NAngles = Angles.n_rows;
+    //constants
+    const arma::cx_double i = arma::cx_double(0,1);
+    const double pi = arma::math::pi();
+    arma::mat Rot(3,3);
 
-//     // incident field
-//     const arma::cx_colvec LPP="(1,0) (0,0) (0,0);", LPS="(0,0) (1,0) (0,0);";
-//     arma::cx_colvec ELPP(3), ELPS(3), Eincident(3*N), P(3*N);
-//     const arma::colvec  khat="1 0 0;", kvec = kn*khat;
-//     arma::mat kr;
-//     arma::cx_mat expikr;
+    arma::cx_mat polar = diagonal_polarisability(invalpha, Euler);
 
-//     arma::cx_mat B = pinv(A); /* inverting the interaction matrix 
-// 				 to solve AP=Eincident multiple times */
+    // incident field
+    const arma::cx_colvec LPP="(1,0) (0,0) (0,0);", LPS="(0,0) (1,0) (0,0);";
+    arma::cx_colvec ELPP(3), ELPS(3), Eincident(3*N), P(3*N);
+    const arma::colvec  khat="1 0 0;", kvec = kn*khat; 
+    double phi, psi,theta;
+    arma::mat kr;
+    arma::cx_mat expikr;
 
-//     arma::mat res(Nangles, 4) ;  
+    // arma::cx_mat B = pinv(A); /* inverting the interaction matrix 
+    // 				 to solve AP=Eincident multiple times */
 
-//     // begin calculation
+    arma::mat res(NAngles, 4) ;  
+
+    // begin calculation
     
-//     int ll=0; 
-//     for(ll=0; ll<NAngles; ll++){ // loop over angles
-//       phi = Angles(ll, 1)*2*pi, psi = asin(2*Angles(ll, 0) - 1);
+    int ll=0; 
+    for(ll=0; ll<NAngles; ll++){ // loop over angles
+      phi = Angles(ll, 0), psi = Angles(ll, 1), theta = Angles(ll, 2);
      
-//       Rot = euler(phi, pi/2, psi); // theta doesn't vary
-//       ELPP =  trans(Rot) * LPP ;
-//       ELPS =  trans(Rot) * LPS ;
-//       kr = R * trans(Rot) * kvec;
-//       expikr = exp(i*kr);
-      
-//       // P polarisation
-//       Eincident = reshape(expikr * strans(ELPP), 3*N, 1, 1);
-//       P = B * Eincident;
-//       // P = solve(A, Eincident);// too slow, invert A before loop
-//       res(0) =  extinction(kn, P, Eincident); 
-//       res(1) =  absorption(kn, P, invalpha); 
-      
-//       // S polarisation
-//       Eincident = reshape(expikr * strans(ELPS), 3*N, 1, 1);
-//       P = B * Eincident; 
-//       // P = solve(A, Eincident); // too slow, invert A before loop
-//       res(2) =  extinction(kn, P, Eincident); 
-//       res(3 = absorption(kn, P, invalpha); 
-      
-//     } 
-             
-//     return res ;
-//   } 
+      // cout << phi << " , " << psi << "\n";
 
-// arma::mat dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
+      Rot = euler(phi, pi/2, psi); // theta doesn't vary
+      // cout << Rot << "\n";
+      ELPP =  trans(Rot) * LPP ;
+      // cout << ELPP << "\n";
+      ELPS =  trans(Rot) * LPS ;
+      kr = R * trans(Rot) * kvec;
+      // cout << kr << "\n";
+      expikr = exp(i*kr);
+      
+      // cout << expikr << "\n";
+      // cout << "up now" << "\n";
+    
+      // P polarisation
+      Eincident = reshape(expikr * strans(ELPP), 3*N, 1, 1);
+      
+      // cout << Eincident << "\n";
+
+      // P = B * Eincident;
+      // cout << "P is fine" << "\n";
+      P = solve(A, Eincident);// too slow, invert A before loop
+      res(ll,0) =  extinction(kn, P, Eincident); 
+      // cout << "extinctionis fine" << "\n";
+      res(ll,1) =  absorption(kn, P, polar); 
+      
+      // S polarisation
+      Eincident = reshape(expikr * strans(ELPS), 3*N, 1, 1);
+      // P = B * Eincident; 
+      P = solve(A, Eincident); // too slow, invert A before loop
+      res(ll,2) =  extinction(kn, P, Eincident); 
+      res(ll,3) = absorption(kn, P, polar); 
+      
+    } 
+             
+    return res ;
+   } 
+
+// arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
 // 				      const arma::mat& Euler, const arma::mat& Angles, \
 // 				      const int full, const int progress)
 //   {
@@ -141,7 +163,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 //       polar = diagonal_polarisability(beta, Euler);
 //       tmp = dispersion(R, A, polar, kn[ll], Angles);
 
-//       res(ll,0) = 0.5*(tmp(0) + tmp(1)); // extinction 
+//       res.slice(0) = 0.5*(tmp(ll,0) + tmp(1)); // extinction 
 //       res(ll,1) = 0.5*(tmp(2) + tmp(3)); // absorption
 //       res(ll,2) = tmp(0) - tmp(1); // cd ext
 //       res(ll,3) = tmp(2) - tmp(3); // cd abs
@@ -159,5 +181,7 @@ RCPP_MODULE(linear){
 
        function( "linear_extinction_spectrum", &linear_extinction_spectrum, \
 		 "Returns the extinction spectra for x and y polarisation at fixed incidence" ) ;
+       function( "dispersion", &dispersion, \
+       		 "Returns the abs and ext xsec for x and y polarisation at multiple angles of incidence" ) ;
     
 }
