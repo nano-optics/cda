@@ -162,8 +162,9 @@ arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, 
       A = interaction_matrix(R, kn[ll], beta, Euler, full);
       // polar = diagonal_polarisability(beta, Euler);
       // tmp = dispersion(R, A, polar, kn[ll], Angles);
-      tmp = dispersion(R, A, Beta, kn[ll], Angles, Euler);
+      tmp = dispersion(R, A, beta, kn[ll], Angles, Euler);
 
+      // cout << A << "\n";
       res.slice(ll) = tmp; 
     }
     if(progress == 1)
