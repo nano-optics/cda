@@ -44,7 +44,7 @@ linear_extinction_spectrum <- function(cluster, material, n=1.33, progress=FALSE
 ##' @param full logical
 ##' @return data.frame
 ##' @author baptiste Auguie
-dispersion_spectrum <- function (cluster,  angles, material, n = 1.33, progress = FALSE, full=TRUE) 
+dispersion_spectrum <- function (cluster,  angles, material, n = 1.33, progress = FALSE, invert=FALSE) 
 {
     k0 <- 2 * pi/material$wavelength
     kn <- k0 * n
@@ -68,7 +68,7 @@ dispersion_spectrum <- function (cluster,  angles, material, n = 1.33, progress 
        
     res <- linear$dispersion_spectrum(kn, invalpha, 
                                       clust$r, clust$angles, angles,
-                                      as.integer(full), as.integer(progress))
+                                      as.integer(full), as.integer(invert))
     
     rbind(
           data.frame(wavelength = rep(material$wavelength, each=Nangles),

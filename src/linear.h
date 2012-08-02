@@ -8,5 +8,5 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 				     const arma::mat& Euler, const int progress);
 
 arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
-		     const double kn, const arma::mat& Angles,  const arma::mat& Euler);
+		     const double kn, const arma::mat& Angles,  const arma::mat& Euler, const int invert);
 #endif

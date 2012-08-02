@@ -75,7 +75,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 // kn: wavevector
 // Angles: incident angles
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
- 			const double kn, const arma::mat& Angles, const arma::mat& Euler)
+		      const double kn, const arma::mat& Angles, const arma::mat& Euler, const int invert)
    {
      const int N = R.n_rows, NAngles = Angles.n_rows;
     //constants
@@ -91,10 +91,11 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
     const arma::colvec  khat="1 0 0;", kvec = kn*khat; 
     double phi, psi,theta;
     arma::mat kr;
-    arma::cx_mat expikr;
+    arma::cx_mat expikr, B;
 
-    // arma::cx_mat B = pinv(A); /* inverting the interaction matrix 
-    // 				 to solve AP=Eincident multiple times */
+    if(invert == 1)
+     arma::cx_mat B = pinv(A); /* inverting the interaction matrix 
+     				 to solve AP=Eincident multiple times */
 
     arma::mat res(NAngles, 4) ;  
 
@@ -123,17 +124,20 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
       
       // cout << Eincident << "\n";
 
-      // P = B * Eincident;
-      // cout << "P is fine" << "\n";
-      P = solve(A, Eincident);// too slow, invert A before loop
+      if(invert == 1)
+	P = B * Eincident;
+      else
+      P = solve(A, Eincident);
       res(ll,0) =  extinction(kn, P, Eincident); 
       // cout << "extinctionis fine" << "\n";
       res(ll,1) =  absorption(kn, P, polar); 
       
       // S polarisation
       Eincident = reshape(expikr * strans(ELPS), 3*N, 1, 1);
-      // P = B * Eincident; 
-      P = solve(A, Eincident); // too slow, invert A before loop
+      if(invert == 1)
+	P = B * Eincident;
+      else
+      P = solve(A, Eincident);
       res(ll,2) =  extinction(kn, P, Eincident); 
       res(ll,3) = absorption(kn, P, polar); 
       
@@ -144,7 +148,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 
 arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
 				      const arma::mat& Euler, const arma::mat& Angles, \
-				      const int full, const int progress)
+				      const int invert, const int progress)
   {
 
     const int NAngles = Angles.n_rows;
@@ -159,10 +163,10 @@ arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, 
       if(progress == 1)
 	progress_bar(ll+1,N);
       beta = reshape(Beta.row(ll), 3, Nr, 1); 
-      A = interaction_matrix(R, kn[ll], beta, Euler, full);
+      A = interaction_matrix(R, kn[ll], beta, Euler, 1); // always full
       // polar = diagonal_polarisability(beta, Euler);
       // tmp = dispersion(R, A, polar, kn[ll], Angles);
-      tmp = dispersion(R, A, beta, kn[ll], Angles, Euler);
+      tmp = dispersion(R, A, beta, kn[ll], Angles, Euler, invert);
 
       // cout << A << "\n";
       res.slice(ll) = tmp; 
