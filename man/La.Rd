@@ -23,4 +23,9 @@
 \author{
   baptiste Auguie
 }
+\seealso{
+  Other user_level polarizability:
+  \code{\link{alpha_kuwata}}, \code{\link{make.invalpha}},
+  \code{\link{polarizability.ellipsoid}}
+}
 

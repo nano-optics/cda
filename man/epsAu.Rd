@@ -56,4 +56,7 @@
   related plasmonic effects Eric C. Le Ru and Pablo G.
   Etchegoin, published by Elsevier, Amsterdam (2009).
 }
+\seealso{
+  Other user_level permittivity: \code{\link{epsAg}}
+}
 

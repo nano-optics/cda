@@ -14,6 +14,9 @@
 ##' @param full logical use full (retarded) dipolar field
 ##' @param progress print progress lines
 ##' @param result.matrix logical return the results as a matrix
+##' @export
+##' @family user_level circular_dichroism
+##' @author baptiste Auguie
 circular_dichroism_spectrum <- function(cluster, material, n=1.33, N=100, averaging = c("QMC","GL","grid"),
                                          full=TRUE, progress=FALSE, result.matrix=FALSE){
 

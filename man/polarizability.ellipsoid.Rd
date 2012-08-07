@@ -33,4 +33,8 @@
 \author{
   baptiste Auguie
 }
+\seealso{
+  Other user_level polarizability: \code{\link{La}},
+  \code{\link{alpha_kuwata}}, \code{\link{make.invalpha}}
+}
 

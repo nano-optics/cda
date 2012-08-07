@@ -93,51 +93,46 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
     arma::mat kr;
     arma::cx_mat expikr, B;
 
-    if(invert == 1)
-     arma::cx_mat B = pinv(A); /* inverting the interaction matrix 
+    if(invert == 1){
+     B = pinv(A); /* inverting the interaction matrix 
      				 to solve AP=Eincident multiple times */
-
+    }
     arma::mat res(NAngles, 4) ;  
 
     // begin calculation
-    
+
     int ll=0; 
     for(ll=0; ll<NAngles; ll++){ // loop over angles
+
       phi = Angles(ll, 0), psi = Angles(ll, 1), theta = Angles(ll, 2);
      
-      // cout << phi << " , " << psi << "\n";
-
-      Rot = euler(phi, pi/2, psi); // theta doesn't vary
-      // cout << Rot << "\n";
+      Rot = euler(phi, pi/2, psi); // theta is fixed
       ELPP =  trans(Rot) * LPP ;
-      // cout << ELPP << "\n";
       ELPS =  trans(Rot) * LPS ;
       kr = R * trans(Rot) * kvec;
-      // cout << kr << "\n";
       expikr = exp(i*kr);
       
-      // cout << expikr << "\n";
-      // cout << "up now" << "\n";
-    
       // P polarisation
       Eincident = reshape(expikr * strans(ELPP), 3*N, 1, 1);
       
-      // cout << Eincident << "\n";
-
-      if(invert == 1)
+      if(invert == 1){
 	P = B * Eincident;
-      else
-      P = solve(A, Eincident);
+      } else {
+	P = solve(A, Eincident);
+      }
+
       res(ll,0) =  extinction(kn, P, Eincident); 
-      // cout << "extinctionis fine" << "\n";
       res(ll,1) =  absorption(kn, P, polar); 
       
       // S polarisation
       Eincident = reshape(expikr * strans(ELPS), 3*N, 1, 1);
-      if(invert == 1)
+
+      if(invert == 1){
 	P = B * Eincident;
-      else
-      P = solve(A, Eincident);
+      } else {
+	P = solve(A, Eincident);
+      }
+
       res(ll,2) =  extinction(kn, P, Eincident); 
       res(ll,3) = absorption(kn, P, polar); 
       
@@ -153,7 +148,6 @@ arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, 
 
     const int NAngles = Angles.n_rows;
     int N = kn.n_elem, Nr = R.n_rows, ll;
-    // Rcpp::Rcout << N << "\n";
     arma::cube res(NAngles, 4, N);
     arma::cx_mat beta(3,Nr);
     arma::mat tmp(NAngles, 4);

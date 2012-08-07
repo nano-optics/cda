@@ -16,6 +16,8 @@
 ##' @param ... additional params 
 ##' @return an rgl mesh 
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level rgl
 ##' @examples
 ##' \dontrun{ require(rgl) ;  ee <- rgl.ellipsoid()
 ##' shapelist3d(ee) }
@@ -48,6 +50,8 @@ rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
 ##' @param ... additional params
 ##' @return rgl mesh
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level rgl
 ##' @examples
 ##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)
 ##' sizes <- clust.equalsizes(0.04,0.02,0.02,NROW(cl$positions))

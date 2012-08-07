@@ -2,7 +2,7 @@
 \alias{theme_minimal}
 \title{theme_minimal}
 \usage{
-  theme_minimal(base_size = 12, base_family = "")
+  theme_minimal(base_size = 12, base_family = "Helvetica")
 }
 \arguments{
   \item{base_size}{font size}

@@ -8,6 +8,8 @@
 ##' @param out output filename
 ##' @return side-effect only
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level povray
 particles.povray <- function(positions,
                       angles,
                       sizes, out="positions.pov"){
@@ -30,6 +32,8 @@ cat(paste("object{ Particle scale <", apply(round(sizes, 5), 1, paste, collapse=
 ##' @param out output filename
 ##' @return side-effect only (note append=TRUE)
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level povray
 curve.povray <- function(positions, size=0.005, radius, 
                        out="positions.pov"){
 

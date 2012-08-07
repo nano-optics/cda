@@ -14,6 +14,8 @@
 ##' @param n surrounding medium
 ##' @param kuwata logical, use Kuwata or Clausius Mossotti
 ##' @return matrix of polarizability
+##' @export
+##' @family user_level polarizability
 ##' @author baptiste Auguie
 polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 1.33, kuwata= TRUE) 
 {
@@ -45,6 +47,8 @@ polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 
 ##' @param c semi-axis in um
 ##' @return shape factor along a
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level polarizability
 La <- function (a = 0.05, b = a, c = a) 
 {
   ## scaled version to help convergence
@@ -71,6 +75,8 @@ La <- function (a = 0.05, b = a, c = a)
 ##' @param L shape factor
 ##' @param epsilon.medium medium permittivity
 ##' @return polarizability
+##' @export
+##' @family user_level polarizability
 ##' @author baptiste Auguie
 alpha_kuwata <-
 function (lambda, epsilon, V, axis, L, epsilon.medium = 1.33^2) 
@@ -102,6 +108,8 @@ Kuwata.B <- function(L){
 ##' @param polarizability.fun polarizability function
 ##' @param ... additional arguments passed to polarizability.fun
 ##' @return  matrix with each row being the 3 principal values of each polarizability tensor
+##' @export
+##' @family user_level polarizability
 ##' @author Baptiste Auguie
 make.invalpha <- function(cluster, material, polarizability.fun=polarizability.ellipsoid, ...){
   polar <- mlply(cluster$sizes, polarizability.fun,

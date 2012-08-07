@@ -6,7 +6,6 @@
 ##' @name cda-package
 ##' @aliases cda
 ##' @docType package
-##' @exportPattern "^[^\\.]"
 ##' @useDynLib cda
 ##' @import Rcpp
 ##' @title cda

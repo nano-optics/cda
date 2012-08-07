@@ -26,4 +26,7 @@
 \author{
   baptiste Auguie
 }
+\seealso{
+  Other user_level povray: \code{\link{particles.povray}}
+}
 

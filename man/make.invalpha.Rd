@@ -29,4 +29,9 @@
 \author{
   Baptiste Auguie
 }
+\seealso{
+  Other user_level polarizability: \code{\link{La}},
+  \code{\link{alpha_kuwata}},
+  \code{\link{polarizability.ellipsoid}}
+}
 

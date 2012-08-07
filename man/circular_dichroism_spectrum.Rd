@@ -31,4 +31,7 @@
 \details{
   CD spectrum
 }
+\author{
+  baptiste Auguie
+}
 

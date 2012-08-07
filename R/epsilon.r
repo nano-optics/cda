@@ -8,6 +8,8 @@
 ##' @param mu.p damping constant
 ##' @return data.frame
 ##' @author baptiste Auguie
+##' @export
+##' @family user_level permittivity
 ##' @references
 ##' Principles of surface-enhanced Raman spectroscopy and related plasmonic effects
 ##' Eric C. Le Ru and Pablo G. Etchegoin, published by Elsevier, Amsterdam (2009).
@@ -43,6 +45,8 @@ epsAg <- function(lambda, epsilon.infty = 4,
 ##' @param lambda2 lambda2
 ##' @param mu2 mu2
 ##' @return data.frame
+##' @export
+##' @family user_level permittivity
 ##' @references
 ##' Principles of surface-enhanced Raman spectroscopy and related plasmonic effects
 ##' Eric C. Le Ru and Pablo G. Etchegoin, published by Elsevier, Amsterdam (2009).

@@ -30,4 +30,15 @@
 \author{
   baptiste Auguie
 }
+\seealso{
+  Other user_level cluster:
+  \code{\link{clust.equalangles}},
+  \code{\link{clust.equalsizes}}, \code{\link{helix}},
+  \code{\link{makeDimerCluster}},
+  \code{\link{makeDimerDihedral}},
+  \code{\link{makeHelixCluster}},
+  \code{\link{makeHelixCluster.zt}},
+  \code{\link{makeRodChain}},
+  \code{\link{makeSpheresCluster}}
+}
 

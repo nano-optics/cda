@@ -31,4 +31,7 @@ sizes <- clust.equalsizes(0.04,0.02,0.02,NROW(cl$positions))
 \author{
   baptiste Auguie
 }
+\seealso{
+  Other user_level rgl: \code{\link{rgl.ellipsoid}}
+}
 
