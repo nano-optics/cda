@@ -20,3 +20,8 @@ theme_minimal <- function(base_size = 12, base_family = "Helvetica") {
           plot.background = element_blank()
           )
 }
+
+if (getRversion() >= "2.15.1") 
+  utils::globalVariables(c("%+replace%", 
+                           "theme", 
+                           "element_blank"))
