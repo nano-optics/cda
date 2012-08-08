@@ -1,6 +1,5 @@
 \docType{package}
 \name{cda-package}
-\alias{cda}
 \alias{cda-package}
 \title{cda}
 \description{
@@ -50,5 +49,6 @@
   B. Auguie, W.L. Barnes. Collective resonances in gold
   nanoparticle arrays. Physical Review Letters (2008)
 }
+\keyword{package}
 \keyword{packagelibrary}
 
