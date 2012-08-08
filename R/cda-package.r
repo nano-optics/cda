@@ -4,11 +4,11 @@
 ##'
 ##' 
 ##' @name cda-package
-##' @aliases cda
 ##' @docType package
 ##' @useDynLib cda
 ##' @import Rcpp
 ##' @title cda
+##' @keywords package
 ##' @author baptiste Auguie \email{baptiste.auguie@@gmail.com}
 ##' @references
 ##' Draine BT. The discrete-dipole approximation and its application to interstellar graphite grains. Astrophysical Journal. 1988.
@@ -28,5 +28,87 @@
 ##' B. Auguie, W.L. Barnes. Collective resonances in gold nanoparticle arrays. Physical Review Letters (2008)
 ##' @keywords packagelibrary
 ##' 
-function()
-  NULL
+NULL
+
+##' Rcpp module: array
+##' 
+##' Exposes a C++ calculation of the array factor.
+##' @name array
+##' @docType data
+##' @export
+##' @details
+##' \itemize{
+##'  \item{array_factor}{ truncated lattice sum for a finite 2D square array}
+##' }
+##' @examples
+##' show( array )
+NULL
+
+##' Rcpp module: cd
+##' 
+##' Exposes a calculation of orientation-averaged circular dichroism within the coupled-dipole approximation.
+##' @name cd
+##' @docType data
+##' @export
+##' @details
+##' \itemize{
+##'  \item{circular_dichroism_spectrum}{Loop over wavelenghts and calculate the orientation averaging of the difference in extinction, absorption, scattering for left/right circularly polarised light}
+##' }
+##' @examples
+##' show( cd )
+NULL
+
+##' Rcpp module: cda
+##' 
+##' Exposes basic C++ functions used in the coupled-dipole approximation.
+##' @name cda
+##' @docType data
+##' @export
+##' @details
+##' \itemize{
+##'   \item{absorption}{absorption cross-section}
+##'   \item{euler}{ 3D rotation matrix parametrized by Euler angles }
+##'   \item{extinction}{ extinction cross-section }
+##'   \item{interaction_matrix}{ build the coupled-dipole interaction matrix }
+##' }
+##' @examples
+##' show( cda )
+NULL
+
+##' Rcpp module: linear
+##' 
+##' Exposes C++ calculation of scattering and absorption of dipolar particles by linearly polarised light in fixed orientation.
+##' @name linear
+##' @docType data
+##' @export
+##' @details
+##' \itemize{
+##'   \item{linear_extinction_spectrum}{Returns extinction spectra for x and y polarisation at one fixed incidence } 
+##'   \item{dispersion}{Returns absorption and extinction cross-sections for x and y polarisation at multiple angles of incidence, fixed wavelength (subroutine)} 
+##'   \item{dispersion_spectrum}{Returns absorption and extinction spectra for x and y polarisation at multiple angles of incidence.} 
+##' }
+##' @examples
+##' show( linear )
+NULL
+	
+
+##' Lattice sum
+##' 
+##' Converged lattice sum G0 for an infinite 2D array of dipoles at normal incidence
+##' @name G0
+##' @aliases gfun
+##' @docType data
+##' @details
+##' The calculation was made using code from Prof. J. G. de Abajo (CSIC, Spain)
+##' @format
+##'   \describe{
+##'    \item{\code{wavelength}}{a numeric vector}
+##'    \item{\code{Qx}}{a numeric vector}
+##'    \item{\code{Gxx}}{a complex vector}
+##'  }
+##' @examples
+##' data(G0)
+##' \dontrun{demo(lattice_sum)}
+NULL
+	
+

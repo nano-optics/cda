@@ -20,7 +20,7 @@
 <<setup,cache=FALSE>>=
 library(cda)
 library(ggplot2)
-theme_set(theme_minimal())
+## theme_set(theme_minimal())
 ## ls("package:cda")
 options(demo.ask=FALSE)
 ## wavelengths

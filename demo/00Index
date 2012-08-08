@@ -4,3 +4,4 @@ dimer_linear   extinction spectrum of a dimer of gold nanorods
 helix_cd circular   dichroism for a helix of gold nanoparticles
 dimer_cd circular   dichroism for a chiral dimer of gold nanorods
 clusters_3d    generate 3D views of some predefined cluster shapes using RGL rendering or povray
+timing_dispersion    testing the direct inversion of the interaction matrix vs solving the linear system

@@ -20,8 +20,8 @@ linear_extinction_spectrum <- function(cluster, material, n=1.33, progress=FALSE
     Nparticles <- nrow(cluster$r)
     
     stopifnot(is.matrix(invalpha),
-              is.matrix(clust$r), 
-              is.matrix(clust$angles))
+              is.matrix(cluster$r), 
+              is.matrix(cluster$angles))
 
     stopifnot(ncol(invalpha)/3 == Nparticles,
               nrow(invalpha) == Nwavelengths)
@@ -58,12 +58,12 @@ dispersion_spectrum <- function (cluster, angles, material, n = 1.33,
     Nwavelengths <- length(k0)
     Nparticles <- nrow(cluster$r)
     Nangles <- nrow(angles)
-    stopifnot(is.matrix(invalpha), is.matrix(angles), is.matrix(clust$r), 
-        is.matrix(clust$angles))
+    stopifnot(is.matrix(invalpha), is.matrix(angles), is.matrix(cluster$r), 
+        is.matrix(cluster$angles))
     stopifnot(ncol(invalpha)/3 == Nparticles, nrow(invalpha) == 
         Nwavelengths)
-    res <- linear$dispersion_spectrum(kn, invalpha, clust$r, 
-        clust$angles, angles, as.integer(invert), as.integer(progress))
+    res <- linear$dispersion_spectrum(kn, invalpha, cluster$r, 
+        cluster$angles, angles, as.integer(invert), as.integer(progress))
     
     rbind(data.frame(wavelength = rep(material$wavelength, each = Nangles), 
         angles = angles[rep(seq.int(Nangles), Nwavelengths), 

@@ -22,7 +22,8 @@ circular_dichroism_spectrum <- function(cluster, material, n=1.33, N=100, averag
 
   averaging <- match.arg(averaging)
 
-  k0 <- 2*pi/material$wavelength
+  wavelength <- material[["wavelength"]]
+  k0 <- 2*pi/wavelength
   kn <- k0*n
   
   invalpha <- make.invalpha(cluster, material, polarizability.fun=polarizability.ellipsoid, n=n, kuwata=TRUE)
@@ -61,11 +62,11 @@ circular_dichroism_spectrum <- function(cluster, material, n=1.33, N=100, averag
   
   if(result.matrix){
     ## extinction, absorption, CD ext, CD abs
-    return(cbind(wavelength = material$wavelength, extinction=res[, 1], absorption=res[, 2], 
+    return(cbind(wavelength = wavelength, extinction=res[, 1], absorption=res[, 2], 
                  CDext=res[,3], CDabs=res[,4]))
   } else {
 
-    d <- data.frame(wavelength = material$wavelength,
+    d <- data.frame(wavelength = wavelength,
                     extinction=res[, 1], absorption=res[, 2], scattering=res[, 1]-res[, 2],
                     CDext=res[,3], CDabs=res[,4], CDsca=res[,3]-res[,4])
 
@@ -95,3 +96,5 @@ circular_dichroism_spectrum <- function(cluster, material, n=1.33, N=100, averag
   }
   
 }
+
+utils::globalVariables("wavelength")
