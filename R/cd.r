@@ -97,4 +97,5 @@ circular_dichroism_spectrum <- function(cluster, material, n=1.33, N=100, averag
   
 }
 
-utils::globalVariables("wavelength")
+if (getRversion() >= "2.15.1")
+ utils::globalVariables("wavelength")
