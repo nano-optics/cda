@@ -12,9 +12,9 @@ Description: Given a set of ellipsoidal nanoparticles (positions and
     equations by direct inversion of the interaction matrix.
     Retardation is included in the interaction.
 SystemRequirements: GNU make
-Version: 1.2
+Version: 1.2.1
 BuildVignettes: false
-Date: 2011-09-04
+Date: 2012-08-25
 Depends:
     methods,
     Rcpp (>= 0.9.5),
