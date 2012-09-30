@@ -26,8 +26,4 @@
 \author{
   baptiste Auguie
 }
-\seealso{
-  Other user_level linear:
-  \code{\link{dispersion_spectrum}}
-}
 

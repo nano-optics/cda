@@ -3,7 +3,8 @@
 \title{dispersion_spectrum}
 \usage{
   dispersion_spectrum(cluster, angles, material, n = 1.33,
-    invert = FALSE, progress = FALSE)
+    polarisation = c("linear", "circular"), invert = FALSE,
+    progress = FALSE)
 }
 \arguments{
   \item{cluster}{list describing a cluster}
@@ -29,9 +30,5 @@
 }
 \author{
   baptiste Auguie
-}
-\seealso{
-  Other user_level linear:
-  \code{\link{linear_extinction_spectrum}}
 }
 

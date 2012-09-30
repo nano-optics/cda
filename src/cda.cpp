@@ -103,6 +103,125 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
 }
 
 
+
+// // calculation for multiple angles of incidence
+// in progress, not functional
+// R: positions
+// A: interaction matrix
+// invalpha: inverse polarisabilities
+// kn: wavevector
+// Angles: incident angles
+ arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
+		      const double kn, const arma::mat& Angles, \
+		      const arma::mat& Euler, \
+		      const int polarisation,			\
+		      const int invert)
+   {
+     const int N = R.n_rows, NAngles = Angles.n_rows;
+    //constants
+    const arma::cx_double i = arma::cx_double(0,1);
+    const double pi = arma::math::pi();
+    arma::mat Rot(3,3);
+
+    arma::cx_mat polar = diagonal_polarisability(invalpha, Euler);
+
+    // incident field
+    arma::cx_colvec LPP, LPS;
+    
+    if(polarisation == 0){ // linear
+     LPP="(1,0) (0,0) (0,0);", LPS="(0,0) (1,0) (0,0);";
+      } else { // circular
+     LPP="(0,1) (1,0) (0,0);", LPS="(1,0) (0,1) (0,0);";
+    }
+
+    const arma::colvec  khat="0 0 1;"; 
+    const arma::colvec kvec = kn*khat; 
+   
+
+    arma::cx_colvec ELPP(3), ELPS(3), Eincident(3*N), P(3*N);
+    double phi, psi,theta;
+    arma::mat kr;
+    arma::cx_mat expikr, B;
+
+    if(invert == 1){
+     B = pinv(A); /* inverting the interaction matrix 
+     				 to solve AP=Eincident multiple times */
+    }
+    arma::mat res(NAngles, 6) ;  
+
+    // begin calculation
+
+    int ll=0; 
+    for(ll=0; ll<NAngles; ll++){ // loop over angles
+
+      phi = Angles(ll, 0), psi = Angles(ll, 1), theta = Angles(ll, 2);
+     
+      Rot = euler(phi, theta, psi); // note: theta should be fixed = pi/2
+      ELPP =  trans(Rot) * LPP ;
+      ELPS =  trans(Rot) * LPS ;
+      kr = R * trans(Rot) * kvec;
+      expikr = exp(i*kr);
+      
+      // PL or RC polarisation
+      Eincident = reshape(expikr * strans(ELPP), 3*N, 1, 1);
+      
+      if(invert == 1){
+	P = B * Eincident;
+      } else {
+	P = solve(A, Eincident);
+      }
+
+      res(ll,0) =  extinction(kn, P, Eincident); 
+      res(ll,1) =  absorption(kn, P, polar); 
+      res(ll,2) =  res(ll,0) - res(ll,1); 
+      
+      // SL or LC polarisation
+      Eincident = reshape(expikr * strans(ELPS), 3*N, 1, 1);
+
+      if(invert == 1){
+	P = B * Eincident;
+      } else {
+	P = solve(A, Eincident);
+      }
+
+      res(ll,3) =  extinction(kn, P, Eincident); 
+      res(ll,4) = absorption(kn, P, polar); 
+      res(ll,5) =  res(ll,3) - res(ll,4); 
+      
+    } 
+             
+    return res ;
+   } 
+
+arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
+			       const arma::mat& Euler, const arma::mat& Angles, \
+			       const int polarisation,			\
+			       const int invert, const int progress)
+  {
+
+    const int NAngles = Angles.n_rows;
+    int N = kn.n_elem, Nr = R.n_rows, ll;
+    arma::cube res(NAngles, 6, N);
+    arma::cx_mat beta(3,Nr);
+    arma::mat tmp(NAngles, 6);
+    arma::cx_mat A(3*Nr,3*Nr), polar(3*Nr,3*Nr);
+
+    for(ll=0; ll<N; ll++){ // loop over kn   
+      if(progress == 1)
+	progress_bar(ll+1,N);
+      beta = reshape(Beta.row(ll), 3, Nr, 1); 
+      A = interaction_matrix(R, kn[ll], beta, Euler, 1); // always full
+      tmp = dispersion(R, A, beta, kn[ll], Angles, Euler, polarisation, invert);
+
+      res.slice(ll) = tmp; 
+    }
+    if(progress == 1)
+      Rcpp::Rcout << "\n";
+
+    return res ;
+  } 
+
+
 RCPP_MODULE(cda){
        using namespace Rcpp ;
 
@@ -110,5 +229,6 @@ RCPP_MODULE(cda){
        function( "extinction", &extinction, "Calculates the extinction cross-section" ) ;
        function( "absorption", &absorption, "Calculates the absorption cross-section" ) ;
        function( "interaction_matrix", &interaction_matrix, "Constructs the coupled-dipole interaction matrix" ) ;
-
+       function( "dispersion_spectrum", &dispersion_spectrum,		\
+       		 "Returns the abs and ext xsec for 2 polarisations at multiple angles of incidence" ) ;
 }
