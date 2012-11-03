@@ -19,7 +19,11 @@ Angles <- rep(seq(0, pi/2, length=12), 3)
 Axes <- rep(letters[24:26], each=12)
 
 clust <- makeRodChain(N=1)
-results <- dispersion_spectrum(clust, Angles, Axes, gold, progress=TRUE)
+clust <- makeRodChain(N=1, a=0.03, b=0.03, c=0.05)
+clust <- makeRodChain(N=1, a=0.03, b=0.05, c=0.03)
+
+results <- dispersion_spectrum(clust, Angles, Axes, gold, 
+                               polarisation="linear", progress=TRUE)
 
 test <- melt(results, meas="value")
 

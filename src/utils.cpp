@@ -33,6 +33,7 @@ using namespace std;
     // fflush(stdout);
   }
   
+// general rotation matrix
  arma::mat euler(const double phi, const double theta, const double psi)
   {
     arma::mat Rot(3,3);
@@ -49,6 +50,35 @@ using namespace std;
     Rot(2,0) = sinphi*sintheta;
     Rot(2,1) = -cosphi*sintheta; 
     Rot(2,2) = costheta;
+    return (Rot);
+  }
+
+// rotation about one main axis only
+ arma::mat axis_rotation(const double angle, const int axis)
+  {
+    const double pi = arma::math::pi();
+    arma::mat Rot(3,3);
+    const double cosangle = cos(angle), sinangle = sin(angle);
+
+
+    if(axis == 0) {// rotate about x axis
+      Rot << 1 << 0 << 0 << arma::endr
+	<< 0 << cosangle << -sinangle << arma::endr
+	<< 0 << sinangle << cosangle << arma::endr;
+
+    }
+    if(axis == 1){// rotate about y axis
+    Rot << cosangle << 0 << sinangle << arma::endr
+	<< 0 << 1 << 0 << arma::endr
+	<< -sinangle << 0 << cosangle << arma::endr;
+
+    }
+    if(axis == 2){// rotate about z axis
+    Rot << cosangle << -sinangle << 0 << arma::endr
+	<< sinangle << cosangle << 0 << arma::endr
+	<< 0 << 0 << 1 << arma::endr;
+
+    }
     return (Rot);
   }
 

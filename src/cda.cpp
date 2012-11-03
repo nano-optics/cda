@@ -112,12 +112,12 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
 // kn: wavevector
 // Angles: incident angles
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
-		      const double kn, const arma::mat& Angles, \
+		      const double kn, const arma::vec& Angle, const arma::uvec& Axis,  \
 		      const arma::mat& Euler, \
 		      const int polarisation,			\
 		      const int invert)
    {
-     const int N = R.n_rows, NAngles = Angles.n_rows;
+     const int N = R.n_rows, NAngles = Angle.n_elem;
     //constants
     const arma::cx_double i = arma::cx_double(0,1);
     const double pi = arma::math::pi();
@@ -154,9 +154,7 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
     int ll=0; 
     for(ll=0; ll<NAngles; ll++){ // loop over angles
 
-      phi = Angles(ll, 0), psi = Angles(ll, 1), theta = Angles(ll, 2);
-     
-      Rot = euler(phi, theta, psi); // note: theta should be fixed = pi/2
+      Rot = axis_rotation(Angle(ll), Axis(ll)); // note: rotation along fixed axis only
       ELPP =  trans(Rot) * LPP ;
       ELPS =  trans(Rot) * LPS ;
       kr = R * trans(Rot) * kvec;
@@ -194,12 +192,12 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
    } 
 
 arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
-			       const arma::mat& Euler, const arma::mat& Angles, \
+			       const arma::mat& Euler, const arma::vec& Angle, const arma::uvec& Axis, \
 			       const int polarisation,			\
 			       const int invert, const int progress)
   {
 
-    const int NAngles = Angles.n_rows;
+    const int NAngles = Angle.n_elem;
     int N = kn.n_elem, Nr = R.n_rows, ll;
     arma::cube res(NAngles, 6, N);
     arma::cx_mat beta(3,Nr);
@@ -211,7 +209,7 @@ arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, 
 	progress_bar(ll+1,N);
       beta = reshape(Beta.row(ll), 3, Nr, 1); 
       A = interaction_matrix(R, kn[ll], beta, Euler, 1); // always full
-      tmp = dispersion(R, A, beta, kn[ll], Angles, Euler, polarisation, invert);
+      tmp = dispersion(R, A, beta, kn[ll], Angle, Axis, Euler, polarisation, invert);
 
       res.slice(ll) = tmp; 
     }

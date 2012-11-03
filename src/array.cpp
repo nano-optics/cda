@@ -1,6 +1,3 @@
-// 
-// 
-// 
 #include "array.h"
 
 #include <RcppArmadillo.h>
