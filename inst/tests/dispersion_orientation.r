@@ -29,5 +29,5 @@ test <- melt(results, meas="value")
 
 ggplot(subset(test, type == "extinction"), 
        aes(wavelength, value, colour=angles, group=angles)) +
-  facet_grid(axes ~ polarisation, scales="free") +
+  facet_grid(axis ~ polarisation, scales="free") +
   geom_path()

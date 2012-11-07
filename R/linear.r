@@ -40,7 +40,7 @@ linear_extinction_spectrum <- function(cluster, material, n=1.33, progress=FALSE
 ##' @title dispersion_spectrum
 ##' @param cluster list describing a cluster
 ##' @param angles of incident field in radians
-##' @param axes of incident field rotation character vector from ('x', 'y', 'z')
+##' @param axis of incident field rotation character vector from ('x', 'y', 'z')
 ##' @param material list
 ##' @param n medium refractive index
 ##' @param invert logical
@@ -49,7 +49,7 @@ linear_extinction_spectrum <- function(cluster, material, n=1.33, progress=FALSE
 ##' @export
 ##' @family user_level cda
 ##' @author baptiste Auguie
-dispersion_spectrum <- function (cluster, angles, axes, material, n = 1.33,
+dispersion_spectrum <- function (cluster, angles, axis="z", material, n = 1.33,
                                  polarisation=c("linear", "circular"), 
                                  invert = FALSE, progress = FALSE) 
 {
@@ -63,45 +63,46 @@ dispersion_spectrum <- function (cluster, angles, axes, material, n = 1.33,
     Nwavelengths <- length(k0)
     Nparticles <- nrow(cluster$r)
     Nangles <- length(angles)
-    axeso <- axes # original codes
-    axes <- as.integer(factor(axes, levels=letters[24:26]))-1L
-    stopifnot(all(axes %in% c(0L, 1L, 2L)), !any(is.na(axes)))
-    stopifnot(Nangles == length(axes))
+    axeso <- axis # original codes
+    if(length(axis) == 1) axis_rep(axis, length.out=Nangles)
+    axis <- as.integer(factor(axis, levels=letters[24:26]))-1L
+    stopifnot(all(axis %in% c(0L, 1L, 2L)), !any(is.na(axis)))
+    stopifnot(Nangles == length(axis))
     stopifnot(is.matrix(invalpha), is.vector(angles), is.matrix(cluster$r), 
         is.matrix(cluster$angles))
     stopifnot(ncol(invalpha)/3 == Nparticles, nrow(invalpha) == 
         Nwavelengths)
     res <- cda$dispersion_spectrum(kn, invalpha, cluster$r, 
-        cluster$angles, angles, axes, as.integer(polarisation), as.integer(invert), as.integer(progress))
+        cluster$angles, angles, axis, as.integer(polarisation), as.integer(invert), as.integer(progress))
 
     angles <- angles[rep(seq.int(Nangles), Nwavelengths)]
-    axes <- axeso[rep(seq.int(Nangles), Nwavelengths)]
+    axis <- axeso[rep(seq.int(Nangles), Nwavelengths)]
     wavelength <- rep(material$wavelength, each = Nangles)
     
     ## print(str(res))
     results <- 
     rbind(data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 1, , drop = TRUE]),
                      type = "extinction", polarisation = "1"),
           data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 2, , drop = TRUE]),
                      type = "absorption", polarisation = "1"),
           data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 3, , drop = TRUE]),
                      type = "scattering", polarisation = "1"),
           data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 4, , drop = TRUE]),
                      type = "extinction", polarisation = "2"),
           data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 5, , drop = TRUE]),
                      type = "absorption", polarisation = "2"),
           data.frame(wavelength = wavelength, angles = angles,
-                     axes=axes,
+                     axis=axis,
                      value = c(res[, 6, , drop = TRUE]),
                      type = "scattering", polarisation = "2"))
     if(polarisation == 0L)
@@ -110,7 +111,7 @@ dispersion_spectrum <- function (cluster, angles, axes, material, n = 1.33,
     if(polarisation == 1L){
       
       results$polarisation <- factor(results$polarisation, labels = c("R", "L"))
-      results <- rbind(results,  data.frame(wavelength = wavelength, angles = angles, axes=axes,
+      results <- rbind(results,  data.frame(wavelength = wavelength, angles = angles, axis=axis,
                                             value = c(res[, 1, , drop = TRUE]  - res[, 4, , drop = TRUE]),
                                             type = "extinction", polarisation = "CD"))
     }
