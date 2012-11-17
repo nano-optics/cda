@@ -2,16 +2,17 @@
 \alias{dispersion_spectrum}
 \title{dispersion_spectrum}
 \usage{
-  dispersion_spectrum(cluster, angles, axes, material,
-    n = 1.33, polarisation = c("linear", "circular"),
-    invert = FALSE, progress = FALSE)
+  dispersion_spectrum(cluster, angles, axis = "z",
+    material, n = 1.33,
+    polarisation = c("linear", "circular"), invert = FALSE,
+    progress = FALSE)
 }
 \arguments{
   \item{cluster}{list describing a cluster}
 
   \item{angles}{of incident field in radians}
 
-  \item{axes}{of incident field rotation character vector
+  \item{axis}{of incident field rotation character vector
   from ('x', 'y', 'z')}
 
   \item{material}{list}

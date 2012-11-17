@@ -30,8 +30,8 @@
   Baptiste Auguie
 }
 \seealso{
-  Other user_level polarizability: \code{\link{La}},
-  \code{\link{alpha_kuwata}},
+  Other user_level polarizability:
+  \code{\link{alpha_kuwata}}, \code{\link{La}},
   \code{\link{polarizability.ellipsoid}}
 }
 

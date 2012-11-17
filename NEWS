@@ -1,4 +1,28 @@
 
+cda 1.3 (2012-11-18) 
+
+INTERNAL CHANGES:
+
+* fixed polarisation and orientation issues in dispersion calculations
+
+* cleaned up internal code
+
+* started using testthat for consistency checks in future releases
+
+USER VISIBLE CHANGES:
+
+* updated the licence to GPL3 + LICENCE file
+
+DOCUMENTATION:
+
+* new examples under inst/wiki formatted for knitr+markdown and updating the github wiki
+
+* removed useless stuff in demos, examples and vignettes
+
+* update the article on scattport
+
+* link to github + wiki as the source of documentation
+
 cda 1.2 (2012-08-08) 
 
 INTERNAL CHANGES:
