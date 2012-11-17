@@ -1,24 +1,20 @@
 Package: cda
 Maintainer: baptiste Auguie <baptiste.auguie@gmail.com>
-License: GPL (>= 2) + file LICENCE
+License: GPL-3 + file LICENSE
 Title: Coupled dipole approximation
 LinkingTo: Rcpp, RcppArmadillo
 Type: Package
 LazyLoad: yes
 Author: baptiste Auguie
-Description: Given a set of ellipsoidal nanoparticles (positions and
-    sizes), calculates the polarizability tensor for the dipoles
-    associated with each particle, and solves the coupled-dipole
-    equations by direct inversion of the interaction matrix.
-    Retardation is included in the interaction.
+Description: Solves the electromagnetic problem of coupled-dipoles (scattering and absorption by a cluster of subwavelength particles in arbitrary 3D configuration) by direct inversion of the interaction matrix. Functions are provided for linear polarisation with varying angle of incidence, as well as circular polarisation with angular averaging (optical activity). Retardation is included in the interaction.
 SystemRequirements: GNU make
-Version: 1.2.1
+Version: 1.3
 BuildVignettes: false
-Date: 2012-08-25
+Date: 2012-11-17
+Imports: methods, 
+    Rcpp (>= 0.10),
+    RcppArmadillo (>= 0.3.4)
 Depends:
-    methods,
-    Rcpp (>= 0.9.5),
-    RcppArmadillo (>= 0.2.3),
     plyr,
     statmod,
     randtoolbox,
@@ -27,8 +23,8 @@ Depends:
 Suggests:
     dielectric,
     rgl,
-    gridExtra,
-    ggplot2
+    ggplot2,
+    gridExtra
 RcppModules: cda, cd, linear, array
 Collate:
     'array.factor.R'

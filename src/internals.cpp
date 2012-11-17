@@ -58,7 +58,7 @@ double eigenmodes(const arma::mat& R, const arma::cx_mat& knc,	\
     } // end loops
   
   // diagonal blocks
-  arma::cx_mat beta = diagonal_polarisability(Beta, Euler);
+  arma::cx_mat beta = block_diagonal(Beta, Euler);
   
   A = A + beta;
   // return inv(A); 

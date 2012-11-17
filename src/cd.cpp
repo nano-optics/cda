@@ -7,7 +7,6 @@
 
 using namespace Rcpp ;
 using namespace RcppArmadillo ;
-
 using namespace std;
 
 // angular averaging using Gauss-Legendre quadrature
@@ -163,7 +162,7 @@ arma::mat circular_dichroism_spectrum(const arma::colvec kn, const arma::cx_mat&
 	progress_bar(ll+1,N);
       beta = reshape(Beta.row(ll), 3, Nr, 1); 
       A = interaction_matrix(R, kn[ll], beta, Euler, full);
-      polar = diagonal_polarisability(beta, Euler);
+      polar = block_diagonal(beta, Euler);
       tmp = averaging(R, A, polar, kn[ll], QuadPhi, QuadPsi);
 
       res(ll,0) = 0.5*(tmp(0) + tmp(1)); // extinction 
@@ -184,7 +183,6 @@ arma::mat circular_dichroism_spectrum2(const arma::colvec kn, const arma::cx_mat
   {
 
     int N = kn.n_elem, Nr = R.n_rows, ll;
-    // Rcpp::Rcout << N << "\n";
     arma::mat res(N,4);
     arma::cx_mat beta(3,Nr);
     arma::colvec tmp(4);
@@ -195,7 +193,7 @@ arma::mat circular_dichroism_spectrum2(const arma::colvec kn, const arma::cx_mat
 	progress_bar(ll+1,N);
       beta = reshape(Beta.row(ll), 3, Nr, 1); 
       A = interaction_matrix(R, kn[ll], beta, Euler, full);
-      polar = diagonal_polarisability(beta, Euler);
+      polar = block_diagonal(beta, Euler);
       tmp = averaging2(R, A, polar, kn[ll], QMC);
 
       res(ll,0) = 0.5*(tmp(0) + tmp(1)); // extinction 
@@ -214,10 +212,10 @@ RCPP_MODULE(cd){
        using namespace Rcpp ;
 
        function( "circular_dichroism_spectrum2", &circular_dichroism_spectrum2, \
-		 "Calculates the orientation-averaged CD spectrum for absorption and extinction" ) ;
+		 "Calculates the orientation-averaged CD spectrum for absorption and extinction using grid integration" ) ;
 
        function( "circular_dichroism_spectrum", &circular_dichroism_spectrum, \
-		 "Calculates the orientation-averaged CD spectrum for absorption and extinction" ) ;
+		 "Calculates the orientation-averaged CD spectrum for absorption and extinction using specified quadrature nodes and weights" ) ;
 
 }
 

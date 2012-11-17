@@ -63,8 +63,8 @@ dispersion_spectrum <- function (cluster, angles, axis="z", material, n = 1.33,
     Nwavelengths <- length(k0)
     Nparticles <- nrow(cluster$r)
     Nangles <- length(angles)
+    if(length(axis) == 1) axis <- rep(axis, length.out=Nangles)
     axeso <- axis # original codes
-    if(length(axis) == 1) axis_rep(axis, length.out=Nangles)
     axis <- as.integer(factor(axis, levels=letters[24:26]))-1L
     stopifnot(all(axis %in% c(0L, 1L, 2L)), !any(is.na(axis)))
     stopifnot(Nangles == length(axis))
