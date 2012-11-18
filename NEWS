@@ -11,6 +11,10 @@ INTERNAL CHANGES:
 
 USER VISIBLE CHANGES:
 
+* function names have changed to be more consistent
+
+* all dimensions are now in nanometres
+
 * updated the licence to GPL3 + LICENCE file
 
 DOCUMENTATION:

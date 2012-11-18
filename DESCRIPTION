@@ -1,21 +1,28 @@
 Package: cda
-Maintainer: baptiste Auguie <baptiste.auguie@gmail.com>
+Version: 1.3
+Authors@R: person("Baptiste", "Auguie",
+    email = "baptiste.auguie@gmail.com", role = c("aut", "cre"),
+    comment = "Initial version loosely inspired from DDA code of Vincent Loke")
 License: GPL-3 + file LICENSE
-Title: Coupled dipole approximation
-LinkingTo: Rcpp, RcppArmadillo
+Title: Coupled dipole approximation in electromagnetic scattering
+Description: The cda package implements the coupled-dipole approximation for
+    electromagnetic scattering by sparse collections of subwavelength
+    particles, with a particular focus on plasmonic nanoparticles in the
+    visible regime. The interaction matrix, and the solution of the linear
+    system of coupled-dipole equations are executed in C++ code for speed;
+    convenient wrapper functions are provided at the R level to generate the
+    particle clusters, calculate the extinction, scattering, and absorption of
+    light by particles with linearly and circularly polarised light. Functions
+    are also provided to calculate orientation-averaged circular dichroism, and
+    display clusters of nanoparticles in three dimensions using OpenGL or
+    povray.
+Date: 2012-11-17
+URL: https://github.com/baptiste/cda
 Type: Package
 LazyLoad: yes
-Author: baptiste Auguie
-Description: Solves the electromagnetic problem of coupled-dipoles (scattering
-    and absorption by a cluster of subwavelength particles in arbitrary 3D
-    configuration) by direct inversion of the interaction matrix. Functions are
-    provided for linear polarisation with varying angle of incidence, as well
-    as circular polarisation with angular averaging (optical activity).
-    Retardation is included in the interaction.
+BuildVignettes: true
 SystemRequirements: GNU make
-Version: 1.3
-BuildVignettes: false
-Date: 2012-11-17
+LinkingTo: Rcpp, RcppArmadillo
 Depends:
     methods,
     Rcpp (>= 0.10),
@@ -32,7 +39,6 @@ Suggests:
     gridExtra
 RcppModules: cda, cd, linear, array
 Collate:
-    'array.factor.R'
     'cd.r'
     'cda-package.r'
     'epsilon.r'
@@ -42,3 +48,5 @@ Collate:
     'povray.r'
     'rgl.r'
     'zzz.r'
+    'array_factor.R'
+    'dispersion.r'

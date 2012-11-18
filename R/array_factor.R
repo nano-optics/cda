@@ -4,9 +4,9 @@
 ##'
 ##' C++ calculation of the array factor
 ##' @title array factor
-##' @param wavelength wavelength in microns
+##' @param wavelength wavelength in nm
 ##' @param N half number of dipoles along one side
-##' @param pitch pitch in microns
+##' @param pitch pitch in nm
 ##' @return S
 ##' @export
 ##' @family user_level array

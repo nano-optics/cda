@@ -1,6 +1,6 @@
-##' Coupled dipole approximation
+##' Coupled dipole approximation in electromagnetic scattering
 ##'
-##' c++ implementation of the coupled dipole approximation for scattering calculations of interacting nanoantennas, specifically targetted at plasmonic nanoparticles
+##' The cda package implements the coupled-dipole approximation for electromagnetic scattering by sparse collections of subwavelength particles, with a particular focus on plasmonic nanoparticles in the visible regime. The interaction matrix, and the solution of the linear system of coupled-dipole equations are executed in C++ code for speed; convenient wrapper functions are provided at the R level to generate the particle clusters, calculate the extinction, scattering, and absorption of light by particles with linearly and circularly polarised light. Functions are also provided to calculate orientation-averaged circular dichroism, and display clusters of nanoparticles in three dimensions using OpenGL or povray.
 ##'
 ##' 
 ##' @name cda-package

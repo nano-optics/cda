@@ -3,10 +3,10 @@
 ## 
 
 
-##' clust.equalsizes
+##' equal_sizes
 ##'
 ##' generate a matrix of equal particle sizes
-##' @title clust.equalsizes
+##' @title equal_sizes
 ##' @param a a
 ##' @param b b
 ##' @param c c
@@ -15,14 +15,14 @@
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-clust.equalsizes <- function(a, b, c, N)
+equal_sizes <- function(a, b, c, N)
 ldply(1:N, function(.) data.frame(a=a, b=b, c=c))
 
 
-##' clust.equalangles
+##' equal_angles
 ##'
 ##' generate a matrix of equal angles
-##' @title clust.equalangles
+##' @title equal_angles
 ##' @param phi phi
 ##' @param theta theta
 ##' @param psi psi
@@ -31,15 +31,15 @@ ldply(1:N, function(.) data.frame(a=a, b=b, c=c))
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-clust.equalangles <- function(phi=0, theta=0, psi=0, N)
+equal_angles <- function(phi=0, theta=0, psi=0, N)
 cbind(phi=rep(phi, N), theta=rep(theta, N), psi=rep(psi, N))
 
 ##' helix curve
 ##'
 ##' add particles on an helix
 ##' @title helix
-##' @param R0 radius in microns
-##' @param pitch pitch in microns
+##' @param R0 radius in nm
+##' @param pitch pitch in nm
 ##' @param N number of particles
 ##' @param delta twist angle between two particles
 ##' @param delta0 angle shift at origin
@@ -50,16 +50,17 @@ cbind(phi=rep(phi, N), theta=rep(theta, N), psi=rep(psi, N))
 ##' @export
 ##' @family user_level cluster
 ##' @examples 
-##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3) ; str(cl)
-##' \dontrun{require(rgl)
+##' cl <- helix(500, 1000, 36, delta=pi/6, n.smooth=1e3) ; str(cl)
+##' \dontrun{
+##' require(rgl)
 ##' open3d()
-##' spheres3d(cl$smooth, radius=0.01,col=2)
-##' spheres3d(cl$positions, radius=0.1, col="gold")
+##' spheres3d(cl$smooth, radius=1,col=2)
 ##' ## ellipsoids are oriented following the helix
-##' sizes <- clust.equalsizes(0.04,0.02,0.02,NROW(cl$positions))
-##' rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold") }
+##' sizes <- equal_sizes(40, 20, 20,NROW(cl$positions))
+##' rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold") 
+##' }
 
-helix <- function(R0=0.5, pitch=0.6, N=5, 
+helix <- function(R0=500, pitch=600, N=5, 
                   delta=pi/8, delta0=pi/2, n.smooth=100*N, right=TRUE){
 
   handedness <- (-1)^(!right)
@@ -91,98 +92,12 @@ helix <- function(R0=0.5, pitch=0.6, N=5,
        radius=R0, smooth=as.matrix(positions2))
 }
 
-##' helix.zt
+##' cluster_dimer
 ##'
-##' create a matrix of xyz positions for ellipsoids arranged on a cylinder with an helical twist
-##' @title helix2
-##' @param R0 radius in um
-##' @param pitch pitch in um
-##' @param z positions of particles along cylinder axis
-##' @param theta angular position along cylinder
-##' @param right logical, handedness
-##' @return matrix N x 3
-##' @author baptiste Auguie
-##' @export
-##' @family user_level cluster
-helix.zt <- function (R0 = 0.5, pitch = 0.6, z=runif(100,-0.5,0.5), theta=runif(100,0,2*pi), right = TRUE) {
-  x = R0 * cos(theta)
-  y = R0 * sin(theta)
-  handedness <- (-1)^(!right)
-  positions <- data.frame(x = x, y = y, z = z)
-    
-  xp <- -positions$y
-  yp <- positions$x
-  zp <- handedness * pitch/(2 * pi)
-  n <- sqrt(xp^2 + yp^2 + zp^2)
-  phi <- atan2(yp, xp)
-  psi <- asin(zp/n)
-  
-  list(positions = as.matrix(positions), angles = cbind(phi, pi/2, psi), radius = R0)
-}
-
-
-
-
-##' make a cluster of spheres
-##'
-##' make a cluster of spheres
-##' @title makeSpheresCluster
-##' @param radius radius
-##' @param N number of spheres
-##' @param R0 radius helix
-##' @param pitch pitch helix
-##' @param delta phase helix
-##' @param delta0 initial phase helix
-##' @param right logical, handedness
-##' @return list of positions, sizes and angles
-##' @author baptiste Auguie
-##' @export
-##' @family user_level cluster
-makeSpheresCluster <- function(radius = 0.005, N, R0=0.5, pitch=0.6, 
-                               delta=pi/8, delta0=0, right=TRUE){
-
-  hel <- helix(N=N, R0=R0, pitch=pitch, delta=delta, delta0=delta0, right=right)
-  sizes <- clust.equalsizes(a=radius, b=radius, c=radius, N=N)
-  angles <- clust.equalangles(N=N)
-  list(r=hel$positions, sizes=sizes, angles=angles)
-  
-}
-##' makeDimerCluster
-##'
-##' makeDimerCluster
-##' first rod along x at (0, 0, -d/2)
-##' second rod at (0, 0, d/2),  rotated by theta (z) in [0, pi], psi (z') in [-pi/2, pi/2]
-##' @title makeDimerCluster
-##' @param d center-to-center distance
-##' @param phi longitude
-##' @param psi latitude
-##' @param a semi axis
-##' @param b semi axis
-##' @param c semi axis
-##' @param right logical,  handedness
-##' @return list with r,  sizes,  angles
-##' @author baptiste Auguie
-##' @export
-##' @family user_level cluster
-makeDimerCluster <- function(d=a, 
-                             phi=pi/4, psi=0,
-                             a=35e-3, b=12e-3, c=b,
-                             right=TRUE){
-
-  r <- cbind(c(0,0), c(0, 0), c(-d/2, d/2))
-  sizes <- clust.equalsizes(a=a, b=b, c=c, N=2)
-  phi <- if(right) phi else -phi
-  angles <- cbind(c(0, phi), c(0, pi/2), c(0, psi))
-  list(r=r, sizes=sizes, angles=angles)
-  
-}
-
-##' makeDimerDihedral
-##'
-##' makeDimerDihedral
+##' cluster with two nanorods
 ##' first rod along x at (0, 0, -d/2)
 ##' second rod at (0, 0, d/2)
-##' @title makeDimerDihedral
+##' @title cluster_dimer
 ##' @param d center-to-center distance
 ##' @param dihedral dihedral angle
 ##' @param alpha1 angle first rod
@@ -194,23 +109,23 @@ makeDimerCluster <- function(d=a,
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-makeDimerDihedral <- function(d=a, 
+cluster_dimer <- function(d=a, 
                              dihedral=0, alpha1=0, alpha2=0,
                              a=35e-3, b=12e-3, 
                               right=TRUE){
 
   r <- cbind(c(0,0), c(0, 0), c(-d/2, d/2))
-  sizes <- clust.equalsizes(a=a, b=b, c=b, N=2)  
+  sizes <- equal_sizes(a=a, b=b, c=b, N=2)  
   angles <- cbind(c(dihedral, 0), c(pi/2, pi/2), c(alpha1, alpha2))
   list(r=r, sizes=sizes, angles=angles)
   
 }
 
 
-##' makeRodChain
+##' cluster_chain
 ##'
-##' makeRodChain
-##' @title makeRodChain
+##' linear chain of parallel nanorods
+##' @title cluster_chain
 ##' @param N number of rods
 ##' @param pitch pitch
 ##' @param a semi axis
@@ -220,19 +135,19 @@ makeDimerDihedral <- function(d=a,
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-makeRodChain <- function(N, pitch=0.5, a=50e-3, b=30e-3,c=b){
+cluster_chain <- function(N, pitch=500, a=50, b=30,c=b){
 
   r <- as.matrix(expand.grid(x=0, y=seq(1,N) * pitch, z=0))
-  sizes <- clust.equalsizes(a=a, b=b, c=c, N=N)
-  angles <- clust.equalangles(N=N)
+  sizes <- equal_sizes(a=a, b=b, c=c, N=N)
+  angles <- equal_angles(N=N)
   list(r=r, sizes=sizes, angles=angles)
   
 }
 
-##' makeHelixCluster
+##' cluster_helix
 ##'
-##' makeHelixCluster
-##' @title makeHelixCluster
+##' helical cluster of ellipsoids
+##' @title cluster_helix
 ##' @param N number of particles
 ##' @param R0 radius of helix
 ##' @param pitch pitch of helix
@@ -249,9 +164,9 @@ makeRodChain <- function(N, pitch=0.5, a=50e-3, b=30e-3,c=b){
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-makeHelixCluster <- function(N=5, R0=12e-3, pitch=15e-3, 
+cluster_helix <- function(N=5, R0=12, pitch=15, 
                              delta=pi/2, delta0=0, right=TRUE,
-                             a=0.005, b=a, c=a,
+                             a=5, b=a, c=a,
                              angles=c("helix", "random", "fixed"),
                              seed=123, ...){
 
@@ -268,39 +183,7 @@ makeHelixCluster <- function(N=5, R0=12e-3, pitch=15e-3,
                     runif(nr, 0, 2*pi),
                     runif(nr, 0, 2*pi)), ncol=3, byrow=T))
  
- sizes <- clust.equalsizes(a, b, c, N)
+ sizes <- equal_sizes(a, b, c, N)
  list(r=r, sizes=sizes, angles=angles)
 }
 
-
-##' helical cluster z theta
-##'
-##' helical cluster z theta
-##' @title makeHelixCluster.zt
-##' @param z z
-##' @param theta theta
-##' @param R0 R0
-##' @param pitch pitch 
-##' @param delta0 delta0
-##' @param right right
-##' @param a a
-##' @param b b
-##' @param c c
-##' @return cluster
-##' @author baptiste Auguie
-##' @export
-##' @family user_level cluster
-makeHelixCluster.zt <- function(z = runif(10, -0.5, 0.5), theta = runif(10, 0, 2 * pi),
-                             R0 = 0.5, pitch = 6, delta0=0, 
-                             right = TRUE, 
-                             a=0.035, b=0.012, c=0.012){
-  hel <- helix.zt(R0=R0, pitch=pitch, z=z, theta=theta, right=right)
- 
-  r <- hel$positions
-  angles <- hel$angles
-  N <- nrow(r)
-  
-  sizes <- clust.equalsizes(a, b, c, N)
-   list(r=r, sizes=sizes, angles=angles)
-  
-}

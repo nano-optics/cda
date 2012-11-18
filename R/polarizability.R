@@ -5,19 +5,20 @@
 ##' principal polarizability components for an ellipsoidal particle
 ##'
 ##' uses the Kuwata prescription
-##' @title polarizability.ellipsoid
-##' @param lambda wavelength in microns
+##' @title polarizability_ellipsoid
+##' @param wavelength wavelength in nm
 ##' @param epsilon complex permittivity
-##' @param a semi-axis in um
-##' @param b semi-axis in um
-##' @param c semi-axis in um
-##' @param n surrounding medium
+##' @param a semi-axis in nm
+##' @param b semi-axis in nm
+##' @param c semi-axis in nm
+##' @param medium surrounding medium
 ##' @param kuwata logical, use Kuwata or Clausius Mossotti
 ##' @return matrix of polarizability
 ##' @export
 ##' @family user_level polarizability
 ##' @author baptiste Auguie
-polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 1.33, kuwata= TRUE) 
+polarizability_ellipsoid <- function(wavelength, epsilon, a=50, b=30 , c=b, 
+                                     medium = 1.33, kuwata= TRUE) 
 {
   if(kuwata){
     V <- 4 * pi/3 * a * b * c
@@ -25,15 +26,15 @@ polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 
     chi.b <- La(b, a, c)
     chi.c <- La(c, a, b)
 
-    alpha.kuwata.a <- alpha_kuwata(lambda, epsilon, V, a, chi.a, 
-        n^2)
-    alpha.kuwata.b <- alpha_kuwata(lambda, epsilon, V, b, chi.b, 
-        n^2)
-    alpha.kuwata.c <- alpha_kuwata(lambda, epsilon, V, c, chi.c, 
-        n^2)
+    alpha.kuwata.a <- alpha_kuwata(wavelength, epsilon, V, a, chi.a, 
+                                   medium)
+    alpha.kuwata.b <- alpha_kuwata(wavelength, epsilon, V, b, chi.b, 
+                                   medium)
+    alpha.kuwata.c <- alpha_kuwata(wavelength, epsilon, V, c, chi.c, 
+                                   medium)
     return(cbind(alpha.kuwata.a, alpha.kuwata.b, alpha.kuwata.c))
   } else {
-    cm <- a^3*(epsilon - n^2) / (epsilon +2*n^2)
+    cm <- a^3*(epsilon - medium^2) / (epsilon +2*medium^2)
     return(cbind(cm,cm,cm))
   }
 }
@@ -42,14 +43,14 @@ polarizability.ellipsoid <- function(lambda, epsilon, a=0.05, b=0.03 , c=b, n = 
 ##'
 ##' calculates the shape factor for a general ellipsoid
 ##' @title La
-##' @param a semi-axis in um
-##' @param b semi-axis in um
-##' @param c semi-axis in um
+##' @param a semi-axis in nm
+##' @param b semi-axis in nm
+##' @param c semi-axis in nm
 ##' @return shape factor along a
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level polarizability
-La <- function (a = 0.05, b = a, c = a) 
+La <- function (a = 50, b = a, c = a) 
 {
   ## scaled version to help convergence
   V <- a*b*c
@@ -68,25 +69,26 @@ La <- function (a = 0.05, b = a, c = a)
 ##' prescription from Kuwata
 ##' @title alpha_kuwata
 ##' @aliases alpha_kuwata Kuwata.A Kuwata.B
-##' @param lambda wavelength
+##' @param wavelength wavelength
 ##' @param epsilon permittivity
 ##' @param V volume
 ##' @param axis semi-axis along incident field
 ##' @param L shape factor
-##' @param epsilon.medium medium permittivity
+##' @param medium refractive index
 ##' @return polarizability
 ##' @export
 ##' @family user_level polarizability
 ##' @author baptiste Auguie
 alpha_kuwata <-
-function (lambda, epsilon, V, axis, L, epsilon.medium = 1.33^2) 
+function (wavelength, epsilon, V, axis, L, medium = 1.33) 
 {
     A <- Kuwata.A(L)
     B <- Kuwata.B(L)
-    x <- 2 * pi * axis/lambda
+    x0 <- 2 * pi * axis/wavelength
+    epsilon.medium <- medium^2
     denom <- (L + epsilon.medium/(epsilon - epsilon.medium)) + A * epsilon.medium * 
-        x^2 + B * epsilon.medium^2 * x^4 - (0+1i)/3 * 4 * pi^2 * epsilon.medium^(3/2) * 
-        V/lambda^3
+      x0^2 + B * epsilon.medium^2 * x0^4 - (0+1i)/3 * 4 * pi^2 * epsilon.medium^(3/2) * 
+        V/wavelength^3
     V/denom/(4 * pi)
 }
 
@@ -102,18 +104,19 @@ Kuwata.B <- function(L){
 ##' inverse polarizability tensors
 ##'
 ##' calculates and formats the principal polarizability of several particles
-##' @title make.invalpha
+##' @title inverse_polarizability
 ##' @param cluster cluster
 ##' @param material material
-##' @param polarizability.fun polarizability function
-##' @param ... additional arguments passed to polarizability.fun
+##' @param polarizability_fun polarizability function
+##' @param ... additional arguments passed to polarizability_fun
 ##' @return  matrix with each row being the 3 principal values of each polarizability tensor
 ##' @export
 ##' @family user_level polarizability
 ##' @author Baptiste Auguie
-make.invalpha <- function(cluster, material, polarizability.fun=polarizability.ellipsoid, ...){
-  polar <- mlply(cluster$sizes, polarizability.fun,
-                 lambda=material$wavelength,
+inverse_polarizability <- function(cluster, material, 
+                          polarizability_fun = polarizability_ellipsoid, ...){
+  polar <- mlply(cluster$sizes, polarizability_fun,
+                 wavelength=material$wavelength,
                  epsilon=material$epsilon, ...)
   invalpha <- as.matrix(1/do.call(cbind, polar))
   

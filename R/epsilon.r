@@ -2,8 +2,8 @@
 ##'
 ##' analytical dielectric function of Silver (Drude model)
 ##' @title epsAg
-##' @param lambda wavelength in nm
-##' @param epsilon.infty background dielectric constant
+##' @param wavelength wavelength in nm
+##' @param epsilon.inf background dielectric constant
 ##' @param lambda.p plasma wavelength
 ##' @param mu.p damping constant
 ##' @return data.frame
@@ -21,18 +21,18 @@
 ##' matplot(silver$wavelength, cbind(Re(silver$epsilon), Im(silver$epsilon)), t="l", lty=1)
 ##' matpoints(AgPalik$wavelength, cbind(Re(AgPalik$epsilon), Im(AgPalik$epsilon)))
 
-epsAg <- function(lambda, epsilon.infty = 4,
+epsAg <- function(wavelength, epsilon.inf = 4,
                   lambda.p = 282, mu.p = 17000){
   
-  data.frame(wavelength=lambda*1e-3, epsilon=
-             epsilon.infty*(1 - 1 / (lambda.p^2*(1/lambda^2 + 1i / (mu.p*lambda)))))
+  data.frame(wavelength=wavelength, epsilon=
+             epsilon.inf*(1 - 1 / (lambda.p^2*(1/lambda^2 + 1i / (mu.p*lambda)))))
 }
 
 ##' permittivity gold
 ##'
 ##' analytical dielectric function of Au (Drude model + interband transitions)
 ##' @title epsAu
-##' @param lambda wavelength in nm
+##' @param wavelength wavelength in nm
 ##' @param epsilon.infty background dielectric constant
 ##' @param lambda.p plasma wavelength
 ##' @param mu.p damping constant
@@ -58,14 +58,14 @@ epsAg <- function(lambda, epsilon.infty = 4,
 ##' matplot(gold$wavelength, cbind(Re(gold$epsilon), Im(gold$epsilon)), t="l", lty=1)
 ##' matpoints(AuJC$wavelength, cbind(Re(AuJC$epsilon), Im(AuJC$epsilon)))
 
-epsAu <- function(lambda, epsilon.infty = 1.54,
+epsAu <- function(wavelength, epsilon.infty = 1.54,
                   lambda.p = 177.5, mu.p = 14500,
                   A1 = 1.27, phi1 = -pi/4, lambda1 = 470, mu1 = 1900,
                   A2 = 1.1, phi2 = -pi/4, lambda2 = 325, mu2 = 1060){
   eps.drude <- 
     epsilon.infty*(1 - 1 / (lambda.p^2*(1/lambda^2 + 1i / (mu.p*lambda))))
 
-  data.frame(wavelength=lambda*1e-3, epsilon=
+  data.frame(wavelength=wavelength, epsilon=
   eps.drude + A1 / lambda1 * (exp(1i*phi1)  / (1/lambda1 - 1/lambda - 1i/mu1) +
                               exp(-1i*phi1) / (1/lambda1 + 1/lambda + 1i/mu1)) +
               A2 / lambda2 * (exp(1i*phi2)  / (1/lambda2 - 1/lambda - 1i/mu2) +
