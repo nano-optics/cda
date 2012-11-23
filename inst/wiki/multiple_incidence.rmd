@@ -1,0 +1,27 @@
+## solving CD equations for two polarisations and a range of angles
+
+library(cda)
+library(ggplot2)
+
+wvl <- seq(400,900, by=1)
+gold <- epsAu(wvl)
+
+clust <- makeSpheresCluster(N=5, radius=5e-3, R0=12e-3, pitch=15e-3,
+                            delta=pi/2, right=TRUE)
+
+## clust <- makeRodChain(N=2)
+
+Angles <- seq(0, pi/2, length=10)
+
+## results <- dispersion_spectrum(clust, axis = "z", Angles, gold, polarisation="linear", progress=FALSE)
+results <- dispersion_spectrum(clust, axis = "z", Angles, gold, polarisation="circular", progress=FALSE)
+test <- melt(results, meas="value")
+
+## ggplot(test, aes(wavelength, value, colour=angles.psi, group=angles.psi)) +
+##   facet_grid(type ~ polarisation, scales="free") +
+##   geom_path()
+
+ggplot(test, aes(wavelength, value,
+                      colour=angles)) +
+ facet_grid(type ~ axis, scales="free") +
+  geom_line()
