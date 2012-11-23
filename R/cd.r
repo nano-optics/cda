@@ -10,7 +10,7 @@
 ##' @param material material
 ##' @param medium refractive index medium
 ##' @param N number of integration points
-##' @param averaging averaging method, using either Quasi Monte Carlo, Gauss Legendre, or regular grid
+##' @param averaging averaging method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, or regular grid
 ##' @param full logical use full (retarded) dipolar field
 ##' @param progress print progress lines
 ##' @param result.matrix logical return the results as a matrix
@@ -18,7 +18,7 @@
 ##' @family user_level circular_dichroism
 ##' @author baptiste Auguie
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100, 
-                                        averaging = c("QMC","GL","grid"),
+                                        averaging = c("GL","QMC","grid"),
                                         full=TRUE, progress=FALSE, 
                                         result.matrix=FALSE){
 
@@ -50,7 +50,8 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
       GL2 <- gauss.quad(rndN)
       
       res <- cd$circular_dichroism_spectrum(kn, invalpha, cluster$r, cluster$angles,
-                                            as.matrix(cbind(GL$nodes, GL$weights)), as.matrix(cbind(GL2$nodes, GL2$weights)),
+                                            as.matrix(cbind(GL$nodes, GL$weights)), 
+                                            as.matrix(cbind(GL2$nodes, GL2$weights)),
                                             as.integer(full), as.integer(progress))
       
     }
@@ -59,7 +60,8 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
       a <- seq(0 + 0.01/sqrt(N),1-0.01/sqrt(N), length=round(sqrt(N))) # remove end points that cause problems
       nodes <- expand.grid(x = a, y=a)
       
-      res <- cd$circular_dichroism_spectrum2(kn, invalpha, cluster$r, cluster$angles, as.matrix(nodes),
+      res <- cd$circular_dichroism_spectrum2(kn, invalpha, cluster$r, cluster$angles, 
+                                             as.matrix(nodes),
                                              as.integer(full), as.integer(progress))
       
     }

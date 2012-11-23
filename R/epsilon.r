@@ -25,7 +25,7 @@ epsAg <- function(wavelength, epsilon.inf = 4,
                   lambda.p = 282, mu.p = 17000){
   
   data.frame(wavelength=wavelength, epsilon=
-             epsilon.inf*(1 - 1 / (lambda.p^2*(1/lambda^2 + 1i / (mu.p*lambda)))))
+             epsilon.inf*(1 - 1 / (lambda.p^2*(1/wavelength^2 + 1i / (mu.p*wavelength)))))
 }
 
 ##' permittivity gold
@@ -63,13 +63,13 @@ epsAu <- function(wavelength, epsilon.infty = 1.54,
                   A1 = 1.27, phi1 = -pi/4, lambda1 = 470, mu1 = 1900,
                   A2 = 1.1, phi2 = -pi/4, lambda2 = 325, mu2 = 1060){
   eps.drude <- 
-    epsilon.infty*(1 - 1 / (lambda.p^2*(1/lambda^2 + 1i / (mu.p*lambda))))
+    epsilon.infty*(1 - 1 / (lambda.p^2*(1/wavelength^2 + 1i / (mu.p*wavelength))))
 
   data.frame(wavelength=wavelength, epsilon=
-  eps.drude + A1 / lambda1 * (exp(1i*phi1)  / (1/lambda1 - 1/lambda - 1i/mu1) +
-                              exp(-1i*phi1) / (1/lambda1 + 1/lambda + 1i/mu1)) +
-              A2 / lambda2 * (exp(1i*phi2)  / (1/lambda2 - 1/lambda - 1i/mu2) +
-                              exp(-1i*phi2) / (1/lambda2 + 1/lambda + 1i/mu2))
+  eps.drude + A1 / lambda1 * (exp(1i*phi1)  / (1/lambda1 - 1/wavelength - 1i/mu1) +
+                              exp(-1i*phi1) / (1/lambda1 + 1/wavelength + 1i/mu1)) +
+              A2 / lambda2 * (exp(1i*phi2)  / (1/lambda2 - 1/wavelength - 1i/mu2) +
+                              exp(-1i*phi2) / (1/lambda2 + 1/wavelength + 1i/mu2))
              )
 }
 
