@@ -46,7 +46,8 @@ p <- ggplot(m,
             aes(lambdap, value, colour=variable, linetype=method)) +
   geom_vline(xintercept = c(1, sqrt(2)/2), linetype=2, colour="grey")+
   geom_line() +  
-  geom_line(data=subset(m, method == "converged"),size=1) + 
+  geom_path(data=subset(m, method == "converged"),size=1) + 
+  coord_cartesian(ylim=c(-500, 1000)) +
   labs(x=expression("reduced wavelength "*lambda/nh), y=expression(S/h^3))
 
 p
