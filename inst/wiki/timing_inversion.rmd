@@ -1,4 +1,4 @@
-The linear system of coupled-dipole equations may have to be solved a large number of times when angular averaging is required. Depending on the size of the system, and presumably the machine where the code is run, in some circumstances it could potentially prove faster to directly invert the interaction matrix once, rather than solving the linear system for each configuration. Here we compare both options, and find that inversion is always slower.
+The linear system of coupled-dipole equations may have to be solved a large number of times when angular averaging is required. Depending on the size of the system, and presumably the machine where the code is run, in some circumstances it could potentially prove faster to directly invert the interaction matrix once, rather than solving the linear system for each configuration. Here we compare both options, and find that inversion is generally slower.
 
 ```{r load,message=FALSE, echo=1:4}
 require(cda)
