@@ -1,5 +1,4 @@
-Comparison of numerical approximation to the lattice sum for a 2D array of dipoles and its converged solution
-
+Comparison of numerical approximation to the lattice sum for a 2D array of dipoles and its converged solution.
 
 ```{r load,message=FALSE}
 library(cda)
@@ -32,16 +31,16 @@ interpolate.fun <- function(x, y){
 
 gfun <- interpolate.fun(G0$wavelength, G0$Gxx)
 
-results <- data.frame(lambdap = S1$wavelength / pitch,
+numerical <- data.frame(lambdap = S1$wavelength / pitch,
                       real = Re(S1$S)*pitch^3,
                       imag = Im(S1$S)*pitch^3,
                       method = "truncated")
 
-javier <- data.frame(lambdap = lambdap,
+converged <- data.frame(lambdap = lambdap,
                      real = gfun$re(lambdap),
                      imag = gfun$im(lambdap),
                      method = "converged")
-m <- melt(rbind(javier,results), id = c("lambdap", "method"))
+m <- melt(rbind(converged, numerical), id = c("lambdap", "method"))
 p <- ggplot(m,
             aes(lambdap, value, colour=variable, linetype=method)) +
   geom_vline(xintercept = c(1, sqrt(2)/2), linetype=2, colour="grey")+
