@@ -77,7 +77,7 @@ dispersion_spectrum <- function (cluster, angles, axis="z", material, medium = 1
     
     results$polarisation <- factor(results$polarisation, labels = c("R", "L"))
     results <- rbind(results,  data.frame(wavelength = wavelength, angles = angles, axis=axis,
-                                          value = c(res[, 1, , drop = TRUE]  - res[, 4, , drop = TRUE]),
+                                          value = c(res[, 4, , drop = TRUE]  - res[, 1, , drop = TRUE]),
                                           type = "extinction", polarisation = "CD"))
   }
   

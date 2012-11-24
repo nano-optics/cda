@@ -1,32 +1,59 @@
-library(cda)
-library(ggplot2)
+The localised plasmon resonance of a dimer of nanoparticles in close proximity may be described in the framework of hybridisation theory. As the separation decreases, electromagnetic coupling between the particles influences the net local field experienced by each particle, resulting in a shift of the resonance. 
 
-wvl <- seq(400,900)
+```{r load,message=FALSE}
+library(cda)
+library(rgl)
+library(ggplot2)
+```
+```{r setup,echo=FALSE}
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
+rgl_annotate = function(){
+  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
+axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
+axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
+axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
+title3d('','','x axis','y axis','z axis')
+}
+theme_set(theme_minimal())
+```
+
+
+```{r cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="dimerlinear-"}
+
+# dielectric function
+wvl <- seq(400, 900)
 gold <- epsAu(wvl)
 
+```
 
-if(interactive() && require(rgl)){ # display RGL window
-  cl <- makeRodChain(N=2, pitch=0.2)
-  rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
+### Influence of the particle separation
+
+```{r comparison,echo=TRUE,tidy=FALSE,fig.path="dimerlinear-",fig.width=8}
+  
+dimer <- function(d=100, ...){
+  
+  r <- cbind(c(0,0), c(-d/2, d/2), c(0, 0))
+  sizes <- equal_sizes(a=50, b=20, c=20, N=2)  
+  angles <- matrix(0, ncol=3, nrow=2)
+
+  cl <- list(r=r, sizes=sizes, angles=angles)
+  linear_extinction_spectrum(cl, material = gold)
+  
 }
-
-onedimer <- function(d = 200){
-  clust <- makeRodChain(N=2, pitch=d*1e-3)
-  m <- linear_extinction_spectrum(clust, gold, n=1.5, progress=FALSE)
-  invisible(m)
-}
-
-params <- data.frame(d=seq(200, 400, by=10))
-comparison <- mdply(params, onedimer, .progress="none")
-## str(comparison)
+params <- data.frame(d=seq(100, 500, length=50))
+comparison <- mdply(params, dimer)
 
 p <- 
-  ggplot(data=comparison)+
-  labs(y=expression(sigma[ext]*" /"*mu*m^2),
-       x=expression(wavelength*" /"*mu*m),
-       colour = expression(d/nm), linetype=expression(polarisation))+
-  geom_path(aes(wavelength, value, linetype=variable,
-                colour=d,
-                group=interaction(d,variable)))+ theme_bw()
+  ggplot(data=comparison) + 
+  facet_grid(variable~., scales="free") +
+  geom_line(aes(wavelength, value, 
+                colour=d, group=d)) +
+  labs(y=expression(sigma[ext]*" /"*nm^2),
+       x=expression(wavelength*" /"*nm), colour="distance /nm") 
 
 p
+```

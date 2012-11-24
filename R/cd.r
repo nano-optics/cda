@@ -74,7 +74,7 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
 
     d <- data.frame(wavelength = wavelength,
                     extinction=res[, 1], absorption=res[, 2], scattering=res[, 1]-res[, 2],
-                    CDext=res[,3], CDabs=res[,4], CDsca=res[,3]-res[,4])
+                    CDext=res[,3], CDabs=res[,4], CDsca=res[,3]-res[,4]) # L - R
 
     L2eV <- 6.62606896e-34 * 299792458/1.602176487e-19
     m <- melt(transform(d, energy = L2eV / wavelength * 1e9), id=c("wavelength", "energy"))

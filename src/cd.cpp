@@ -167,7 +167,7 @@ arma::mat circular_dichroism_spectrum(const arma::colvec kn, const arma::cx_mat&
 
       res(ll,0) = 0.5*(tmp(0) + tmp(1)); // extinction 
       res(ll,1) = 0.5*(tmp(2) + tmp(3)); // absorption
-      res(ll,2) = tmp(0) - tmp(1); // cd ext
+      res(ll,2) = tmp(0) - tmp(1); // cd ext L - R
       res(ll,3) = tmp(2) - tmp(3); // cd abs
     }
     if(progress == 1)

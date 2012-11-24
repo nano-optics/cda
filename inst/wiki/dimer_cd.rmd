@@ -1,3 +1,4 @@
+In this example the optical acitivity of a chiral dimer of axi-symmetric nanoparticles is investigated. First, we visualise the parametrisation of such a dimer with the inter-particle separation, the dihedral angle, and one additional angle for each particle.
 
 ```{r load,message=FALSE}
 library(cda)
@@ -39,6 +40,7 @@ rgl_annotate()
 
 ```
 
+The optical activity is modelled with full angular averaging over incident light directions. Scattering, absorption and extinction spectra are calculated for both right- and left-handed circular polarisations, and the difference corresponds to circular dichroism.
 
 ### Comparing the two mirror-images
 

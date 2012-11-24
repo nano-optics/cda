@@ -59,8 +59,7 @@ rgl_annotate()
 cl3 <- cluster_helix(N=20, R0=500, pitch=1000, 
                           delta=pi/7, delta0=0, right=TRUE,
                           a=100, b=50, c=20,
-                          angles=c("helix", "random", "fixed"),
-                          seed=123)
+                          angles="helix")
 hel3 <- helix(N = 20, R0 = 500, pitch = 1000, delta = pi/7, 
              delta0 = 0, right = TRUE)
   
