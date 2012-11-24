@@ -1,4 +1,4 @@
-In this example the optical acitivity of a chiral dimer of axi-symmetric nanoparticles is investigated. First, we visualise the parametrisation of such a dimer with the inter-particle separation, the dihedral angle, and one additional angle for each particle.
+In this example the optical activity of a chiral dimer of axi-symmetric nanoparticles is investigated. First, we visualise the parametrisation of such a dimer with the inter-particle separation, the dihedral angle, and one additional angle for each particle.
 
 ```{r load,message=FALSE}
 library(cda)
