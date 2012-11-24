@@ -8,15 +8,19 @@ cl <- cluster_dimer(d=100,
               a=35, b=12, 
               right=TRUE)
 
-# visualise
-rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
+params <- expand.grid(N=c(500, 1000, 5000),
+                       averaging=c("grid", "GL", "QMC"),
+                       stringsAsFactors=FALSE)
 
-linear <- linear_extinction_spectrum(cl, gold)
-p1 <- ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
+comparison <- mdply(params, circular_dichroism_spectrum, cluster=cl, material=gold)
 
-circular <- circular_dichroism_spectrum(cl, gold)
 
-p2 <- ggplot(circular, aes(wavelength, value, color=variable)) + 
-  facet_grid(type~variable, scales="free") + geom_path()
+p <- 
+  ggplot(subset(comparison, type == "CD" & variable == "extinction")) + 
+  facet_grid(averaging~.)+
+  geom_path(aes(wavelength, value, colour=N, group=N))+
+  labs(y=expression(sigma[ext]/nm^2),
+       x=expression(wavelength/nm), colour=expression(N))+
+         theme_minimal()
 
-p2
+p

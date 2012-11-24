@@ -1,11 +1,11 @@
-In this example we define a dimer of nanorods,  model its optical response to linearly polarised light at fixed incidence, and orientation-averaged optical activity.
 
-```{r load,message=FALSE}
+## @knitr load
 library(cda)
 library(rgl)
 library(ggplot2)
-```
-```{r setup,echo=FALSE}
+
+
+## @knitr setup
 knit_hooks$set(rgl = function(before, options, envir) {
   # if a device was opened before this chunk, close it
   if (before && rgl.cur() > 0) rgl.close()
@@ -19,10 +19,9 @@ axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
 title3d('','','x axis','y axis','z axis')
 }
 theme_set(theme_minimal())
-```
 
-### Manually defining a cluster
-```{r cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="basic-"}
+
+## @knitr cluster
 
 # dielectric function
 wvl <- seq(400, 900)
@@ -41,23 +40,21 @@ rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
 rgl.viewpoint( theta = 0, phi = 20, fov = 70, zoom = 1)
 rgl_annotate()
 
-```
-# calculate extinction, absorption, scattering of linearly polarised light at fixed incidence
 
-```{r linear,echo=TRUE,tidy=FALSE,fig.path="basic-"}
+
+## @knitr linear
 # calculate extinction spectrum at fixed incidence
 
 linear <- linear_extinction_spectrum(cl, gold)
 ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
 
-```
 
-# calculate orientation-averaged optical activity
 
-```{r oa,echo=TRUE,tidy=FALSE,fig.path="basic-",fig.width=8}
+## @knitr oa
 circular <- circular_dichroism_spectrum(cl, gold)
 
 ggplot(circular, aes(wavelength, value, color=variable)) + 
   facet_grid(type~variable, scales="free") + geom_path()
 
-```
+
+

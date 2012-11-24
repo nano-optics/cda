@@ -3,7 +3,8 @@
 \title{cluster_dimer}
 \usage{
   cluster_dimer(d = a, dihedral = 0, alpha1 = 0,
-    alpha2 = 0, a = 0.035, b = 0.012, right = TRUE)
+    alpha2 = 0, a = 0.035, b = 0.012,
+    handedness = c("right", "left"))
 }
 \arguments{
   \item{d}{center-to-center distance}
@@ -18,7 +19,7 @@
 
   \item{b}{semi axis}
 
-  \item{right}{handedness}
+  \item{handedness}{'left' or 'right' handed}
 }
 \value{
   list with r, sizes, angles

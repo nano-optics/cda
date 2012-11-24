@@ -1,11 +1,11 @@
-In this example we consider a periodic arrangement of ellipsoid along a line, with a separation of the order of the wavelength. The incident light is perpendicular to the chain axis. As the number of particle grows, the signature of diffractive coupling rises from the shadows of the single-particle spectrum.
 
-```{r load,message=FALSE}
+## @knitr load
 library(cda)
 library(rgl)
 library(ggplot2)
-```
-```{r setup,echo=FALSE}
+
+
+## @knitr setup
 knit_hooks$set(rgl = function(before, options, envir) {
   # if a device was opened before this chunk, close it
   if (before && rgl.cur() > 0) rgl.close()
@@ -19,9 +19,9 @@ axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
 title3d('','','x axis','y axis','z axis')
 }
 theme_set(theme_minimal())
-```
 
-```{r cluster, rgl=TRUE,echo=-9,tidy=FALSE,fig.width=3,fig.height=3,fig.path="chain-"}
+
+## @knitr cluster
 # dielectric function
 wvl <- seq(400, 900)
 gold <- epsAu(wvl)
@@ -31,11 +31,9 @@ rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
 # visualise
 rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
 rgl.viewpoint( theta = 0, phi = 20, fov = 70, zoom = 1)
-```
 
-## Influence of the chain length
 
-```{r comparison,echo=TRUE,tidy=FALSE,fig.path="chain-"}
+## @knitr comparison
 
 chain <- function(N, pitch = 500, ...){
   cl <- cluster_chain(N, pitch, ...)
@@ -55,4 +53,5 @@ labs(y=expression(sigma[ext]*" /"*nm^2),
                 group=interaction(N,variable)))
 
 p
-```
+
+

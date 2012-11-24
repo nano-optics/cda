@@ -104,16 +104,14 @@ helix <- function(R0=500, pitch=600, N=5,
 ##' @param alpha2 angle second rod
 ##' @param a semi axis
 ##' @param b semi axis
-##' @param right handedness
 ##' @return list with r,  sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
 cluster_dimer <- function(d=a, 
                              dihedral=0, alpha1=0, alpha2=0,
-                             a=35e-3, b=12e-3, 
-                              right=TRUE){
-
+                             a=35e-3, b=12e-3){
+ 
   r <- cbind(c(0,0), c(0, 0), c(-d/2, d/2))
   sizes <- equal_sizes(a=a, b=b, c=b, N=2)  
   angles <- cbind(c(dihedral, 0), c(pi/2, pi/2), c(alpha1, alpha2))
