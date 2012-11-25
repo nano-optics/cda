@@ -1,23 +1,15 @@
-library(cda)
-library(ggplot2)
-library(rgl)
+context("Checking that absence of chirality yields no optical activity")
 
-gold <- epsAu(seq(400, 900))
+gold <- epsAu(seq(400, 600, by=100))
 
 cl <- cluster_dimer(d=100, 
               dihedral=0*pi/180, alpha1=20*pi/180, alpha2=0,
-              a=35, b=12, 
-              right=TRUE)
+              a=35, b=12)
 
-# visualise
-rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
+circular <- circular_dichroism_spectrum(cl, gold, averaging="QMC", N=100)
+CD <- subset(circular, type == "CD")
+xsec <- subset(circular, type != "CD")
 
-linear <- linear_extinction_spectrum(cl, gold)
-p1 <- ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
-
-circular <- circular_dichroism_spectrum(cl, gold, averaging="GL")
-
-p2 <- ggplot(circular, aes(wavelength, value, color=variable)) + 
-  facet_grid(type~variable, scales="free") + geom_path()
-
-p2
+test_that("test that a dimer with plane of symmetry yields no CD", {
+  expect_that(max(CD[['value']]) / max(xsec[['value']]) < 1e-10, is_true())
+})
