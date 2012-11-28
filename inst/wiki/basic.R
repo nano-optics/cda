@@ -6,11 +6,7 @@ library(ggplot2)
 
 
 ## @knitr setup
-knit_hooks$set(rgl = function(before, options, envir) {
-  # if a device was opened before this chunk, close it
-  if (before && rgl.cur() > 0) rgl.close()
-  hook_rgl(before, options, envir)
-})
+
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))

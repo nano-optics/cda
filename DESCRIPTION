@@ -36,7 +36,8 @@ Suggests:
     dielectric,
     rgl,
     ggplot2,
-    gridExtra
+    gridExtra,
+    testthat
 RcppModules: cda, cd, linear, array
 Collate:
     'cd.r'

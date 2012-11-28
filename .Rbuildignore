@@ -1,8 +1,9 @@
 .gitignore
 .git
 .RS_Store
-wiki/*.png
-wiki/*.html
-wiki/*.md
+wiki/.*png$
+wiki/.*html$
+wiki/.*r$
+wiki/.*\.md$
 publis/
 presentation/

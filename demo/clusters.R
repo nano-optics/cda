@@ -5,11 +5,7 @@ library(rgl)
 
 
 ## @knitr setup
-knit_hooks$set(rgl = function(before, options, envir) {
-  # if a device was opened before this chunk, close it
-  if (before && rgl.cur() > 0) rgl.close()
-  hook_rgl(before, options, envir)
-})
+
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -36,8 +32,7 @@ rgl_annotate()
 ## @knitr dimer
 cl2 <- cluster_dimer(d=100, 
                           dihedral=45*pi/180, alpha1=10*pi/180, alpha2=0,
-                          a=35, b=12, 
-                          right=TRUE)
+                          a=35, b=12)
 
 rgl.ellipsoids(cl2$r, cl2$sizes, cl2$angles, col="gold")
 rgl_annotate()
@@ -54,8 +49,7 @@ rgl_annotate()
 cl3 <- cluster_helix(N=20, R0=500, pitch=1000, 
                           delta=pi/7, delta0=0, right=TRUE,
                           a=100, b=50, c=20,
-                          angles=c("helix", "random", "fixed"),
-                          seed=123)
+                          angles="helix")
 hel3 <- helix(N = 20, R0 = 500, pitch = 1000, delta = pi/7, 
              delta0 = 0, right = TRUE)
   
