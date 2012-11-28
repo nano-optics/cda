@@ -3,7 +3,7 @@ Version: 1.3
 Authors@R: person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com", role = c("aut", "cre"),
     comment = "Initial version loosely inspired from DDA code of Vincent Loke")
-License: GPL-3 + file LICENSE
+License: GPL-3 + file LICENCE
 Title: Coupled dipole approximation in electromagnetic scattering
 Description: The cda package implements the coupled-dipole approximation for
     electromagnetic scattering by sparse collections of subwavelength
