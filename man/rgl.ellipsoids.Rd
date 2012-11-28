@@ -25,7 +25,7 @@
 }
 \examples{
 cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)
-sizes <- clust.equalsizes(0.04,0.02,0.02,NROW(cl$positions))
+sizes <- equal_sizes(0.04,0.02,0.02,NROW(cl$positions))
 \dontrun{ require(rgl) ; rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold") }
 }
 \author{

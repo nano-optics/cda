@@ -8,6 +8,7 @@
 ##' @param axis of incident field rotation character vector from ('x', 'y', 'z')
 ##' @param material list
 ##' @param medium medium refractive index
+##' @param polarisation linear or circular polarisation
 ##' @param invert logical
 ##' @param progress logical, display progress bar
 ##' @return data.frame

@@ -19,6 +19,8 @@
 
   \item{medium}{medium refractive index}
 
+  \item{polarisation}{linear or circular polarisation}
+
   \item{invert}{logical}
 
   \item{progress}{logical, display progress bar}

@@ -1,8 +1,8 @@
-\name{particles.povray}
-\alias{particles.povray}
-\title{particles.povray}
+\name{particles_povray}
+\alias{particles_povray}
+\title{particles_povray}
 \usage{
-  particles.povray(positions, angles, sizes,
+  particles_povray(positions, angles, sizes,
     out = "positions.pov")
 }
 \arguments{
@@ -27,6 +27,6 @@
   baptiste Auguie
 }
 \seealso{
-  Other user_level povray: \code{\link{curve.povray}}
+  Other user_level povray: \code{\link{curve_povray}}
 }
 

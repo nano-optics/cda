@@ -11,6 +11,9 @@
 ##' @export
 ##' @family user_level array
 ##' @author baptiste Auguie
+##' @examples
+##' S <- array_factor(seq(500, 700), 10, 500)
+##' str(S)
 array_factor <- function(wavelength, N, pitch){
 
   k <- 2*pi/wavelength

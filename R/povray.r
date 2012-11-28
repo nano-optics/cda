@@ -1,7 +1,7 @@
 ##' create particles for povray input
 ##'
 ##' writes a list of particles
-##' @title particles.povray
+##' @title particles_povray
 ##' @param positions matrix of positions
 ##' @param angles matrix of Euler angles in radians
 ##' @param sizes matrix of particle sizes
@@ -10,7 +10,7 @@
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level povray
-particles.povray <- function(positions,
+particles_povray <- function(positions,
                       angles,
                       sizes, out="positions.pov"){
 
@@ -25,7 +25,7 @@ cat(paste("object{ Particle scale <", apply(round(sizes, 5), 1, paste, collapse=
 ##' create long string of small particles for povray input
 ##'
 ##' writes a list of particles, as well as cylinder
-##' @title curve.povray
+##' @title curve_povray
 ##' @param positions matrix of positions
 ##' @param size radius of particles
 ##' @param radius radius of inner cylinder
@@ -34,7 +34,7 @@ cat(paste("object{ Particle scale <", apply(round(sizes, 5), 1, paste, collapse=
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level povray
-curve.povray <- function(positions, size=0.005, radius, 
+curve_povray <- function(positions, size=0.005, radius, 
                        out="positions.pov"){
 
   sizes <- size + 0*positions
