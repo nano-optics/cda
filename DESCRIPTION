@@ -20,7 +20,7 @@ Date: 2012-11-17
 URL: https://github.com/baptiste/cda
 Type: Package
 LazyLoad: yes
-BuildVignettes: false
+BuildVignettes: true
 SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
 Depends:

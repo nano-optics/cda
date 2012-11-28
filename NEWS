@@ -1,5 +1,5 @@
 
-cda 1.3 (2012-11-18) 
+cda 1.3 (2012-11-28) 
 
 INTERNAL CHANGES:
 
@@ -21,9 +21,7 @@ DOCUMENTATION:
 
 * new examples under inst/wiki formatted for knitr+markdown and updating the github wiki
 
-* removed useless stuff in demos, examples and vignettes
-
-* update the article on scattport
+* cleaning up demos, examples and vignettes
 
 * link to github + wiki as the source of documentation
 
