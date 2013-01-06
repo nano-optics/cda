@@ -18,8 +18,9 @@
 ##' wvl <- seq(300, 900)
 ##' silver <- epsAg(wvl)
 ##' 
-##' matplot(silver$wavelength, cbind(Re(silver$epsilon), Im(silver$epsilon)), t="l", lty=1)
-##' matpoints(AgPalik$wavelength, cbind(Re(AgPalik$epsilon), Im(AgPalik$epsilon)))
+##' matplot(silver$wavelength, cbind(Re(silver$epsilon), Im(silver$epsilon)), 
+##' t="l", lty=1, xlab = "wavelength / nm", ylab = "Dielectric function")
+##' matpoints(AgPalik$wavelength, cbind(Re(AgPalik$epsilon), Im(AgPalik$epsilon)), pch=1)
 
 epsAg <- function(wavelength, epsilon.inf = 4,
                   lambda.p = 282, mu.p = 17000){
@@ -51,12 +52,14 @@ epsAg <- function(wavelength, epsilon.inf = 4,
 ##' Principles of surface-enhanced Raman spectroscopy and related plasmonic effects
 ##' Eric C. Le Ru and Pablo G. Etchegoin, published by Elsevier, Amsterdam (2009).
 ##' @author baptiste Auguie
+##' @examples
 ##' require(dielectric) ; data(AuJC)
 ##' wvl <- seq(300, 900)
 ##' gold <- epsAu(wvl)
 ##' 
-##' matplot(gold$wavelength, cbind(Re(gold$epsilon), Im(gold$epsilon)), t="l", lty=1)
-##' matpoints(AuJC$wavelength, cbind(Re(AuJC$epsilon), Im(AuJC$epsilon)))
+##' matplot(gold$wavelength, cbind(Re(gold$epsilon), Im(gold$epsilon)), 
+##' t="l", lty=1, xlab = "wavelength / nm", ylab = "Dielectric function")
+##' matpoints(AuJC$wavelength, cbind(Re(AuJC$epsilon), Im(AuJC$epsilon)), pch=1)
 
 epsAu <- function(wavelength, epsilon.infty = 1.54,
                   lambda.p = 177.5, mu.p = 14500,

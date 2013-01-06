@@ -28,8 +28,9 @@ require(dielectric) ; data(AgPalik)
 wvl <- seq(300, 900)
 silver <- epsAg(wvl)
 
-matplot(silver$wavelength, cbind(Re(silver$epsilon), Im(silver$epsilon)), t="l", lty=1)
-matpoints(AgPalik$wavelength, cbind(Re(AgPalik$epsilon), Im(AgPalik$epsilon)))
+matplot(silver$wavelength, cbind(Re(silver$epsilon), Im(silver$epsilon)),
+t="l", lty=1, xlab = "wavelength / nm", ylab = "Dielectric function")
+matpoints(AgPalik$wavelength, cbind(Re(AgPalik$epsilon), Im(AgPalik$epsilon)), pch=1)
 }
 \author{
   baptiste Auguie
