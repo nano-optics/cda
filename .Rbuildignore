@@ -1,6 +1,7 @@
 .gitignore
 .git
 .RS_Store
+
 wiki/.*png$
 wiki/.*html$
 wiki/.*r$
