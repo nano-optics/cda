@@ -21,7 +21,7 @@
   C++ calculation of the array factor
 }
 \examples{
-S <- array_factor(seq(500, 700), 10, 500)
+S <- array_factor(seq(400, 600),  10,  500)
 str(S)
 }
 \author{

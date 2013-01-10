@@ -10,14 +10,3 @@ test_that("Dielectric function is correct", {
   gold <- epsAu(seq(400, 600, by=100))
   expect_equal(gold, .gold)
 })
-
-
-
-gold <- epsAu(seq(400, 600, by=100))
-cl <- cluster_dimer(d=100, 
-              dihedral=0*pi/180, alpha1=20*pi/180, alpha2=0,
-              a=35, b=12)
-
-beta <- inverse_polarizability(cl, gold)
-head(beta)
-
