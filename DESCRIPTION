@@ -31,10 +31,10 @@ Depends:
     statmod,
     randtoolbox,
     reshape2,
-    grid
+    dielectric
 Suggests:
-    dielectric,
     rgl,
+    grid,
     ggplot2,
     gridExtra,
     testthat
@@ -42,7 +42,6 @@ RcppModules: cda, cd, linear, array
 Collate:
     'cd.r'
     'cda-package.r'
-    'epsilon.r'
     'linear.r'
     'polarizability.R'
     'positions.R'
