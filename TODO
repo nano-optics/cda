@@ -1,0 +1,1 @@
+* refactor the QMC integration to allow iterative runs, increasing the number of points while reusing the previous results to reach a given convergence goal

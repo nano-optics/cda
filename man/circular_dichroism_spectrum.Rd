@@ -4,8 +4,9 @@
 \usage{
   circular_dichroism_spectrum(cluster, material,
     medium = 1.33, N = 100,
-    averaging = c("GL", "QMC", "grid"), full = TRUE,
-    progress = FALSE, result.matrix = FALSE)
+    averaging = c("GL", "QMC", "grid", "cheap"),
+    iterative = FALSE, precision = 0.001, Nmax = 10000,
+    full = TRUE, progress = FALSE, result.matrix = FALSE)
 }
 \arguments{
   \item{cluster}{cluster (list)}
@@ -17,8 +18,17 @@
   \item{N}{number of integration points}
 
   \item{averaging}{averaging method, using either Gauss
-  Legendre quadrature (default), Quasi Monte Carlo, or
-  regular grid}
+  Legendre quadrature (default), Quasi Monte Carlo, regular
+  grid, or "cheap" (3 axes)}
+
+  \item{iterative}{logical, increase N until convergence
+  (QMC only)}
+
+  \item{precision}{relative diff between two runs (QMC
+  only)}
+
+  \item{Nmax}{maximum N if convergence not attained (QMC
+  only)}
 
   \item{full}{logical use full (retarded) dipolar field}
 

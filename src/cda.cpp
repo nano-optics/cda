@@ -22,7 +22,10 @@ arma::cx_mat block_diagonal(const arma::cx_mat& Beta, const arma::mat& Euler) {
   const arma::colvec phi = Euler.col(0), theta = Euler.col(1), psi = Euler.col(2);
   
   arma::mat Rot(3,3);
-  arma::cx_mat polar(3*N,3*N);
+  arma::mat zero(3*N,3*N);
+  zero.fill(0.0);
+  arma::cx_mat polar(zero, zero);
+  
   
   int ii=0;
   for(ii=0; ii<N; ii++){
@@ -61,16 +64,19 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,	\
       for(kk=0; kk<N; kk++)
 	{
 	  if(jj!=kk){
-	    
+	    //  cout << jj << " " << kk << " \n";
     	    rk_to_rj = R.row(jj) - R.row(kk) ;
     	    rjk = norm(rk_to_rj,2);
+	    // cout << rjk << "\n";
     	    rjkhat = rk_to_rj / rjk;
     	    rjkrjk = trans(rjkhat) * rjkhat;
+	    // cout << rjkrjk << "\n";
 	    if(full == 1) {
 	      Ajk = exp(i*kn*rjk) / rjk *  (kn*kn*(rjkrjk - I3) + (i*kn*rjk - arma::cx_double(1,0)) / (rjk*rjk) * (3*rjkrjk - I3)) ;
 	    } else {	      
 	      Ajk = (I3 - 3*rjkrjk)/ (rjk*rjk*rjk)  ;
 	    }
+	    //  cout << jj << " " << kk << " " << Ajk << "\n";
 	    // assign block 
 	    A.submat(jj*3,kk*3,jj*3+2,kk*3+2) = Ajk;
 	  }
@@ -80,7 +86,10 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,	\
   // diagonal blocks
   arma::cx_mat polar = block_diagonal(Beta, Euler);
   
+  //  cout << polar << "\n";
   A = A + polar;
+ 
+  // cout << A << "\n";
   // return inv(A); 
   return(A);
 }

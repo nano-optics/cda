@@ -1,11 +1,11 @@
 Package: cda
 Version: 1.3.3
-Authors@R: c(person("Baptiste", "Auguie", 
-                    email = "baptiste.auguie@gmail.com", 
-                    role = c("aut", "cre")), 
-             person("LAPACK authors", 
-                    role = "cph", 
-                    comment = "copyrights apply to src/zgels.f"))
+Authors@R: c(person("Baptiste", "Auguie",
+    email = "baptiste.auguie@gmail.com",
+    role = c("aut", "cre")),
+    person("LAPACK authors",
+    role = "cph",
+    comment = "copyrights apply to src/zgels.f"))
 License: GPL-3
 Copyright: file inst/COPYRIGHTS for src/zgels.f obtained from LAPACK
 Title: Coupled dipole approximation in electromagnetic scattering

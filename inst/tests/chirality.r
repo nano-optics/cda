@@ -6,7 +6,7 @@ cl <- cluster_dimer(d=100,
               dihedral=0*pi/180, alpha1=20*pi/180, alpha2=0,
               a=35, b=12)
 
-circular <- circular_dichroism_spectrum(cl, gold, averaging="QMC", N=100)
+circular <- circular_dichroism_spectrum(cl, gold, averaging="GL", N=100)
 CD <- subset(circular, type == "CD")
 xsec <- subset(circular, type != "CD")
 

@@ -3,3 +3,5 @@
 *.md
 .DS_Store
 .Rhistory
+src/*.o
+src/*.so

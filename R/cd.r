@@ -10,7 +10,10 @@
 ##' @param material material
 ##' @param medium refractive index medium
 ##' @param N number of integration points
-##' @param averaging averaging method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, or regular grid
+##' @param averaging averaging method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, regular grid, or "cheap" (3 axes)
+##' @param iterative logical, increase N until convergence (QMC only)
+##' @param precision relative diff between two runs (QMC only)
+##' @param Nmax maximum N if convergence not attained (QMC only)
 ##' @param full logical use full (retarded) dipolar field
 ##' @param progress print progress lines
 ##' @param result.matrix logical return the results as a matrix
@@ -18,7 +21,8 @@
 ##' @family user_level circular_dichroism
 ##' @author baptiste Auguie
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100, 
-                                        averaging = c("GL","QMC","grid"),
+                                        averaging = c("GL","QMC","grid", "cheap"),
+                                        iterative=FALSE, precision=1e-3, Nmax=1e4,
                                         full=TRUE, progress=FALSE, 
                                         result.matrix=FALSE){
 
@@ -34,12 +38,34 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
   
   if(averaging == "QMC") # Quasi Monte Carlo, using Halton sequence from randtoolbox
     {
-      nodes <- halton(N, dim = 2, normal=FALSE)
-  
+      nodes <- halton(N, dim = 2, normal=FALSE, init=TRUE)
       res <- cd$circular_dichroism_spectrum2(kn, invalpha, cluster$r, cluster$angles, 
                                              as.matrix(nodes),
                                              as.integer(full), as.integer(progress))
-  
+      
+      ## iterative improvement: add new points until convergence or Nmax reached
+      if(iterative){
+        converged <- FALSE
+        Ntot <- N
+        while(Ntot < Nmax && !converged){
+          oldN <- Ntot
+          old <- res[,1]
+          Ntot <- Ntot + 100
+          nodes <- halton(100, dim = 2, normal=FALSE, init=FALSE)
+          ## xsec at new points
+          newres <- cd$circular_dichroism_spectrum2(kn, invalpha, cluster$r, cluster$angles, 
+                                                    as.matrix(nodes),
+                                                    as.integer(full), as.integer(progress))
+          
+          ## average of the two results
+          res <- (oldN * res + 100 * newres) / (oldN + 100)
+          
+          test <- max(abs(old - res[,1]) / res[,1]) # max relative difference in extinction cross section
+          
+          message("N:", Ntot, "; relative error: " , test)
+          converged <- test < precision
+        }
+      }
     }
   
   if(averaging == "GL") # Gauss Legendre quadrature, using nodes and weights from statmod
@@ -65,6 +91,28 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
                                              as.integer(full), as.integer(progress))
       
     }
+ 
+  if(averaging == "cheap") # 3 directions
+  {
+    
+#     6 directions
+#     nodes <- rbind(c(1/2, 0), # +x is phi=0, psi=0
+#                    c(1/2, 1/2), # -x is phi=pi, psi=0
+#                    c(1/2, 1/4), # +y is phi=pi/2, psi=0
+#                    c(1/2, 3/4), # -y is phi=3pi/2, psi=0
+#                    c(1, 1/4), # +z is phi=pi/2, psi=pi/2
+#                    c(0, 1/4)) # -z is phi=pi/2, psi=-pi/2
+    
+    # psi, phi
+    nodes <- rbind(c(1/2, 0), # +x is phi=0, psi=0
+                   c(1/2, 1/4), # +y is phi=pi/2, psi=0
+                   c(1, 1/4)) # +z is phi=pi/2, psi=pi/2
+                    
+    res <- cd$circular_dichroism_spectrum2(kn, invalpha, cluster$r, cluster$angles, 
+                                           as.matrix(nodes),
+                                           as.integer(full), as.integer(progress))
+    
+  }
   
   if(result.matrix){
     ## extinction, absorption, CD ext, CD abs
@@ -105,3 +153,4 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, N=100,
 
 if (getRversion() >= "2.15.1")
  utils::globalVariables("wavelength")
+
