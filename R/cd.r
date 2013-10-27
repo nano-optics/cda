@@ -17,6 +17,8 @@
 ##' @param full logical use full (retarded) dipolar field
 ##' @param progress print progress lines
 ##' @param result.matrix logical return the results as a matrix
+##' @importFrom randtoolbox halton
+##' @importFrom statmod gauss.quad
 ##' @export
 ##' @family user_level circular_dichroism
 ##' @author baptiste Auguie
