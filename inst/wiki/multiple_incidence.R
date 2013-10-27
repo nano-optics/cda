@@ -57,7 +57,6 @@ ggplot(subset(test, type == "extinction"),
   labs(y=expression(sigma[ext]*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="incident angle")
 
-
 ## @knitr comparison
 
 variables <- expand.grid(Angles = seq(0, 2*pi, length=36),

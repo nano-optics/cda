@@ -60,7 +60,6 @@ using namespace std;
     arma::mat Rot(3,3);
     const double cosangle = cos(angle), sinangle = sin(angle);
 
-
     if(axis == 0) {// rotate about x axis
       Rot << 1 << 0 << 0 << arma::endr
 	<< 0 << cosangle << -sinangle << arma::endr
@@ -79,6 +78,7 @@ using namespace std;
 	<< 0 << 0 << 1 << arma::endr;
 
     }
+
     return (Rot);
   }
 

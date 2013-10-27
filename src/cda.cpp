@@ -22,10 +22,10 @@ arma::cx_mat block_diagonal(const arma::cx_mat& Beta, const arma::mat& Euler) {
   const arma::colvec phi = Euler.col(0), theta = Euler.col(1), psi = Euler.col(2);
   
   arma::mat Rot(3,3);
-  arma::mat zero(3*N,3*N);
-  zero.fill(0.0);
-  arma::cx_mat polar(zero, zero);
-  
+  // arma::mat zero(3*N,3*N);
+  // zero.fill(0.0);
+  // arma::cx_mat polar(zero, zero);
+  arma::cx_mat polar = arma::zeros<arma::cx_mat>( 3*N, 3*N );
   
   int ii=0;
   for(ii=0; ii<N; ii++){
@@ -121,7 +121,7 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
 // kn: wavevector
 // Angles: incident angles
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_mat& invalpha, \
-		      const double kn, const arma::vec& Angle, const arma::uvec& Axis,  \
+		      const double kn, const arma::vec& Angle, const arma::ivec& Axis,  \
 		      const arma::mat& Euler, \
 		      const int polarisation,			\
 		      const int invert)
@@ -201,7 +201,7 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
    } 
 
 arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, const arma::mat& R, \
-			       const arma::mat& Euler, const arma::vec& Angle, const arma::uvec& Axis, \
+			       const arma::mat& Euler, const arma::vec& Angle, const arma::ivec& Axis, \
 			       const int polarisation,			\
 			       const int invert, const int progress)
   {

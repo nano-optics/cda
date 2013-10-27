@@ -15,7 +15,8 @@
 ##' @export
 ##' @family user_level cda
 ##' @author baptiste Auguie
-dispersion_spectrum <- function (cluster, angles, axis="z", material, medium = 1.33,
+dispersion_spectrum <- function (cluster, angles, axis='z', 
+                                 material, medium = 1.33,
                                  polarisation=c("linear", "circular"), 
                                  invert = FALSE, progress = FALSE) 
 {
@@ -34,13 +35,15 @@ dispersion_spectrum <- function (cluster, angles, axis="z", material, medium = 1
   axeso <- axis # original codes
   axis <- as.integer(factor(axis, levels=letters[24:26]))-1L
   stopifnot(all(axis %in% c(0L, 1L, 2L)), !any(is.na(axis)))
+
   stopifnot(Nangles == length(axis))
   stopifnot(is.matrix(invalpha), is.vector(angles), is.matrix(cluster$r), 
             is.matrix(cluster$angles))
   stopifnot(ncol(invalpha)/3 == Nparticles, nrow(invalpha) == 
     Nwavelengths)
   res <- cda$dispersion_spectrum(kn, invalpha, cluster$r, 
-                                 cluster$angles, angles, axis, as.integer(polarisation), as.integer(invert), as.integer(progress))
+                                 cluster$angles, angles, as.integer(axis), as.integer(polarisation), 
+                                 as.integer(invert), as.integer(progress))
   
   angles <- angles[rep(seq.int(Nangles), Nwavelengths)]
   axis <- axeso[rep(seq.int(Nangles), Nwavelengths)]
