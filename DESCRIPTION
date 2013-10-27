@@ -38,7 +38,7 @@ Suggests:
     gridExtra,
     testthat,
     knitr
-Imports: 
+Imports:
     Rcpp (>= 0.10.5),
     RcppArmadillo (>= 0.3.900),
     statmod,

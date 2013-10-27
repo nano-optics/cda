@@ -16,7 +16,7 @@
 ##' @export
 ##' @family user_level cluster
 equal_sizes <- function(a, b, c, N)
-ldply(1:N, function(.) data.frame(a=a, b=b, c=c))
+  data.frame(a = rep(a, N), b = rep(b, N), c = rep(c, N))
 
 
 ##' equal_angles
