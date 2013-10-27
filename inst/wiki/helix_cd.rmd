@@ -4,6 +4,8 @@ A helix of more than 4 spheres is chiral, and displays optical activity. In cont
 library(cda)
 library(rgl)
 library(ggplot2)
+library(reshape2)
+library(plyr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {

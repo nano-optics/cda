@@ -4,6 +4,8 @@ A cluster of particles is defined in 3 dimensions by a list with 3 components: p
 ```{r load,message=FALSE}
 library(cda)
 library(rgl)
+library(reshape2)
+library(plyr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {

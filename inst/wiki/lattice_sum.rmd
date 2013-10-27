@@ -4,6 +4,8 @@ Comparison of numerical approximation to the lattice sum for a 2D array of dipol
 library(cda)
 library(rgl)
 library(ggplot2)
+library(reshape2)
+library(plyr)
 ```
 
 ```{r setup,echo=FALSE}

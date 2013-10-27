@@ -1,10 +1,12 @@
 Three options are provided for angular averaging: Gauss-Legendre quadrature, regular grid in (theta, phi), and a quasi-random Monte Carlo sequence on the sphere. Here we compare their performance and accuracy.
 
-```{r load,message=FALSE, echo=1:4}
+```{r load,message=FALSE, echo=1:6}
 require(cda)
 require(ggplot2)
 require(microbenchmark)
 require(xtable)
+library(reshape2)
+library(plyr)
 
 theme_set(theme_minimal())
 display_benchmark <- function(x, unit = "t"){

@@ -4,6 +4,8 @@ In this example the optical activity of a chiral dimer of axi-symmetric nanopart
 library(cda)
 library(rgl)
 library(ggplot2)
+library(reshape2)
+library(plyr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {
