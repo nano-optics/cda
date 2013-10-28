@@ -1,1 +1,8 @@
 * refactor the QMC integration to allow iterative runs, increasing the number of points while reusing the previous results to reach a given convergence goal
+
+
+references
+Y. Okada, Efficient numerical orientation averaging of light scattering properties with a quasi-Monte-Carlo method, Journal of Quantitative Spectroscopy and Radiative Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742, ISSN 0022-4073, http://dx.doi.org/10.1016/j.jqsrt.2008.01.002.
+(http://www.sciencedirect.com/science/article/pii/S002240730800006X)
+Keywords: Light scattering simulation; Efficient calculation; Orientation averaging; T-matrix; Discrete dipole approximation
+
