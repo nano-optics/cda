@@ -23,7 +23,7 @@
   OpenGL or povray.
 }
 \author{
-  baptiste Auguie \email{baptiste.auguie@gmail.com}
+  baptiste Auguie
 }
 \references{
   Draine BT. The discrete-dipole approximation and its

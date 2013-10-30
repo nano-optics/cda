@@ -18,7 +18,8 @@
 
   \item{medium}{surrounding medium}
 
-  \item{kuwata}{logical, use Kuwata or Clausius Mossotti}
+  \item{kuwata}{logical, use Kuwata or Clausius Mossotti
+  prescription, see Details}
 }
 \value{
   matrix of polarizability
@@ -29,9 +30,19 @@
 }
 \details{
   uses the Kuwata prescription
+
+  The Kuwata version includes semi-empirical terms of
+  radiative correction and dynamic depolarisation to better
+  match the fully retarded dipolar response in a reasonable
+  range of (subwavelength) sizes and aspect ratios.
 }
 \author{
   baptiste Auguie
+}
+\references{
+  Kuwata et al. Resonant light scattering from metal
+  nanoparticles: Practical analysis beyond Rayleigh
+  approximation Appl. Phys. Lett. 83, 22 (2003)
 }
 \seealso{
   Other user_level polarizability:

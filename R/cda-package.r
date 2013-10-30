@@ -9,7 +9,7 @@
 ##' @import Rcpp
 ##' @title cda
 ##' @keywords package
-##' @author baptiste Auguie \email{baptiste.auguie@@gmail.com}
+##' @author baptiste Auguie
 ##' @references
 ##' Draine BT. The discrete-dipole approximation and its application to interstellar graphite grains. Astrophysical Journal. 1988.
 ##' 

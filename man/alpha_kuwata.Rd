@@ -32,6 +32,11 @@
 \author{
   baptiste Auguie
 }
+\references{
+  Kuwata et al. Resonant light scattering from metal
+  nanoparticles: Practical analysis beyond Rayleigh
+  approximation Appl. Phys. Lett. 83, 22 (2003)
+}
 \seealso{
   Other user_level polarizability:
   \code{\link{inverse_polarizability}}, \code{\link{La}},

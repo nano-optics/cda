@@ -8,5 +8,6 @@ wiki/.*r$
 wiki/.*\.md$
 publis/
 presentation/
+develop/
 src/*.o
 src/*.so

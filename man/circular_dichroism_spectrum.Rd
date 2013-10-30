@@ -46,4 +46,11 @@
 \author{
   baptiste Auguie
 }
+\references{
+  Y. Okada, Efficient numerical orientation averaging of
+  light scattering properties with a quasi-Monte-Carlo
+  method, Journal of Quantitative Spectroscopy and
+  Radiative Transfer, Volume 109, Issue 9, June 2008, Pages
+  1719-1742.
+}
 
