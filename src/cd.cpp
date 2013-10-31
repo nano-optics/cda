@@ -209,12 +209,10 @@ arma::mat circular_dichroism_spectrum2(const arma::colvec kn, const arma::cx_mat
 
 
 RCPP_MODULE(cd){
-       using namespace Rcpp ;
-
-       function( "circular_dichroism_spectrum2", &circular_dichroism_spectrum2, \
+       Rcpp::function( "circular_dichroism_spectrum2", &circular_dichroism_spectrum2, \
 		 "Calculates the orientation-averaged CD spectrum for absorption and extinction using grid integration" ) ;
 
-       function( "circular_dichroism_spectrum", &circular_dichroism_spectrum, \
+       Rcpp::function( "circular_dichroism_spectrum", &circular_dichroism_spectrum, \
 		 "Calculates the orientation-averaged CD spectrum for absorption and extinction using specified quadrature nodes and weights" ) ;
 
 }

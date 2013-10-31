@@ -159,11 +159,10 @@ arma::cx_mat  scattered_field(const arma::mat& Rdip, \
 }
 
 RCPP_MODULE(internals){
-       using namespace Rcpp ;
 
-       function( "eigenmodes", &eigenmodes, "Computes the determinant of the interaction matrix" ) ;
-       function( "green_matrix", &green_matrix, "Constructs the green matrix" ) ;
-       function( "scattered_field", &scattered_field, "Calculates the scattered field" ) ;
-       function( "polarization", &polarization, "Calculates the dipole moments" ) ;
+       Rcpp::function( "eigenmodes", &eigenmodes, "Computes the determinant of the interaction matrix" ) ;
+       Rcpp::function( "green_matrix", &green_matrix, "Constructs the green matrix" ) ;
+       Rcpp::function( "scattered_field", &scattered_field, "Calculates the scattered field" ) ;
+       Rcpp::function( "polarization", &polarization, "Calculates the dipole moments" ) ;
 
 }

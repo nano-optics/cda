@@ -70,12 +70,6 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
 
 
 RCPP_MODULE(linear){
-       using namespace Rcpp ;
-
-       function( "linear_extinction_spectrum", &linear_extinction_spectrum, \
+       Rcpp::function( "linear_extinction_spectrum", &linear_extinction_spectrum, \
 		 "Returns the extinction spectra for x and y polarisation at fixed incidence" ) ;
-       // function( "dispersion", &dispersion, \
-       // 		 "Returns the abs and ext xsec for x and y polarisation at multiple angles of incidence" ) ;
-       // function( "dispersion_spectrum", &dispersion_spectrum,		\
-       // 		 "Returns the abs and ext xsec for x and y polarisation at multiple angles of incidence" ) ;
 }

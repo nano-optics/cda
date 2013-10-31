@@ -230,12 +230,10 @@ arma::cube dispersion_spectrum(const arma::colvec kn, const arma::cx_mat& Beta, 
 
 
 RCPP_MODULE(cda){
-       using namespace Rcpp ;
-
-       function( "euler", &euler, "Constructs a 3x3 Euler rotation matrix" ) ;
-       function( "extinction", &extinction, "Calculates the extinction cross-section" ) ;
-       function( "absorption", &absorption, "Calculates the absorption cross-section" ) ;
-       function( "interaction_matrix", &interaction_matrix, "Constructs the coupled-dipole interaction matrix" ) ;
-       function( "dispersion_spectrum", &dispersion_spectrum,		\
+       Rcpp::function( "euler", &euler, "Constructs a 3x3 Euler rotation matrix" ) ;
+       Rcpp::function( "extinction", &extinction, "Calculates the extinction cross-section" ) ;
+       Rcpp::function( "absorption", &absorption, "Calculates the absorption cross-section" ) ;
+       Rcpp::function( "interaction_matrix", &interaction_matrix, "Constructs the coupled-dipole interaction matrix" ) ;
+       Rcpp::function( "dispersion_spectrum", &dispersion_spectrum,		\
        		 "Returns the absorption, scattering and extinction spectra for 2 polarisations at specified angles of incidence" ) ;
 }

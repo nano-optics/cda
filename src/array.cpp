@@ -42,8 +42,7 @@ cx_colvec array_factor(const colvec& k, const mat& R) {
 
 
 RCPP_MODULE(array){
-       using namespace Rcpp ;
-       function( "array_factor", &array_factor ) ;
+  Rcpp::function( "array_factor", &array_factor ) ;
 }
 
 
