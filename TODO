@@ -1,3 +1,5 @@
 * check that the polarisability is passed from R to C++ in the best shape to avoid unnecessary transformations.
 
-* find an iterative solver for the CDA equations, e.g qmr, gmres, CG
+* find/write an iterative solver for the CDA equations, e.g qmr, gmres, CG etc.
+
+* solve multiple angles at once using solve(A, B) where B is a matrix of incident fields.

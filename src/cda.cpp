@@ -175,7 +175,7 @@ double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat&
       if(invert == 1){
 	P = B * Eincident;
       } else {
-	P = solve(A, Eincident);
+	P = solve(A, Eincident); // Eincident could be a matrix for improved efficiency
       }
 
       res(ll,0) =  extinction(kn, P, Eincident); 

@@ -1,0 +1,40 @@
+Design considerations for the CDA package
+========================================================
+
+## Minimal code in R
+
+## Structure of the core components
+
+Simulated spectra are obtained for a vector of wavelengths, with length Nlambda, and a cluster size N.
+
+* Wavelength-dependent values
+
+Beta is a matrix of size 3N x Nlambda (rows x columns). It is passed to xxx_spectrum functions at the cpp level, and is passed one row at a time to the functions operating one wavelength at a time.
+
+      beta = reshape(Beta.row(ll), 3, Nr, 1); 
+
+Not true, change this without reshaping beta every time
+
+Integrate diagonal into main A function and don't build a useless matrix
+
+
+------
+
+Beta is 3N x Nlambda
+Euler is 3xN matrix
+R is a 3xN matrix
+Angle is a 3xN matrix
+Axis is a 3xN matrix
+
+-----
+
+beta is Beta.col(ii)
+block diagonal becomes
+trans(Euler.col(ii)) * diagmat(beta(jj:jj+3)) * Euler.col(ii)
+
+
+
+* Diagonal blocks
+
+* Interaction matrix
+

@@ -1,14 +1,15 @@
-cda 1.4
-
-BUG FIX
-
-* Armadillo 0.190 brought some changes that made the results incorrect at the C++ lavel. First, the diagonal part of the interaction matrix was filling the off-diagonal blocks with non-zero elements due to non-initialisation of the matrix. Second, the integer flag for the Axes (x, y, z) was passed as a arma::uvec, where arma::ivec should be used.
+cda 1.5
 
 USER VISIBLE CHANGES:
 
 * QMC angular averaging gains an 'iterative' routine, adding new integration points until specified accuracy is reached
 
 * a 'cheap' version of angular averaging is added, only using 3 angles
+
+BUG FIX:
+
+* Armadillo 0.190 brought some changes that made the results incorrect at the C++ lavel. First, the diagonal part of the interaction matrix was filling the off-diagonal blocks with non-zero elements due to non-initialisation of the matrix. Second, the integer flag for the Axes (x, y, z) was passed as a arma::uvec, where arma::ivec should be used.
+
 
 cda 1.3.3
 
