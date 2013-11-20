@@ -2,8 +2,8 @@
 \alias{inverse_polarizability}
 \title{inverse_polarizability}
 \usage{
-  inverse_polarizability(cluster, material,
-    polarizability_fun = polarizability_ellipsoid, ...)
+inverse_polarizability(cluster, material,
+  polarizability_fun = polarizability_ellipsoid, ...)
 }
 \arguments{
   \item{cluster}{cluster}

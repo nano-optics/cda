@@ -3,7 +3,7 @@
 library(cda)
 library(rgl)
 library(ggplot2)
-
+library(plyr)
 
 ## @knitr setup
 

@@ -9,17 +9,12 @@ Authors@R: c(person("Baptiste", "Auguie",
 License: GPL-3
 Copyright: file inst/COPYRIGHTS for src/zgels.f obtained from LAPACK
 Title: Coupled dipole approximation in electromagnetic scattering
-Description: The cda package implements the coupled-dipole approximation for
-    electromagnetic scattering by sparse collections of subwavelength
-    particles, with a particular focus on plasmonic nanoparticles in the
-    visible regime. The interaction matrix, and the solution of the linear
-    system of coupled-dipole equations are executed in C++ code for speed;
-    convenient wrapper functions are provided at the R level to generate the
-    particle clusters, calculate the extinction, scattering, and absorption of
-    light by particles with linearly and circularly polarised light. Functions
-    are also provided to calculate orientation-averaged circular dichroism, and
-    display clusters of nanoparticles in three dimensions using OpenGL or
-    povray.
+Description: Solves the electromagnetic problem of coupled-dipoles (scattering
+    and absorption by a cluster of subwavelength particles in arbitrary 3D
+    configuration) by direct inversion of the interaction matrix. Functions are
+    provided for linear polarisation with varying angle of incidence, as well
+    as circular polarisation with angular averaging (optical activity).
+    Retardation is included in the interaction.
 URL: https://github.com/baptiste/cda
 Type: Package
 LazyLoad: yes
@@ -31,8 +26,6 @@ Depends:
     dielectric
 Suggests:
     rgl,
-    plyr,
-    reshape2,
     grid,
     ggplot2,
     gridExtra,
@@ -42,16 +35,7 @@ Imports:
     Rcpp (>= 0.10.5),
     RcppArmadillo (>= 0.3.900),
     statmod,
-    randtoolbox
+    randtoolbox,
+    reshape2,
+    plyr
 RcppModules: cda, cd, linear, array
-Collate:
-    'cd.r'
-    'cda-package.r'
-    'linear.r'
-    'polarizability.R'
-    'positions.R'
-    'povray.r'
-    'rgl.r'
-    'zzz.r'
-    'array_factor.R'
-    'dispersion.r'

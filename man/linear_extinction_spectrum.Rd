@@ -2,8 +2,8 @@
 \alias{linear_extinction_spectrum}
 \title{extinction_spectrum}
 \usage{
-  linear_extinction_spectrum(cluster, material,
-    medium = 1.33, progress = FALSE)
+linear_extinction_spectrum(cluster, material, medium = 1.33,
+  progress = FALSE)
 }
 \arguments{
   \item{cluster}{list describing a cluster}

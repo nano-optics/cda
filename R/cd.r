@@ -19,6 +19,7 @@
 ##' @param result.matrix logical return the results as a matrix
 ##' @importFrom randtoolbox halton
 ##' @importFrom statmod gauss.quad
+##' @importFrom reshape2 melt
 ##' @export
 ##' @family user_level circular_dichroism
 ##' @author baptiste Auguie

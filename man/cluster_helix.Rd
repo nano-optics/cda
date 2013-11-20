@@ -2,10 +2,9 @@
 \alias{cluster_helix}
 \title{cluster_helix}
 \usage{
-  cluster_helix(N = 5, R0 = 12, pitch = 15, delta = pi/2,
-    delta0 = 0, right = TRUE, a = 5, b = a, c = a,
-    angles = c("helix", "random", "fixed"), seed = 123,
-    ...)
+cluster_helix(N = 5, R0 = 12, pitch = 15, delta = pi/2, delta0 = 0,
+  right = TRUE, a = 5, b = a, c = a, angles = c("helix", "random",
+  "fixed"), seed = 123, ...)
 }
 \arguments{
   \item{N}{number of particles}
@@ -46,7 +45,8 @@
 }
 \seealso{
   Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{equal_angles}},
+  \code{\link{cluster_dimer}},
+  \code{\link{cluster_dimer2}}, \code{\link{equal_angles}},
   \code{\link{equal_sizes}}, \code{\link{helix}}
 }
 

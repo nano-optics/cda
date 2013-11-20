@@ -2,8 +2,7 @@
 \alias{particles_povray}
 \title{particles_povray}
 \usage{
-  particles_povray(positions, angles, sizes,
-    out = "positions.pov")
+particles_povray(positions, angles, sizes, out = "positions.pov")
 }
 \arguments{
   \item{positions}{matrix of positions}

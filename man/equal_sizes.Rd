@@ -2,7 +2,7 @@
 \alias{equal_sizes}
 \title{equal_sizes}
 \usage{
-  equal_sizes(a, b, c, N)
+equal_sizes(a, b, c, N)
 }
 \arguments{
   \item{a}{a}
@@ -27,7 +27,9 @@
 }
 \seealso{
   Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
-  \code{\link{equal_angles}}, \code{\link{helix}}
+  \code{\link{cluster_dimer}},
+  \code{\link{cluster_dimer2}},
+  \code{\link{cluster_helix}}, \code{\link{equal_angles}},
+  \code{\link{helix}}
 }
 

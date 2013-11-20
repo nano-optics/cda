@@ -4,7 +4,7 @@
 
 ##' principal polarizability components for an ellipsoidal particle
 ##'
-##' uses the Kuwata prescription
+##' uses the Kuwata prescription (see references)
 ##' @title polarizability_ellipsoid
 ##' @param wavelength wavelength in nm
 ##' @param epsilon complex permittivity
@@ -116,6 +116,7 @@ Kuwata.B <- function(L){
 ##' @param polarizability_fun polarizability function
 ##' @param ... additional arguments passed to polarizability_fun
 ##' @return  matrix with each row being the 3 principal values of each polarizability tensor
+##' @importFrom plyr mlply
 ##' @export
 ##' @family user_level polarizability
 ##' @author Baptiste Auguie

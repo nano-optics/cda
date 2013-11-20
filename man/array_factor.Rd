@@ -2,7 +2,7 @@
 \alias{array_factor}
 \title{array factor}
 \usage{
-  array_factor(wavelength, N, pitch)
+array_factor(wavelength, N, pitch)
 }
 \arguments{
   \item{wavelength}{wavelength in nm}

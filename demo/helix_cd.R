@@ -3,6 +3,7 @@
 library(cda)
 library(rgl)
 library(ggplot2)
+library(plyr)
 
 
 ## @knitr setup
@@ -62,7 +63,7 @@ p <-
   geom_line(aes(wavelength, value, 
                 colour=factor(N))) +
   labs(y=expression(sigma[ext]*" /"*nm^2),
-       x=expression(wavelength*" /"*nm), colour="dihedral angle") 
+       x=expression(wavelength*" /"*nm), colour="N") 
 
 p
 

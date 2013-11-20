@@ -2,7 +2,7 @@
 \alias{La}
 \title{La}
 \usage{
-  La(a = 50, b = a, c = a)
+La(a = 50, b = a, c = a)
 }
 \arguments{
   \item{a}{semi-axis in nm}

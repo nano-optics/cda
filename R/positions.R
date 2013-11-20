@@ -119,6 +119,32 @@ cluster_dimer <- function(d=a,
   
 }
 
+##' cluster_dimer2
+##'
+##' cluster with two nanorods
+##' first rod along x at (0, 0, -d/2)
+##' second rod at (0, 0, d/2)
+##' @title cluster_dimer2
+##' @param d center-to-center distance
+##' @param dihedral dihedral angle
+##' @param alpha1 angle first rod
+##' @param alpha2 angle second rod
+##' @param a semi axis
+##' @param b semi axis
+##' @return list with r,  sizes,  angles
+##' @author baptiste Auguie
+##' @export
+##' @family user_level cluster
+cluster_dimer2 <- function(d=a, 
+                          dihedral=0, alpha1=0, alpha2=0,
+                          a=35e-3, b=12e-3){
+  
+  r <- cbind(c(0,0), c(0, 0), c(-d/2, d/2))
+  sizes <- equal_sizes(a=a, b=b, c=b, N=2)  
+  angles <- cbind(c(dihedral, 0), c(pi/2, pi/2), c(alpha1, alpha2))
+  list(r=r, sizes=sizes, angles=angles)
+  
+}
 
 ##' cluster_chain
 ##'

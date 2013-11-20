@@ -2,6 +2,7 @@
 
 ## norm1 <- function(x) Matrix::norm(matrix(x),'f')
 require(Matrix)
+require(plyr)
 norm <- function(x) as.numeric(sqrt(t.default(x) %*% x))
 # norm(c(1,1,0))
 # 
@@ -17,7 +18,21 @@ incident_field <- function(E0, k, r){
 }
 
 cext <- function(k, E0, Ei, P){
-  Re(4*pi* norm(k) /(E0%*%Conj(E0)) * Im(P%*%(Conj(Ei))))
+  Re(4*pi* norm(k) /(E0%*%Conj(E0)) * Im(P%*%Conj(Ei)))
+}
+
+# cext_avg <- function(k, E0, Ei, P){
+#   
+#   res <- 0
+#   for (ii in seq.int(ncol(P)))
+#     res <- res + cext(k, E0, Ei[,ii], P[,ii])
+#   res
+# }
+
+
+cext_avg <- function(k, E0, Ei, P){
+  
+  Re(4*pi* norm(k) /(E0%*%Conj(E0)) * Im(c(P)%*%Conj(c(Ei)))) / ncol(P)
 }
 
 incident_fields <- function(E0, k, r, angles){
@@ -99,45 +114,55 @@ interaction_matrix <-  function(r, kn, beta, euler){
 # P <- jitter(Re(Ei)) + Ei
 # cext(k, E0, Ei, P)
 
-cluster <- list(r = cbind(c(0, 0, 0),
-                          c(0, 0, 200)),
-                angles = cbind(c(0, 0, 0),
-                               c(pi/5, pi/3, 0)),
-                sizes = cbind(c(40, 30, 30),
-                              c(50, 20, 20)))
 
 
-simulation <- function(wavelength, cluster, E0=c(1,0,0), k0=c(0,0,1)){
+simulation <- function(wavelength, cluster){
   kn <- 2*pi/wavelength
   N <- ncol(cluster$r)
-  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[1,], b=cluster$sizes[2,], c=cluster$sizes[3,], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAu(wavelength)$epsilon, medium=1.0), SIMPLIFY=FALSE))
+  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[1,], b=cluster$sizes[2,], c=cluster$sizes[3,], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAg(wavelength)$epsilon, medium=1.0), SIMPLIFY=FALSE))
   beta <- 1/alpha
   
-  angles <- cbind(c(1/2, 0,0), # +x is phi=0, psi=0
-                 c(1/2, 1/4,0), # +y is phi=pi/2, psi=0
-                 c(1, 1/4,0)) # +z is phi=pi/2, psi=pi/2
+  angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
+                 c(pi/2, pi/2, 0), # +y is phi=pi/2, psi=0
+                 c(pi/2, pi/2, pi/2)) # +z is phi=pi/2, psi=pi/2
   
   A <- interaction_matrix(cluster$r, kn, beta, cluster$angles)
-  Ei <- incident_fields(E0, k=kn*k0, r=cluster$r, angles)
+  E0L=c(0,1,1i)
+  E0R=c(0,1i,1)
+  k0=c(1,0,0)
+  
+  EiL <- incident_fields(E0L, k=kn*k0, r=cluster$r, angles)
+  EiR <- incident_fields(E0R, k=kn*k0, r=cluster$r, angles)
  
-  P <- solve(A, Ei)
-  cext(kn*k0, E0, Ei, P)
+  PL <- solve(A, EiL)
+  PR <- solve(A, EiR)
+#   browser()
+  cext_avg(kn*k0, E0L, EiL, PL) - cext_avg(kn*k0, E0R, EiR, PR)
 }
 
+cluster <- list(r = cbind(c(0, 0, 0),
+                          c(0, 0, 400)),
+                angles = cbind(c(0, 0, 0),
+                               c(pi/4, pi/2, 0)),
+                sizes = cbind(c(40, 20, 20),
+                              c(40, 20, 20)))
 # simulation(500, cluster)
-wavelength <- seq(300, 900)
+wavelength <- seq(200, 900)
 # material <- epsAu(wavelength)
 
-test <- sapply(wavelength, simulation, cluster=cluster, E0=c(0,1,0))
+test <- sapply(wavelength, simulation, cluster=cluster)
 
 plot(wavelength,test, t="l")
 
 cluster2 <- lapply(cluster, t)
 require(cda)
-test2 <- dispersion_spectrum(cluster2, c(0), "x", medium=1, 
-                             material=epsAu(wavelength))
+# test2 <- dispersion_spectrum(cluster2, c(0), "x", medium=1, 
+#                              material=epsAu(wavelength))
 
-with(subset(test2, type == "extinction" & polarisation == "s"), 
+test2 <- circular_dichroism_spectrum(cluster2, averaging="cheap", medium=1, 
+                             material=epsAg(wavelength))
+
+with(subset(test2, type == "CD" & variable == "extinction"), 
      lines(wavelength, value, col="red"))
 
 

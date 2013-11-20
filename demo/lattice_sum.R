@@ -3,7 +3,7 @@
 library(cda)
 library(rgl)
 library(ggplot2)
-
+library(reshape2)
 
 ## @knitr setup
 theme_set(theme_minimal())

@@ -2,8 +2,7 @@
 \alias{curve_povray}
 \title{curve_povray}
 \usage{
-  curve_povray(positions, size = 0.005, radius,
-    out = "positions.pov")
+curve_povray(positions, size = 0.005, radius, out = "positions.pov")
 }
 \arguments{
   \item{positions}{matrix of positions}

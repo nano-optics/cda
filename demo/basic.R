@@ -50,7 +50,8 @@ ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
 circular <- circular_dichroism_spectrum(cl, gold)
 
 ggplot(circular, aes(wavelength, value, color=variable)) + 
-  facet_grid(type~variable, scales="free") + geom_path()
+  facet_grid(type~variable, scales="free") + geom_path() +
+  guides(colour="none")
 
 
 

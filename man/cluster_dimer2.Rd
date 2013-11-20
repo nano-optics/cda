@@ -1,8 +1,8 @@
-\name{cluster_dimer}
-\alias{cluster_dimer}
-\title{cluster_dimer}
+\name{cluster_dimer2}
+\alias{cluster_dimer2}
+\title{cluster_dimer2}
 \usage{
-cluster_dimer(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
+cluster_dimer2(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
   b = 0.012)
 }
 \arguments{
@@ -22,7 +22,7 @@ cluster_dimer(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
   list with r, sizes, angles
 }
 \description{
-  cluster_dimer
+  cluster_dimer2
 }
 \details{
   cluster with two nanorods first rod along x at (0, 0,
@@ -33,8 +33,8 @@ cluster_dimer(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
 }
 \seealso{
   Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer2}},
-  \code{\link{cluster_helix}}, \code{\link{equal_angles}},
-  \code{\link{equal_sizes}}, \code{\link{helix}}
+  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
+  \code{\link{equal_angles}}, \code{\link{equal_sizes}},
+  \code{\link{helix}}
 }
 

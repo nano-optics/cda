@@ -2,11 +2,10 @@
 \alias{circular_dichroism_spectrum}
 \title{circular_dichroism_spectrum}
 \usage{
-  circular_dichroism_spectrum(cluster, material,
-    medium = 1.33, N = 100,
-    averaging = c("GL", "QMC", "grid", "cheap"),
-    iterative = FALSE, precision = 0.001, Nmax = 10000,
-    full = TRUE, progress = FALSE, result.matrix = FALSE)
+circular_dichroism_spectrum(cluster, material, medium = 1.33, N = 100,
+  averaging = c("GL", "QMC", "grid", "cheap"), iterative = FALSE,
+  precision = 0.001, Nmax = 10000, full = TRUE, progress = FALSE,
+  result.matrix = FALSE)
 }
 \arguments{
   \item{cluster}{cluster (list)}

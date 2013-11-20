@@ -2,7 +2,7 @@
 \alias{rgl.ellipsoids}
 \title{rgl.ellipsoids}
 \usage{
-  rgl.ellipsoids(positions, sizes, angles, ...)
+rgl.ellipsoids(positions, sizes, angles, ...)
 }
 \arguments{
   \item{positions}{matrix of positions}

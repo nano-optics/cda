@@ -2,8 +2,8 @@
 \alias{polarizability_ellipsoid}
 \title{polarizability_ellipsoid}
 \usage{
-  polarizability_ellipsoid(wavelength, epsilon, a = 50,
-    b = 30, c = b, medium = 1.33, kuwata = TRUE)
+polarizability_ellipsoid(wavelength, epsilon, a = 50, b = 30, c = b,
+  medium = 1.33, kuwata = TRUE)
 }
 \arguments{
   \item{wavelength}{wavelength in nm}
@@ -29,7 +29,7 @@
   particle
 }
 \details{
-  uses the Kuwata prescription
+  uses the Kuwata prescription (see references)
 
   The Kuwata version includes semi-empirical terms of
   radiative correction and dynamic depolarisation to better

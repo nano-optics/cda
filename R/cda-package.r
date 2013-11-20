@@ -1,6 +1,6 @@
 ##' Coupled dipole approximation in electromagnetic scattering
 ##'
-##' The cda package implements the coupled-dipole approximation for electromagnetic scattering by sparse collections of subwavelength particles, with a particular focus on plasmonic nanoparticles in the visible regime. The interaction matrix, and the solution of the linear system of coupled-dipole equations are executed in C++ code for speed; convenient wrapper functions are provided at the R level to generate the particle clusters, calculate the extinction, scattering, and absorption of light by particles with linearly and circularly polarised light. Functions are also provided to calculate orientation-averaged circular dichroism, and display clusters of nanoparticles in three dimensions using OpenGL or povray.
+##' Solves the electromagnetic problem of coupled-dipoles (scattering and absorption by a cluster of subwavelength particles in arbitrary 3D configuration) by direct inversion of the interaction matrix. Functions are provided for linear polarisation with varying angle of incidence, as well as circular polarisation with angular averaging (optical activity). Retardation is included in the interaction.
 ##'
 ##' 
 ##' @name cda-package
@@ -17,13 +17,17 @@
 ##' 
 ##' Gunnarsson L, Zou S, Schatz GC, et al. Confined plasmons in nanofabricated single silver particle pairs: Experimental observations of strong interparticle interactions. Journal of Physical Chemistry B. 2005.
 ##' 
-##' ## Any one of the following references may (should) be used to cite and acknowledge this package.
+##' ## Any one of the following references should be used to cite and acknowledge the use of this package.
 ##' 
-##' A. Guerrero-Martinez, B. Auguie, J.L. Alonso-Gomez, Z. Dzolic, S. Gomez-Grana, M. Zinic, M.M. Cid, L.M. Liz-Marzan. Intense Optical Activity from three-Dimensional Chiral Ordering of Plasmonic Nanoantennas. Angew. Chem. Int. Ed.50 (2011)
+##' Circular dichroism:
 ##' 
 ##' B. Auguie, J.L. Alonso-Gomez, A. Guerrero-Martinez, L.M. Liz-Marzan. Fingers crossed: circular dichroism with a dimer of plasmonic nanorods. J. Phys. Chem. Lett. 2, (2011)
 ##' 
+##' Linear extinction:
+##' 
 ##' B. Auguie, W.L. Barnes. Diffractive coupling in gold nanoparticle arrays and the effect of disorder. Optics Letters (2009)
+##' 
+##' Array factor (infinite case):
 ##' 
 ##' B. Auguie, W.L. Barnes. Collective resonances in gold nanoparticle arrays. Physical Review Letters (2008)
 ##' @keywords packagelibrary
@@ -42,7 +46,6 @@ NULL
 ##' }
 ##' @examples
 ##' show( array )
-NULL
 
 ##' Rcpp module: cd
 ##' 
@@ -56,7 +59,6 @@ NULL
 ##' }
 ##' @examples
 ##' show( cd )
-NULL
 
 ##' Rcpp module: cda
 ##' 
@@ -73,7 +75,6 @@ NULL
 ##' }
 ##' @examples
 ##' show( cda )
-NULL
 
 ##' Rcpp module: linear
 ##' 
@@ -89,7 +90,6 @@ NULL
 ##' }
 ##' @examples
 ##' show( linear )
-NULL
 	
 
 ##' Lattice sum
@@ -109,6 +109,5 @@ NULL
 ##' @examples
 ##' data(G0)
 ##' \dontrun{demo(lattice_sum)}
-NULL
 	
 

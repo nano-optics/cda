@@ -2,8 +2,8 @@
 \alias{helix}
 \title{helix}
 \usage{
-  helix(R0 = 500, pitch = 600, N = 5, delta = pi/8,
-    delta0 = pi/2, n.smooth = 100 * N, right = TRUE)
+helix(R0 = 500, pitch = 600, N = 5, delta = pi/8, delta0 = pi/2,
+  n.smooth = 100 * N, right = TRUE)
 }
 \arguments{
   \item{R0}{radius in nm}
@@ -47,7 +47,9 @@ rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold")
 }
 \seealso{
   Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
-  \code{\link{equal_angles}}, \code{\link{equal_sizes}}
+  \code{\link{cluster_dimer}},
+  \code{\link{cluster_dimer2}},
+  \code{\link{cluster_helix}}, \code{\link{equal_angles}},
+  \code{\link{equal_sizes}}
 }
 

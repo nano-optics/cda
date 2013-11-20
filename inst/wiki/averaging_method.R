@@ -2,6 +2,8 @@
 ## @knitr load
 require(cda)
 require(ggplot2)
+library(plyr)
+library(reshape2)
 require(microbenchmark)
 require(xtable)
 
