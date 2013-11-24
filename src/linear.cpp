@@ -28,13 +28,13 @@ arma::colvec linear_extinction(const arma::mat& R, const arma::cx_mat& A, const 
   Eincident = reshape(expikr * strans(SP), 3*N, 1, 1);
   // P = A * Eincident;
   P = solve(A, Eincident);
-  res(0) = extinction(kn, P, Eincident) / N; 
+  // res(0) = extinction(kn, P, Eincident) / N; 
 
   // p polarisation
   Eincident = reshape(expikr * strans(PP), 3*N, 1, 1);
   // P = A * Eincident;
   P = solve(A, Eincident);
-  res(1) = extinction(kn, P, Eincident) / N;  
+  // res(1) = extinction(kn, P, Eincident) / N;  
   
   return res ;
   } 
@@ -55,7 +55,7 @@ arma::mat linear_extinction_spectrum(const arma::colvec kn, const arma::cx_mat& 
     if(progress == 1)
       progress_bar(ll+1,N);
       beta = reshape(Beta.row(ll), 3, Nr, 1); 
-      A = interaction_matrix(R, kn[ll], beta, Euler, 1);
+      A = interaction_matrix(R, kn[ll], beta, Euler, true);
       tmp = linear_extinction(R, A, kn[ll]);
       res(ll,0) = tmp(0);
       res(ll,1) = tmp(1);

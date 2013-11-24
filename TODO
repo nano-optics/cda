@@ -7,3 +7,9 @@
 * find/write an iterative solver for the CDA equations, e.g qmr, gmres, CG etc.
 
 * check the cheap accuracy for short wavelengths
+
+
+// optional arguments in c++
+// switch between c++ functions
+// Toeplitz
+// Gauss Legendre quadrature

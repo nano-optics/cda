@@ -57,10 +57,9 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
 // kn: wavevector
 // Angles: incident angles
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
-		      const arma::cx_colvec& Beta,			
+		      const arma::cx_mat& Adiag,			
 		      const double kn, const arma::vec& Angles, 
 		      const arma::ivec& Axes, 
-		      const arma::mat& Euler, 
 		      const int polarisation)
    {
      const int N = R.n_cols, NAngles = Angles.n_elem;
@@ -69,7 +68,6 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
     const double pi = arma::datum::pi;
     arma::mat Rot(3,3);
 
-    arma::cx_mat Alpha = block_diagonal(Beta, Euler);
 
     // incident field
     const arma::colvec  khat="1 0 0;"; 
@@ -92,13 +90,13 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
     Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
     P = solve(A, Eincident);
     res.col(0) =  extinction(kn, P, Eincident); 
-    res.col(1) = absorption(kn, P, Alpha); 
+    res.col(1) = absorption(kn, P, Adiag); 
 
     // second polarisation
     Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
     P = solve(A, Eincident);
     res.col(2) =  extinction(kn, P, Eincident); 
-    res.col(3) = absorption(kn, P, Alpha); 
+    res.col(3) = absorption(kn, P, Adiag); 
              
     return res ;
    } 

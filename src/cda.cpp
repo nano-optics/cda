@@ -40,7 +40,7 @@ arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler)
 // full is an integer flag to use full/static interaction term
 arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 				const arma::cx_colvec& Beta, const arma::mat& Euler, 
-				const int full) {
+				const bool full) {
   
   const int N = R.n_cols;
   arma::cx_mat A = arma::zeros<arma::cx_mat>( 3*N, 3*N );
@@ -69,7 +69,7 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 	      rjk = norm(rk_to_rj,2);
 	      rjkhat = rk_to_rj / rjk;
 	      rjkrjk =  rjkhat * rjkhat.st();
-	      if(full == 1) {
+	      if(full) {
 		Ajk = exp(i*kn*rjk) / rjk *  (kn*kn*(rjkrjk - I3) + \
 					      (i*kn*rjk - arma::cx_double(1,0)) / \
 					      (rjk*rjk) * (3*rjkrjk - I3)) ;

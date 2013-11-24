@@ -185,6 +185,13 @@ simulation <- function(wavelength, cluster, medium=1.33){
     CDa=aL-aR)
 }
 
+
+
+# integration_points()
+# integration_points("QMC")
+
+
+
 simulationcpp <- function(wavelength, cluster, medium=1.33, Nquad=30){
   kn <- 2*pi/wavelength*medium
   N <- ncol(cluster$r)
@@ -216,38 +223,25 @@ simulationcpp <- function(wavelength, cluster, medium=1.33, Nquad=30){
   axis_angles <- c(0, pi/2, pi/2)
   axis_axes <- c(0L, 1L, 2L)
   
-  weights <- rep(1, length=ncol(angles))
-  tmp <- cd$averaging(cluster$r, A, Adiag, kn, angles, weights)
+#   weights <- rep(1, length=ncol(angles))
+#   tmp <- cd$averaging(cluster$r, A, Adiag, kn, angles, weights)
   
-  # scale the coordinates from (-1, 1) to (0, 2pi) and (-pi/2, pi/2) resp.
-  phi1=0; phi2=2*pi; psi1=-pi/2; psi2=pi/2; 
-  C1 = (phi2 - phi1) / 2;  D1 = (phi2 + phi1) / 2;
-  C2 = (psi2 - psi1) / 2; D2 = (psi2 + psi1) / 2;
+  quadrature <- integration_points("GL", Nquad)
+  tmp <- cd$averaging(cluster$r, A, Adiag, kn, quadrature$angles, quadrature$weights)
+#   
+#   arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
+#                        const arma::cx_mat& Adiag,			
+#                        const double kn, const arma::vec& Angles, 
+#                        const arma::ivec& Axes, 
+#                        const int polarisation)
   
-  rndN <- ceiling(sqrt(Nquad/2))
-  GL_phi <- statmod::gauss.quad(2*rndN)
-  GL_psi <- statmod::gauss.quad(rndN)
-  
-  phi = GL_phi$nodes*C1 + D1  
-  psi = GL_psi$nodes*C2 + D2
-  
-  # grid of angles, theta is constant here
-  grid <- expand.grid(phi=phi, theta=pi/2, psi=psi)
-  # corresponding weights for 1D quadrature
-  weights <- expand.grid(phi=GL_phi$weights, psi=GL_psi$weights)
-  # combine the weigths for each point; cos(psi) comes from the Jacobian in the integral
-  weights <- C1 * C2 / (4*pi) * cos(grid$psi) * weights$phi * weights$psi
-  
-  tmp <- cd$averaging(cluster$r, A, Adiag, kn, t(grid), weights)
-  
-  test <- dispersion$dispersion(cluster$r, A, beta, kn, 
-                                axis_angles, axis_axes, 
-                                cluster$angles, 1L)
+  test <- dispersion$dispersion(cluster$r, A, Adiag, kn, 
+                                axis_angles, axis_axes, 1L)
   aa <- colMeans(test)
    eL <- tmp[1,1]
 #   eL <- aa[1]
 #   eR <- aa[3]
-  eR <- tmp[3,1]
+  eR <- tmp[2,1]
   aL <- aa[2]
   aR <- aa[4]
   
@@ -305,4 +299,9 @@ print(p)
 #                                        medium=1.0,
 #                                        epsilon = dielectric::epsAu(wavelength)$epsilon)
 
+circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="QMC", Nquad=100, iterative=FALSE) -> a
+circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="GL", Nquad=40) -> b
+
+ggplot(a, aes(wavelength, value, colour=variable))+
+  facet_wrap(~type, ncol=1, scale="free")+ geom_line()+ geom_line(data=b, linetype=2)
 

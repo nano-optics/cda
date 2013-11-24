@@ -4,10 +4,9 @@
 #include <RcppArmadillo.h>
 
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
-		      const arma::cx_colvec& Beta,			
+		      const arma::cx_mat& Adiag,			
 		      const double kn, const arma::vec& Angles, 
 		      const arma::ivec& Axes, 
-		      const arma::mat& Euler, 
 		      const int polarisation);
 
 #endif
