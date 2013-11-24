@@ -49,7 +49,6 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
 }
 
 
-
 // // calculation for multiple angles of incidence
 // R: positions
 // A: interaction matrix
@@ -101,7 +100,39 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
     return res ;
    } 
 
+
+arma::cube dispersion_spectrum(const arma::colvec kn, 
+			       const arma::cx_mat& Beta, const arma::mat& R, 
+			       const arma::mat& Euler, const arma::vec& Angles,
+			       const arma::ivec& Axes,			
+			       const int polarisation, const bool progress)
+  {
+
+    const int NAngles = Angles.n_elem;
+    int N = kn.n_elem, Nr = R.n_cols, ll;
+    arma::cube results(NAngles, 6, N);
+    arma::mat tmp(NAngles, 6);
+    arma::cx_mat A(3*Nr,3*Nr), Adiag(3*Nr,3*Nr);
+
+    for(ll=0; ll<N; ll++){ // loop over kn   
+      if(progress)
+	progress_bar(ll+1,N);
+
+      A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, 1); // retarded
+      Adiag = block_diagonal(Beta.col(ll), Euler);
+      tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, polarisation);
+      results.slice(ll) = tmp; 
+    }
+    if(progress)
+      Rcpp::Rcout << "\n";
+
+    return results ;
+  } 
+
+
 RCPP_MODULE(dispersion){
        Rcpp::function( "dispersion", &dispersion,
+		       "Returns the absorption, scattering and extinction for 2 polarisations at specified angles of incidence" ) ;
+       Rcpp::function( "dispersion_spectrum", &dispersion_spectrum,
 		       "Returns the absorption, scattering and extinction spectra for 2 polarisations at specified angles of incidence" ) ;
 }
