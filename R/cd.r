@@ -9,10 +9,10 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
   
   if(method == "cheap"){
     
-    angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
+    angles <- rbind(c(0, pi/2, 0), # +x is phi=0, psi=0
                     c(pi/2, pi/2, 0), # +y is phi=pi/2, psi=0
                     c(pi/2, pi/2, pi/2)) # +z is phi=pi/2, psi=pi/2
-    weights <- rep(1/ncol(angles), ncol(angles)) 
+    weights <- rep(1/nrow(angles), nrow(angles)) 
     return(list(angles=angles, weights=weights))
   }
   
@@ -24,7 +24,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
     psi <- asin(2*nodes[,2] - 1)
     grid <- data.frame(phi=phi, theta=pi/2, psi=psi)
     weights <- rep(1/nrow(grid), nrow(grid))
-    return(list(angles=t(grid), weights=weights))
+    return(list(angles=grid, weights=weights))
   }
   
   if(method == "GL"){
@@ -47,7 +47,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
     # combine the weigths for each point; cos(psi) comes from the Jacobian in the integral
     weights <- C1 * C2 / (4*pi) * cos(grid$psi) * weights$phi * weights$psi
     
-    return(list(angles=t(grid), weights=weights))
+    return(list(angles=grid, weights=weights))
   }  
   
   if(method == "grid"){
@@ -57,7 +57,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
     psi <- asin(2*a - 1)
     grid <- expand.grid(phi=phi, theta=pi/2, psi=psi)
     weights <- rep(1/nrow(grid), nrow(grid))
-    return(list(angles=t(grid), weights=weights))
+    return(list(angles=grid, weights=weights))
   }
   
 }
@@ -107,7 +107,7 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=10
   quadrature <- integration_points(averaging, Nquad)
   
   results <- cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
-                                 quadrature$angles, 
+                                 as.matrix(quadrature$angles), 
                                  quadrature$weights,
                                  full, progress)
   

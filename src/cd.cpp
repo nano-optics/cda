@@ -20,7 +20,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
 			const arma::colvec& Weights)
   {
 
-    const int N = R.n_cols, Nangles = Angles.n_cols;
+    const int N = R.n_rows, Nangles = Angles.n_rows;
     //constants
     const arma::cx_double i = arma::cx_double(0,1);
     const double pi = arma::datum::pi;
@@ -62,7 +62,7 @@ arma::mat average_spectrum(const arma::colvec kn,
 			   const bool full, const bool progress)
   {
 
-    int N = kn.n_elem, Nr = R.n_cols, ll;
+    int N = kn.n_elem, Nr = R.n_rows, ll;
 
     arma::mat res(N,6);
     arma::colvec tmp(4);

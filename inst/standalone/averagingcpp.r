@@ -11,7 +11,7 @@ norm <- function(x) as.numeric(sqrt(t.default(x) %*% x))
 # k <- 6/600 *c(0,0,1)
 
 incident_field <- function(E0, k, r){
-  kr <- crossprod(k, r)
+  kr <- r %*% k
   
   expikr <- exp(1i*kr)
   as.vector(matrix(c(E0[1]*expikr, E0[2]*expikr, 
@@ -50,7 +50,7 @@ cext_avg <- function(k, E0, Ei, P){
 
 incident_fields <- function(E0, k, r, angles){
   
-  Ei <- matrix(0, ncol=ncol(angles), nrow=3*ncol(r))
+  Ei <- matrix(0, ncol=ncol(angles), nrow=3*nrow(r))
   for (ii in seq(1, ncol(angles))){
     
     rot <- rotation(angles[,ii])
@@ -79,7 +79,7 @@ rotation(c(0,pi/2,pi/3))
 
 interaction_matrix <-  function(r, kn, beta, euler){
   
-  N <- ncol(r)
+  N <- nrow(r)
   A <- matrix(0, 3*N, 3*N)
   
   I <- diag(3)
@@ -92,7 +92,7 @@ interaction_matrix <-  function(r, kn, beta, euler){
         ind1 <- ((jj-1)*3+1):(jj*3)
         ind2 <- ((kk-1)*3+1):(kk*3)
         
-        rk_to_rj <- r[,jj] - r[,kk]
+        rk_to_rj <- r[jj,] - r[kk,]
         rjk <- norm(rk_to_rj)
         rjk_hat <- rk_to_rj / rjk
         rjkrjk <- outer(rjk_hat, rjk_hat)
@@ -103,7 +103,7 @@ interaction_matrix <-  function(r, kn, beta, euler){
       } else {
         
         ind1 <- ((jj-1)*3+1):(jj*3)
-        rot <- rotation(euler[,jj])
+        rot <- rotation(euler[jj,])
         A[ind1, ind1]  <- t(rot) %*% diag(beta[ind1]) %*% rot
         
       }
@@ -114,7 +114,7 @@ interaction_matrix <-  function(r, kn, beta, euler){
 
 diagonal_blocks <-  function(r, kn, beta, euler){
   
-  N <- ncol(r)
+  N <- nrow(r)
   A <- matrix(0, 3*N, 3*N)
   
   
@@ -124,7 +124,7 @@ diagonal_blocks <-  function(r, kn, beta, euler){
       if (jj == kk){          
         
         ind1 <- ((jj-1)*3+1):(jj*3)
-        rot <- rotation(euler[,jj])
+        rot <- rotation(euler[jj,])
         A[ind1, ind1]  <- t(rot) %*% diag(beta[ind1]) %*% rot
         
       }
@@ -154,8 +154,8 @@ diagonal_blocks <-  function(r, kn, beta, euler){
 
 simulation <- function(wavelength, cluster, medium=1.33){
   kn <- 2*pi/wavelength*medium
-  N <- ncol(cluster$r)
-  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[1,], b=cluster$sizes[2,], c=cluster$sizes[3,], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAu(wavelength)$epsilon, medium=medium), SIMPLIFY=FALSE))
+  N <- nrow(cluster$r)
+  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[,1], b=cluster$sizes[,2], c=cluster$sizes[,3], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAu(wavelength)$epsilon, medium=medium), SIMPLIFY=FALSE))
   beta <- 1/alpha
   
   angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
@@ -194,8 +194,8 @@ simulation <- function(wavelength, cluster, medium=1.33){
 
 simulationcpp <- function(wavelength, cluster, medium=1.33, Nquad=30){
   kn <- 2*pi/wavelength*medium
-  N <- ncol(cluster$r)
-  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[1,], b=cluster$sizes[2,], c=cluster$sizes[3,], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAu(wavelength)$epsilon, medium=medium), SIMPLIFY=FALSE))
+  N <- nrow(cluster$r)
+  alpha <- do.call(cbind, mapply(cda::polarizability_ellipsoid, a=cluster$sizes[,1], b=cluster$sizes[,2], c=cluster$sizes[,3], MoreArgs=list(wavelength=wavelength, epsilon=dielectric::epsAu(wavelength)$epsilon, medium=medium), SIMPLIFY=FALSE))
   beta <- 1/alpha
   
   angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
@@ -226,8 +226,10 @@ simulationcpp <- function(wavelength, cluster, medium=1.33, Nquad=30){
 #   weights <- rep(1, length=ncol(angles))
 #   tmp <- cd$averaging(cluster$r, A, Adiag, kn, angles, weights)
   
-  quadrature <- integration_points("GL", Nquad)
-  tmp <- cd$averaging(cluster$r, A, Adiag, kn, quadrature$angles, quadrature$weights)
+  quadrature <- cda:::integration_points("GL", Nquad)
+  
+  tmp <- cd$averaging(cluster$r, A, Adiag, kn, as.matrix(quadrature$angles), quadrature$weights)
+#   message("here")
 #   
 #   arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
 #                        const arma::cx_mat& Adiag,			
@@ -264,8 +266,9 @@ cl <- cluster_dimer(dihedral = 45 * pi/180, d=100, a=35, b=12,
 
 
 # cluster$sizes <- cluster$sizes*1
-cluster <- lapply(cl, t)
+# cluster <- lapply(cl, t)
 # simulation(500, cluster)
+cluster <- cl
 wavelength <- data.frame(wavelength=seq(400, 900))
 # material <- epsAu(wavelength)
 

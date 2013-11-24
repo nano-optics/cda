@@ -18,12 +18,12 @@ using namespace std;
 // which are the diagonal blocks of the interaction matrix
 arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler) {
   
-  const int N = Euler.n_cols;
+  const int N = Euler.n_rows;
   arma::mat Rot(3,3);
   arma::cx_mat polar = arma::zeros<arma::cx_mat>( 3*N, 3*N );
   int ii=0;
   for(ii=0; ii<N; ii++){
-    Rot = euler(Euler(0,ii), Euler(1,ii), Euler(2,ii));
+    Rot = euler(Euler(ii,0), Euler(ii,1), Euler(ii,2));
     polar.submat(ii*3,ii*3,ii*3+2,ii*3+2) =  Rot.st() * \
       diagmat(Beta.subvec(ii*3, ii*3+2)) * Rot; 
     
@@ -33,16 +33,16 @@ arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler)
 }
 
 // constructs the interaction matrix 
-// R is the 3xN matrix of positions
+// R is the Nx3 matrix of positions
 // kn is the incident wavenumber (scalar)
 // Beta is the 3N vector of inverse polarisabilities
-// Euler is the 3xN matrix of rotation angles
-// full is an integer flag to use full/static interaction term
+// Euler is the Nx3 matrix of rotation angles
+// full is an logical flag to use full/static interaction term
 arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 				const arma::cx_colvec& Beta, const arma::mat& Euler, 
 				const bool full) {
   
-  const int N = R.n_cols;
+  const int N = R.n_rows;
   arma::cx_mat A = arma::zeros<arma::cx_mat>( 3*N, 3*N );
 
   // constants
@@ -65,10 +65,10 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 	{
 	  if(jj!=kk)
 	    {
-	      rk_to_rj = R.col(jj) - R.col(kk) ;
-	      rjk = norm(rk_to_rj,2);
+	      rk_to_rj = R.row(jj) - R.row(kk) ;
+	      rjk = norm(rk_to_rj, 2);
 	      rjkhat = rk_to_rj / rjk;
-	      rjkrjk =  rjkhat * rjkhat.st();
+	      rjkrjk =  rjkhat.st() * rjkhat;
 	      if(full) {
 		Ajk = exp(i*kn*rjk) / rjk *  (kn*kn*(rjkrjk - I3) + \
 					      (i*kn*rjk - arma::cx_double(1,0)) / \
@@ -77,7 +77,7 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 		Ajk = (I3 - 3*rjkrjk)/ (rjk*rjk*rjk)  ;
 	      }
 	    } else { // diagonal blocks
-	    Rot = euler(Euler(0,jj), Euler(1,jj), Euler(2,jj));
+	    Rot = euler(Euler(jj,0), Euler(jj,1), Euler(jj,2));
 	    Ajk = Rot.st() * diagmat(Beta.subvec(jj*3, jj*3+2)) * Rot;
 	      
 	      }
@@ -131,8 +131,8 @@ arma::cx_mat incident_field(const arma::cx_colvec& E0,
 			    const arma::mat& R,
 			    const arma::mat& Angles)
 {
-  const int Nangles = Angles.n_cols;
-  const int N = R.n_cols;
+  const int Nangles = Angles.n_rows;
+  const int N = R.n_rows;
   const arma::cx_double i = arma::cx_double(0,1);
   arma::mat Rot(3,3);
   arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
@@ -143,13 +143,12 @@ arma::cx_mat incident_field(const arma::cx_colvec& E0,
   arma::cx_colvec expikrrep(3*N);
   arma::cx_colvec E0rep(3*N);
   int jj=0;
-  arma::mat  Rt = R.st();
   for(jj=0; jj<Nangles; jj++)
     {
-      Rot = euler(Angles(0, jj), Angles(1, jj), Angles(2, jj));
+      Rot = euler(Angles(jj,0), Angles(jj,1), Angles(jj,2));
       k_r = Rot.st() * k;
       E0_r = Rot.st() * E0;
-      kR = Rt * k_r ;
+      kR = R * k_r ;
       expikr = exp(i * kR);
       expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
       E0rep = repmat(E0_r, N, 1);

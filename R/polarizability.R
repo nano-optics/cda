@@ -122,7 +122,7 @@ Kuwata.B <- function(L){
 ##' @author Baptiste Auguie
 inverse_polarizability <- function(cluster, material, 
                           polarizability_fun = polarizability_ellipsoid, ...){
-  polar <- mlply(t(cluster$sizes), polarizability_fun,
+  polar <- mlply(cluster[['sizes']], polarizability_fun,
                  wavelength=material$wavelength,
                  epsilon=material$epsilon, ...)
   invalpha <- t(1/do.call(cbind, polar))

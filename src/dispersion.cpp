@@ -22,7 +22,7 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
 			     const arma::colvec& Angles)
 {
   const int Nangles = Angles.n_elem;
-  const int N = R.n_cols;
+  const int N = R.n_rows;
   const arma::cx_double i = arma::cx_double(0,1);
   arma::mat Rot(3,3);
   arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
@@ -33,13 +33,12 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
   arma::cx_colvec expikrrep(3*N);
   arma::cx_colvec E0rep(3*N);
   int jj=0;
-  arma::mat  Rt = R.st();
   for(jj=0; jj<Nangles; jj++)
     {
       Rot = axis_rotation(Angles(jj), Axes(jj));
       k_r = Rot.st() * k;
       E0_r = Rot.st() * E0;
-      kR = Rt * k_r ;
+      kR = R * k_r ;
       expikr = exp(i * kR);
       expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
       E0rep = repmat(E0_r, N, 1);
@@ -61,7 +60,7 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
 		      const arma::ivec& Axes, 
 		      const int polarisation)
    {
-     const int N = R.n_cols, NAngles = Angles.n_elem;
+     const int N = R.n_rows, NAngles = Angles.n_elem;
     //constants
     const arma::cx_double i = arma::cx_double(0,1);
     const double pi = arma::datum::pi;
@@ -109,7 +108,7 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
   {
 
     const int NAngles = Angles.n_elem;
-    int N = kn.n_elem, Nr = R.n_cols, ll;
+    int N = kn.n_elem, Nr = R.n_rows, ll;
     arma::cube results(NAngles, 6, N);
     arma::mat tmp(NAngles, 6);
     arma::cx_mat A(3*Nr,3*Nr), Adiag(3*Nr,3*Nr);
