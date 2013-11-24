@@ -32,21 +32,21 @@ cluster_helix(N = 5, R0 = 12, pitch = 15, delta = pi/2, delta0 = 0,
   \item{...}{extra arguments (ignored)}
 }
 \value{
-  list
+list
 }
 \description{
-  cluster_helix
+cluster_helix
 }
 \details{
-  helical cluster of ellipsoids
+helical cluster of ellipsoids
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}},
-  \code{\link{cluster_dimer2}}, \code{\link{equal_angles}},
-  \code{\link{equal_sizes}}, \code{\link{helix}}
+Other user_level cluster: \code{\link{cluster_chain}},
+\code{\link{cluster_dimer}}, \code{\link{cluster_dimer2}},
+\code{\link{equal_angles}}, \code{\link{equal_sizes}},
+\code{\link{helix}}
 }
 

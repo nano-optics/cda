@@ -9,13 +9,6 @@ norm <- function(x) as.numeric(sqrt(t.default(x) %*% x))
 # E0 <- c(1, 0, 0)
 # k <- 6/600 *c(0,0,1)
 
-incident_field <- function(E0, k, r){
-  kr <- crossprod(k, r)
-  
-  expikr <- exp(1i*kr)
-  as.vector(matrix(c(E0[1]*expikr, E0[2]*expikr, 
-                     E0[3]*expikr), nrow=3, byrow=T))  
-}
 
 cext <- function(k, E0, Ei, P){
   Re(4*pi* norm(k) /(E0%*%Conj(E0)) * Im(P%*%Conj(Ei)))
@@ -33,6 +26,14 @@ cext <- function(k, E0, Ei, P){
 cext_avg <- function(k, E0, Ei, P){
   
   Re(4*pi* norm(k) /(E0%*%Conj(E0)) * Im(c(P)%*%Conj(c(Ei)))) / ncol(P)
+}
+
+incident_field <- function(E0, k, r){
+  kr <- crossprod(k, r)
+  
+  expikr <- exp(1i*kr)
+  as.vector(matrix(c(E0[1]*expikr, E0[2]*expikr, 
+                     E0[3]*expikr), nrow=3, byrow=T))  
 }
 
 incident_fields <- function(E0, k, r, angles){

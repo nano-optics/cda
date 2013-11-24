@@ -19,22 +19,22 @@ cluster_dimer2(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
   \item{b}{semi axis}
 }
 \value{
-  list with r, sizes, angles
+list with r, sizes, angles
 }
 \description{
-  cluster_dimer2
+cluster_dimer2
 }
 \details{
-  cluster with two nanorods first rod along x at (0, 0,
-  -d/2) second rod at (0, 0, d/2)
+cluster with two nanorods first rod along x at (0, 0, -d/2)
+second rod at (0, 0, d/2)
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
-  \code{\link{equal_angles}}, \code{\link{equal_sizes}},
-  \code{\link{helix}}
+Other user_level cluster: \code{\link{cluster_chain}},
+\code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
+\code{\link{equal_angles}}, \code{\link{equal_sizes}},
+\code{\link{helix}}
 }
 

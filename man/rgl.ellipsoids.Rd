@@ -14,14 +14,14 @@ rgl.ellipsoids(positions, sizes, angles, ...)
   \item{...}{additional params}
 }
 \value{
-  rgl mesh
+rgl mesh
 }
 \description{
-  Create a list of rgl ellipsoids oriented in space
+Create a list of rgl ellipsoids oriented in space
 }
 \details{
-  each ellipsoid is specified by its position, dimensions,
-  and Euler angles
+each ellipsoid is specified by its position, dimensions,
+and Euler angles
 }
 \examples{
 cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)
@@ -29,9 +29,9 @@ sizes <- equal_sizes(0.04,0.02,0.02,NROW(cl$positions))
 \dontrun{ require(rgl) ; rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold") }
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level rgl: \code{\link{rgl.ellipsoid}}
+Other user_level rgl: \code{\link{rgl.ellipsoid}}
 }
 

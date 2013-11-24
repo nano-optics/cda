@@ -1,7 +1,7 @@
 \docType{data}
-\name{linear}
-\alias{linear}
-\title{Rcpp module: linear}
+\name{dispersion}
+\alias{dispersion}
+\title{Rcpp module: dispersion}
 \description{
 Exposes C++ calculation of scattering and absorption of
 dipolar particles by linearly polarised light in fixed
@@ -18,6 +18,6 @@ and extinction spectra for x and y polarisation at multiple
 angles of incidence.} }
 }
 \examples{
-show( linear )
+show( dispersion )
 }
 

@@ -12,19 +12,19 @@ array_factor(wavelength, N, pitch)
   \item{pitch}{pitch in nm}
 }
 \value{
-  S
+S
 }
 \description{
-  C++ calculation of the array factor
+C++ calculation of the array factor
 }
 \details{
-  C++ calculation of the array factor
+C++ calculation of the array factor
 }
 \examples{
 S <- array_factor(seq(400, 600),  10,  500)
 str(S)
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 

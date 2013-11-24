@@ -14,18 +14,18 @@ particles_povray(positions, angles, sizes, out = "positions.pov")
   \item{out}{output filename}
 }
 \value{
-  side-effect only
+side-effect only
 }
 \description{
-  create particles for povray input
+create particles for povray input
 }
 \details{
-  writes a list of particles
+writes a list of particles
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level povray: \code{\link{curve_povray}}
+Other user_level povray: \code{\link{curve_povray}}
 }
 

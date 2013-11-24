@@ -9,16 +9,15 @@
    \item{\code{Gxx}}{a complex vector}
  }}
 \description{
-  Converged lattice sum G0 for an infinite 2D array of
-  dipoles at normal incidence
+Converged lattice sum G0 for an infinite 2D array of
+dipoles at normal incidence
 }
 \details{
-  The calculation was made using code from Prof. J. G. de
-  Abajo (CSIC, Spain)
+The calculation was made using code from Prof. J. G. de
+Abajo (CSIC, Spain)
 }
 \examples{
 data(G0)
 \dontrun{demo(lattice_sum)}
 }
-\keyword{datasets}
 

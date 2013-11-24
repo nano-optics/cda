@@ -15,15 +15,15 @@ linear_extinction_spectrum(cluster, material, medium = 1.33,
   \item{progress}{logical, display progress bar}
 }
 \value{
-  data.frame
+data.frame
 }
 \description{
-  extinction spectrum
+extinction spectrum
 }
 \details{
-  extinction spectrum
+extinction spectrum
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 

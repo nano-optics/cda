@@ -25,15 +25,15 @@ dispersion_spectrum(cluster, angles, axis = "z", material, medium = 1.33,
   \item{progress}{logical, display progress bar}
 }
 \value{
-  data.frame
+data.frame
 }
 \description{
-  dispersion spectrum
+dispersion spectrum
 }
 \details{
-  dispersion spectrum
+dispersion spectrum
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 

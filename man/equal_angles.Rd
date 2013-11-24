@@ -14,22 +14,21 @@ equal_angles(phi = 0, theta = 0, psi = 0, N)
   \item{N}{N}
 }
 \value{
-  matrix Nx3
+matrix Nx3
 }
 \description{
-  equal_angles
+equal_angles
 }
 \details{
-  generate a matrix of equal angles
+generate a matrix of equal angles
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level cluster: \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}},
-  \code{\link{cluster_dimer2}},
-  \code{\link{cluster_helix}}, \code{\link{equal_sizes}},
-  \code{\link{helix}}
+Other user_level cluster: \code{\link{cluster_chain}},
+\code{\link{cluster_dimer}}, \code{\link{cluster_dimer2}},
+\code{\link{cluster_helix}}, \code{\link{equal_sizes}},
+\code{\link{helix}}
 }
 

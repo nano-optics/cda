@@ -37,19 +37,18 @@ circular_dichroism_spectrum(cluster, material, medium = 1.33, N = 100,
   matrix}
 }
 \description{
-  Simulate a CD spectrum
+Simulate a CD spectrum
 }
 \details{
-  CD spectrum
+CD spectrum
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \references{
-  Y. Okada, Efficient numerical orientation averaging of
-  light scattering properties with a quasi-Monte-Carlo
-  method, Journal of Quantitative Spectroscopy and
-  Radiative Transfer, Volume 109, Issue 9, June 2008, Pages
-  1719-1742.
+Y. Okada, Efficient numerical orientation averaging of
+light scattering properties with a quasi-Monte-Carlo
+method, Journal of Quantitative Spectroscopy and Radiative
+Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742.
 }
 
