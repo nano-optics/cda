@@ -92,41 +92,37 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 
 // calculate the extinction cross section given wavenumber kn, Nx3
 // polarization P, Nx3 incident field Eincident
-double extinction(const double kn, const arma::cx_mat& P, 
-		  const arma::cx_mat& Eincident)
+arma::colvec extinction(const double kn, const arma::cx_mat& P, 
+			 const arma::cx_mat& Eincident)
 {
-  const double c = 4*arma::math::pi()*kn * \
-    imag(cdot(vectorise(Eincident), vectorise(P))) / P.n_cols; 
-  return c;
+  int Nangles = P.n_cols, ii=0;
+  arma::colvec results(Nangles);
+
+  for (ii=0; ii<Nangles; ii++)
+    {
+      results(ii) = imag(cdot(Eincident.col(ii), P.col(ii)));
+    }
+  return  4*arma::datum::pi*kn*results;
 }
 
-
-// cabs_avg <- function(kn, Alpha, P){
-//   Eexc <- c(Alpha %*% P)
-  
-//   4*pi* kn * Re(Im(Conj(Eexc) %*% c(P)) - kn^3* Conj(c(P))%*%c(P))/ ncol(P)
-// }
 
 // calculate the absorption cross section given wavenumber kn, Nx3
 // polarization P, 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
-double absorption(const double kn, const arma::cx_mat& P, 
+ arma::colvec absorption(const double kn, const arma::cx_mat& P, 
 		  const arma::cx_mat& diagBeta)
 {
-  arma::cx_colvec Pvec = vectorise(P, 0); 
-  arma::cx_colvec Evec=vectorise(diagBeta * P, 0);
-  const double c = 4*arma::math::pi()*kn*(as_scalar(imag(Evec.t() * Pvec)) - \
-						    kn*kn*kn* 2/3 * \
-						    real(cdot(Pvec, Pvec))); 
-  return c/P.n_cols;
+  int Nangles = P.n_cols, ii=0;
+  arma::cx_mat Eexc = diagBeta * P;
+  arma::colvec results(Nangles);
+
+  for (ii=0; ii<Nangles; ii++)
+    {
+      results(ii) = imag(cdot(Eexc.col(ii), P.col(ii))) -	\
+			      kn*kn*kn* 2/3 * real(cdot(P.col(ii), P.col(ii)));
+    }
+  return  4*arma::datum::pi*kn*results;
+
 }
-
-// double absorption(const double kn, const arma::cx_colvec& P, const arma::cx_mat& diagBeta)
-// {
-//   const double c = 4*arma::math::pi()*kn*(imag(cdot(diagBeta * P, P)) -	\
-// 					  kn*kn*kn* 2/3 * real(cdot(P, P))); 
-//   return c;
-// }
-
 
 // calculate the incident field at each dipole location 
 // for multiple angles of incidence

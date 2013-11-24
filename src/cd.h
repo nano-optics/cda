@@ -3,7 +3,7 @@
 
 #include <RcppArmadillo.h>
 
-arma::colvec averaging2(const arma::mat& R, const arma::cx_mat& A, 
+arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A, 
 	   const arma::cx_mat& Beta,		
 	   const double kn, 
 	   const arma::mat& Angles,

@@ -9,8 +9,13 @@ using namespace Rcpp ;
 using namespace RcppArmadillo ;
 using namespace std;
 
+// optional arguments in c++
+// switch between c++ functions
+// Toeplitz
+// Gauss Legendre quadrature
+
 // angular averaging with unit weights
-arma::colvec averaging2(const arma::mat& R, const arma::cx_mat& A, 
+arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A, 
 			const arma::cx_mat& Beta,		
 			const double kn, 
 			const arma::mat& Angles,
@@ -29,24 +34,30 @@ arma::colvec averaging2(const arma::mat& R, const arma::cx_mat& A,
     arma::cx_colvec RCP="(0,0) (0,1) (1,0);", LCP="(0,0) (1,0) (0,1);";
     RCP = arma::datum::sqrt2/2 * RCP ;
     LCP = arma::datum::sqrt2/2 * LCP ;
+    arma::colvec xsec(Nangles); // temporary storage of cross-sections
+
     // left polarisation
     Eincident = incident_field(LCP, kvec, R, Angles);
     P = solve(A, Eincident);
-    res(0) = extinction(kn, P, Eincident); 
-    res(1) = absorption(kn, P, Beta); 
+    xsec = extinction(kn, P, Eincident);
+    res(0) = dot(xsec, Weights); 
+    xsec = absorption(kn, P, Beta);
+    res(1) = dot(xsec, Weights); 
       
     // right polarisation
     Eincident = incident_field(RCP, kvec, R, Angles);
     P = solve(A, Eincident);
-    res(2) = extinction(kn, P, Eincident); 
-    res(3) = absorption(kn, P, Beta); 
+    xsec = extinction(kn, P, Eincident);
+    res(2) = dot(xsec, Weights); 
+    xsec = absorption(kn, P, Beta);
+    res(3) = dot(xsec, Weights); 
 
     return res ;
   } 
 
 RCPP_MODULE(cd){
-       Rcpp::function( "averaging2", &averaging2, \
-		 "Calculates the orientation-averaged CD spectrum for absorption and extinction using grid integration" ) ;
+       Rcpp::function( "averaging", &averaging, \
+		 "Calculates the orientation-averaged spectrum for absorption and extinction using numerical quadrature over two Euler angles" ) ;
 
 
 }

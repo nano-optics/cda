@@ -15,7 +15,7 @@ using namespace std;
 
 // calculate the incident field at each dipole location 
 // for multiple axis-angles of incidence
-arma::cx_mat incident_field2(const arma::cx_colvec& E0, 
+arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0, 
 			     const arma::colvec& k, 
 			     const arma::mat& R,
 			     const arma::ivec& Axes,
@@ -49,40 +49,6 @@ arma::cx_mat incident_field2(const arma::cx_colvec& E0,
 }
 
 
-// calculate the extinction cross section given wavenumber kn, Nx3
-// polarization P, Nx3 incident field Eincident
-arma::colvec extinction2(const double kn, const arma::cx_mat& P, 
-			 const arma::cx_mat& Eincident)
-{
-  int Nangles = P.n_cols, ii=0;
-  arma::colvec results(Nangles);
-
-  for (ii=0; ii<Nangles; ii++)
-    {
-      results(ii) = imag(cdot(Eincident.col(ii), P.col(ii)));
-    }
-  return  4*arma::datum::pi*kn*results;
-}
-
-
-// cabs_avg <- function(kn, Alpha, P){
-//   Eexc <- c(Alpha %*% P)
-  
-//   4*pi* kn * Re(Im(Conj(Eexc) %*% c(P)) - kn^3* Conj(c(P))%*%c(P))/ ncol(P)
-// }
-
-// calculate the absorption cross section given wavenumber kn, Nx3
-// polarization P, 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
-double absorption2(const double kn, const arma::cx_mat& P, 
-		  const arma::cx_mat& diagBeta)
-{
-  arma::cx_colvec Pvec = vectorise(P, 0); 
-  arma::cx_colvec Evec=vectorise(diagBeta * P, 0);
-  const double c = 4*arma::math::pi()*kn*(as_scalar(imag(Evec.t() * Pvec)) - \
-						    kn*kn*kn* 2/3 * \
-						    real(cdot(Pvec, Pvec))); 
-  return c/P.n_cols;
-}
 
 // // calculation for multiple angles of incidence
 // R: positions
@@ -122,17 +88,17 @@ double absorption2(const double kn, const arma::cx_mat& P,
     arma::cx_mat Eincident(3*N,NAngles);
     arma::cx_mat P(3*N,NAngles);
 
-    // begin calculation
-    Eincident = incident_field2(LPP, kvec, R, Axes, Angles);
-    //cout << Eincident << endl;
+    // first polarisation
+    Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
     P = solve(A, Eincident);
-    res.col(0) =  extinction2(kn, P, Eincident); 
-    res.col(1) = extinction2(kn, P, Eincident); 
+    res.col(0) =  extinction(kn, P, Eincident); 
+    res.col(1) = absorption(kn, P, Alpha); 
 
-    Eincident = incident_field2(LPS, kvec, R, Axes, Angles);
+    // second polarisation
+    Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
     P = solve(A, Eincident);
-    res.col(2) =  extinction2(kn, P, Eincident); 
-    res.col(3) = extinction2(kn, P, Eincident); 
+    res.col(2) =  extinction(kn, P, Eincident); 
+    res.col(3) = absorption(kn, P, Alpha); 
              
     return res ;
    } 

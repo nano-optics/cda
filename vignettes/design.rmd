@@ -1,6 +1,18 @@
 Design considerations for the CDA package
 ========================================================
 
+
+## Functions
+
+CDA
+
+* `block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler)`
+
+* `interaction_matrix(const arma::mat& R, const double kn,
+  			const arma::cx_colvec& Beta, const arma::mat& Euler, 
+				const int full)`
+* ``
+
 ## Minimal code in R
 
 ## Structure of the core components
