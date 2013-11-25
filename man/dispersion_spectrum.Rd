@@ -2,9 +2,8 @@
 \alias{dispersion_spectrum}
 \title{dispersion_spectrum}
 \usage{
-dispersion_spectrum(cluster, angles, axis = "z", material, medium = 1.33,
-  polarisation = c("linear", "circular"), invert = FALSE,
-  progress = FALSE)
+dispersion_spectrum(cluster, material, medium = 1.33, angles, axis = "z",
+  polarisation = c("linear", "circular"), progress = FALSE)
 }
 \arguments{
   \item{cluster}{list describing a cluster}
@@ -19,8 +18,6 @@ dispersion_spectrum(cluster, angles, axis = "z", material, medium = 1.33,
   \item{medium}{medium refractive index}
 
   \item{polarisation}{linear or circular polarisation}
-
-  \item{invert}{logical}
 
   \item{progress}{logical, display progress bar}
 }

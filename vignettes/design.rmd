@@ -1,16 +1,15 @@
-Design considerations for the CDA package
+Design considerations and structure of the CDA package
 ========================================================
-
 
 ## Description of a cluster at the R level
 
 A cluster describes the geometry of N particles in a list,
 
-* positions is a data.frame of 3 columns (x, y, z) and N rows
+* `r` is a data.frame of 3 columns (x, y, z) and N rows
 
-* angles is a data.frame of 3 columns (x, y, z) and N rows 
+* `angles` is a data.frame of 3 columns (x, y, z) and N rows 
 
-* sizes is a data.frame of 3 columns (x, y, z) and N rows
+* `sizes` is a data.frame of 3 columns (x, y, z) and N rows
 
 ## Polarisability
 
@@ -18,8 +17,67 @@ The principal values of the inverse polarisability tensor of every particle are 
 
 This matrix is formed from the sizes of the cluster, and the material and medium properties.
 
+## Functions at the R level
+
+### Modelling spectra
+
+* `circular_dichroism_spectrum`
+
+* `dispersion_spectrum`
+
+### Clusters
+
+* `cluster_chain` 
+
+* `cluster_dimer` 
+
+* `cluster_dimer2` 
+
+* `cluster_helix`
+
+### Utilities
+
+* `array_factor`
+
+* `alpha_kuwata` 
+
+* `equal_angles`
+
+* `equal_sizes`
+
+* `helix`
+
+* `inverse_polarizability`
+ 
+* `La`
+
+* `polarizability_ellipsoid`
+ 
+### Visualisation
+
+* `curve_povray`
+
+* `particles_povray`
+
+* `rgl.ellipsoid`
+
+* `rgl.ellipsoids
+
+## Structure of the core C++ components
+
+* A is a 3Nx3N complex matrix
+
+* Adiag is a 3Nx3N complex matrix
+
+* Beta is a 3NxNlambda complex matrix
+
+
 ## Functions at the C++ level
 
+### Array
+
+`array_factor` Dipole sum (truncated) for 2D square array
+  
 ### CDA
 
 * `incident_field` Calculate the incident field at each dipole location 
@@ -47,49 +105,9 @@ This matrix is formed from the sizes of the cluster, and the material and medium
 
 * `dispersion_spectrum` Angle-resolved spectra for linear or circular polarisations
 
-### Linear
-
-
-
 ### Utils
 
+* `euler` Euler rotation matrix
 
-
-
-## Minimal code in R
-
-## Structure of the core components
-
-Simulated spectra are obtained for a vector of wavelengths, with length Nlambda, and a cluster size N.
-
-* Wavelength-dependent values
-
-Beta is a matrix of size 3N x Nlambda (rows x columns). It is passed to xxx_spectrum functions at the cpp level, and is passed one row at a time to the functions operating one wavelength at a time.
-
-      beta = reshape(Beta.row(ll), 3, Nr, 1); 
-
-Not true, change this without reshaping beta every time
-
-Integrate diagonal into main A function and don't build a useless matrix
-
-
-------
-
-Beta is 3N x Nlambda
-Euler is 3xN matrix
-R is a 3xN matrix
-Angle is a 3xN matrix
-Axis is a 3xN matrix
-
------
-
-beta is Beta.col(ii)
-block diagonal becomes
-trans(Euler.col(ii)) * diagmat(beta(jj:jj+3)) * Euler.col(ii)
-
-
-
-* Diagonal blocks
-
-* Interaction matrix
+* `axis_rotation` Rotation matrix about a cartesian axis
 

@@ -201,10 +201,10 @@ arma::colvec extinction(const double kn, const arma::cx_mat& P,
 // Nx3 polarisation P
 // 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
  arma::colvec absorption(const double kn, const arma::cx_mat& P, 
-		  const arma::cx_mat& diagBeta)
+		  const arma::cx_mat& Adiag)
 {
   int Nangles = P.n_cols, ii=0;
-  arma::cx_mat Eexc = diagBeta * P;
+  arma::cx_mat Eexc = Adiag * P;
   arma::colvec results(Nangles);
 
   for (ii=0; ii<Nangles; ii++)
@@ -219,7 +219,9 @@ arma::colvec extinction(const double kn, const arma::cx_mat& P,
 
 RCPP_MODULE(cda){
        Rcpp::function( "euler", &euler, 
-		       "Construct a 3x3 Euler rotation matrix" ) ;
+		       "Euler rotation matrix" ) ;
+       Rcpp::function( "axis_rotation", &axis_rotation, 
+		       "Rotation matrix about a cartesian axis" ) ;
        Rcpp::function( "extinction", &extinction, 
 	 "Calculate the extinction cross-section for multiple incident angles" ) ;
        Rcpp::function( "absorption", &absorption, 

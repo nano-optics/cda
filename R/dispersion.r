@@ -29,7 +29,7 @@ dispersion_spectrum <- function (cluster, material, medium = 1.33,
                                  polarizability_fun = polarizability_ellipsoid, 
                                  medium = medium, kuwata = TRUE)
   Nwavelengths <- length(k0)
-  Nparticles <- ncol(cluster$r)
+  Nparticles <- nrow(cluster$r)
   Nangles <- length(angles)
   
   if(length(axis) == 1) axis <- rep(axis, length.out=Nangles)
@@ -38,8 +38,10 @@ dispersion_spectrum <- function (cluster, material, medium = 1.33,
   stopifnot(all(axis %in% c(0L, 1L, 2L)), !any(is.na(axis)))
 
   stopifnot(Nangles == length(axis))
-  stopifnot(is.matrix(Beta), is.vector(angles), is.matrix(cluster$r), 
+  stopifnot(is.matrix(Beta), is.vector(angles), 
+            is.matrix(cluster$r), 
             is.matrix(cluster$angles))
+  
   stopifnot(nrow(Beta)/3 == Nparticles, 
             ncol(Beta) == Nwavelengths)
   

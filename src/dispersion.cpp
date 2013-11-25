@@ -37,19 +37,19 @@ using namespace std;
 
 
     // incident field
-    const arma::colvec  khat="1 0 0;"; 
+    const arma::colvec  khat="0 0 1;"; 
     const arma::colvec kvec = kn*khat; 
     arma::cx_colvec LPP, LPS;
     
     if(polarisation == 0){ // linear
-     LPP="(0,0) (1,0) (0,0);", LPS="(0,0) (0,0) (1,0);";
+     LPP="(1,0) (0,0) (0,0);", LPS="(0,0) (1,0) (0,0);";
       } else { // circular
-      LPP="(0,0) (1,0) (0,1);", LPS="(0,0) (0,1) (1,0);";
+     LPP="(0,1) (1,0) (0,0);", LPS="(1,0) (0,1) (0,0);";
       LPP = arma::datum::sqrt2/2 * LPP ;
       LPS = arma::datum::sqrt2/2 * LPS ;
     }
 
-    arma::mat res(NAngles, 4) ;  
+    arma::mat res(NAngles, 6) ;  
     arma::cx_mat Eincident(3*N,NAngles);
     arma::cx_mat P(3*N,NAngles);
 
@@ -58,12 +58,14 @@ using namespace std;
     P = solve(A, Eincident);
     res.col(0) =  extinction(kn, P, Eincident); 
     res.col(1) = absorption(kn, P, Adiag); 
+    res.col(2) = res.col(0) - res.col(1); 
 
     // second polarisation
     Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
     P = solve(A, Eincident);
-    res.col(2) =  extinction(kn, P, Eincident); 
-    res.col(3) = absorption(kn, P, Adiag); 
+    res.col(3) =  extinction(kn, P, Eincident); 
+    res.col(4) = absorption(kn, P, Adiag); 
+    res.col(5) = res.col(3) - res.col(4); 
              
     return res ;
    } 
@@ -96,7 +98,6 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
     for(ll=0; ll<N; ll++){ // loop over kn   
       if(progress)
 	progress_bar(ll+1,N);
-
       A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, 1); // retarded
       Adiag = block_diagonal(Beta.col(ll), Euler);
       tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, polarisation);

@@ -8,7 +8,7 @@ using namespace RcppArmadillo ;
 using namespace std;
 
   
-  void progress_bar(double x, double N)
+void progress_bar(double x, double N)
   {
     // how wide you want the progress meter to be
     int totaldotz=40;
@@ -33,8 +33,8 @@ using namespace std;
     // fflush(stdout);
   }
   
-// general rotation matrix
- arma::mat euler(const double phi, const double theta, const double psi)
+// Euler rotation matrix
+arma::mat euler(const double phi, const double theta, const double psi)
   {
     arma::mat Rot(3,3);
     const double cosphi = cos(phi), cospsi = cos(psi), costheta = cos(theta);
@@ -53,7 +53,7 @@ using namespace std;
     return (Rot);
   }
 
-// rotation about one main axis only
+// Rotation matrix about a cartesian axis
  arma::mat axis_rotation(const double angle, const int axis)
   {
     const double pi = arma::math::pi();

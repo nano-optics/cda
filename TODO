@@ -1,15 +1,7 @@
 * test examples
 
-* refactor averaging and cd_spectrum to switch between two functions
-
 * polarisability port to c++, higher-level function for fast optimization
 
 * find/write an iterative solver for the CDA equations, e.g qmr, gmres, CG etc.
 
 * check the cheap accuracy for short wavelengths
-
-
-// optional arguments in c++
-// switch between c++ functions
-// Toeplitz
-// Gauss Legendre quadrature

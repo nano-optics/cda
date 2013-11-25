@@ -2,12 +2,8 @@ Package: cda
 Version: 1.5
 Authors@R: c(person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com",
-    role = c("aut", "cre")),
-    person("LAPACK authors",
-    role = "cph",
-    comment = "copyrights apply to src/zgels.f"))
+    role = c("aut", "cre")))
 License: GPL-3
-Copyright: file inst/COPYRIGHTS for src/zgels.f obtained from LAPACK
 Title: Coupled dipole approximation in electromagnetic scattering
 Description: Solves the electromagnetic problem of coupled-dipoles (scattering
     and absorption by a cluster of subwavelength particles in arbitrary 3D
@@ -38,4 +34,4 @@ Imports:
     randtoolbox,
     reshape2,
     plyr
-RcppModules: cda, cd, array, dispersion
+RcppModules: cda, cd, dispersion, array
