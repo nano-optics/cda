@@ -38,4 +38,4 @@ Imports:
     randtoolbox,
     reshape2,
     plyr
-RcppModules: cda, cd, linear, array, dispersion
+RcppModules: cda, cd, array, dispersion

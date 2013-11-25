@@ -11,8 +11,14 @@ using namespace std;
 
 
 //
-// angular averaging
+// Performs full angular averaging for both circular polarisations
 //
+// R is the Nx3 matrix of positions
+// A is the 3Nx3N interaction matrix
+// Adiag is the 3Nx3N block-diagonal part of the interaction matrix
+// kn is the incident wavenumber (scalar)
+// Angles is the Nanglesx3 matrix of incident beam angles
+// Weigths is the Nangles vector of quadrature weights
 arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A, 
 			const arma::cx_mat& Adiag,		
 			const double kn, 
@@ -53,6 +59,17 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     return res ;
   } 
 
+//
+// Angular-average spectra for LCP and RCP polarisations
+//
+// kn is the vector of incident wavenumbers
+// Beta is the 3N vector of inverse polarisabilities
+// R is the Nx3 matrix of positions
+// Euler is the Nx3 matrix of particle rotation angles
+// Angles is the Nanglesx3 matrix of incident beam angles
+// Weigths is the Nangles vector of quadrature weights
+// full is a logical flag to switch off retardation terms
+// progress is a logical flag to display progress bars
 arma::mat average_spectrum(const arma::colvec kn, 
 			   const arma::cx_mat& Beta, 
 			   const arma::mat& R,				
@@ -93,12 +110,10 @@ arma::mat average_spectrum(const arma::colvec kn,
 
 
 RCPP_MODULE(cd){
-       Rcpp::function( "averaging", &averaging, \
-		 "Calculates the orientation-averaged spectrum for absorption and extinction using numerical quadrature over two Euler angles" ) ;
-       Rcpp::function( "average_spectrum", &average_spectrum, \
-		 "Calculates the orientation-averaged spectrum for absorption and extinction using numerical quadrature over two Euler angles" ) ;
-
-
+       Rcpp::function( "averaging", &averaging, 
+	   "Performs full angular averaging for both circular polarisations" ) ;
+       Rcpp::function( "average_spectrum", &average_spectrum, 
+	   "Angular-average spectra for LCP and RCP polarisations" ) ;
 }
 
 

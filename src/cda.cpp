@@ -11,9 +11,91 @@ using namespace Rcpp ;
 using namespace RcppArmadillo ;
 using namespace std;
 
+//
+// Calculate the incident field at each dipole location 
+//
+// for multiple (Euler) angles of incidence
+// E0 is the normalised incident electric field before rotation
+// k is the incident wavevector before rotation
+// R is the Nx3 matrix of positions
+// Angles is the Nx3 matrix of incident beam angles
+arma::cx_mat incident_field(const arma::cx_colvec& E0, 
+			    const arma::colvec& k, 
+			    const arma::mat& R,
+			    const arma::mat& Angles)
+{
+  const int Nangles = Angles.n_rows;
+  const int N = R.n_rows;
+  const arma::cx_double i = arma::cx_double(0,1);
+  arma::mat Rot(3,3);
+  arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
+  arma::cx_colvec E0_r(3);
+  arma::cx_colvec expikr(N);
+  arma::colvec k_r(3);
+  arma::colvec kR(N);
+  arma::cx_colvec expikrrep(3*N);
+  arma::cx_colvec E0rep(3*N);
+  int jj=0;
+  for(jj=0; jj<Nangles; jj++)
+    {
+      Rot = euler(Angles(jj,0), Angles(jj,1), Angles(jj,2));
+      k_r = Rot.st() * k;
+      E0_r = Rot.st() * E0;
+      kR = R * k_r ;
+      expikr = exp(i * kR);
+      expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
+      E0rep = repmat(E0_r, N, 1);
+      Ei.col(jj) = E0rep % expikrrep;
+    }
+  return(Ei);
+}
 
+//
+// Incident field along multiple axes
+//
+// E0 is the normalised electric field
+// k is the wavevector
+// R is the Nx3 matrix of positions
+// Axes is a vector of integer codes corresponding to x, y, z
+// Angles is a vector of rotation angles around Axes
+arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0, 
+			     const arma::colvec& k, 
+			     const arma::mat& R,
+			     const arma::ivec& Axes,
+			     const arma::colvec& Angles)
+{
+  const int Nangles = Angles.n_elem;
+  const int N = R.n_rows;
+  const arma::cx_double i = arma::cx_double(0,1);
+  arma::mat Rot(3,3);
+  arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
+  arma::cx_colvec E0_r(3);
+  arma::cx_colvec expikr(N);
+  arma::colvec k_r(3);
+  arma::colvec kR(N);
+  arma::cx_colvec expikrrep(3*N);
+  arma::cx_colvec E0rep(3*N);
+  int jj=0;
+  for(jj=0; jj<Nangles; jj++)
+    {
+      Rot = axis_rotation(Angles(jj), Axes(jj));
+      k_r = Rot.st() * k;
+      E0_r = Rot.st() * E0;
+      kR = R * k_r ;
+      expikr = exp(i * kR);
+      expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
+      E0rep = repmat(E0_r, N, 1);
+      Ei.col(jj) = E0rep % expikrrep;
+    }
+  return(Ei);
+}
+
+//
+// Construct the diagonal blocks of the interaction matrix
+// (inverse polarisabilities) for use in C_abs
+//
 // Beta is the 3N vector of inverse polarisabilities
-// 3xN matrix Euler of rotation angles
+// Nx3 matrix Euler of rotation angles
 // returns a 3Nx3N block-diagonal matrix of (inverse) polarizabilities
 // which are the diagonal blocks of the interaction matrix
 arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler) {
@@ -32,7 +114,9 @@ arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler)
   return polar;
 }
 
-// constructs the interaction matrix 
+//
+// Construct the full interaction matrix
+//
 // R is the Nx3 matrix of positions
 // kn is the incident wavenumber (scalar)
 // Beta is the 3N vector of inverse polarisabilities
@@ -90,8 +174,12 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 }
 
 
-// calculate the extinction cross section given wavenumber kn, Nx3
-// polarization P, Nx3 incident field Eincident
+//
+// Calculate the extinction cross-section for multiple incident angles
+//
+// wavenumber kn
+// Nx3 polarisation P
+// Nx3 incident field Eincident
 arma::colvec extinction(const double kn, const arma::cx_mat& P, 
 			 const arma::cx_mat& Eincident)
 {
@@ -106,8 +194,12 @@ arma::colvec extinction(const double kn, const arma::cx_mat& P,
 }
 
 
-// calculate the absorption cross section given wavenumber kn, Nx3
-// polarization P, 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
+//
+// Calculate the absorption cross-section for multiple incident angles
+//
+// wavenumber kn
+// Nx3 polarisation P
+// 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
  arma::colvec absorption(const double kn, const arma::cx_mat& P, 
 		  const arma::cx_mat& diagBeta)
 {
@@ -124,45 +216,20 @@ arma::colvec extinction(const double kn, const arma::cx_mat& P,
 
 }
 
-// calculate the incident field at each dipole location 
-// for multiple angles of incidence
-arma::cx_mat incident_field(const arma::cx_colvec& E0, 
-			    const arma::colvec& k, 
-			    const arma::mat& R,
-			    const arma::mat& Angles)
-{
-  const int Nangles = Angles.n_rows;
-  const int N = R.n_rows;
-  const arma::cx_double i = arma::cx_double(0,1);
-  arma::mat Rot(3,3);
-  arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
-  arma::cx_colvec E0_r(3);
-  arma::cx_colvec expikr(N);
-  arma::colvec k_r(3);
-  arma::colvec kR(N);
-  arma::cx_colvec expikrrep(3*N);
-  arma::cx_colvec E0rep(3*N);
-  int jj=0;
-  for(jj=0; jj<Nangles; jj++)
-    {
-      Rot = euler(Angles(jj,0), Angles(jj,1), Angles(jj,2));
-      k_r = Rot.st() * k;
-      E0_r = Rot.st() * E0;
-      kR = R * k_r ;
-      expikr = exp(i * kR);
-      expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
-      E0rep = repmat(E0_r, N, 1);
-      Ei.col(jj) = E0rep % expikrrep;
-    }
-  return(Ei);
-}
 
 RCPP_MODULE(cda){
-       Rcpp::function( "euler", &euler, "Constructs a 3x3 Euler rotation matrix" ) ;
-       Rcpp::function( "extinction", &extinction, "Calculates the extinction cross-section" ) ;
-       Rcpp::function( "absorption", &absorption, "Calculates the absorption cross-section" ) ;
-       Rcpp::function( "interaction_matrix", &interaction_matrix, "Constructs the coupled-dipole interaction matrix" ) ;
-       Rcpp::function( "block_diagonal", &block_diagonal, "Diagonal part of the interaction matrix" ) ;
-Rcpp::function( "incident_field", &incident_field, "Incident field at multiple angles" ) ;
-
+       Rcpp::function( "euler", &euler, 
+		       "Construct a 3x3 Euler rotation matrix" ) ;
+       Rcpp::function( "extinction", &extinction, 
+	 "Calculate the extinction cross-section for multiple incident angles" ) ;
+       Rcpp::function( "absorption", &absorption, 
+         "Calculate the absorption cross-section for multiple incident angles" ) ;
+       Rcpp::function( "interaction_matrix", &interaction_matrix, 
+		       "Construct the full interaction matrix" ) ;
+       Rcpp::function( "block_diagonal", &block_diagonal, 
+		       "Construct the diagonal blocks of the interaction matrix" ) ;
+       Rcpp::function( "incident_field", &incident_field, 
+		       "Calculate the incident field at each dipole location" ) ;
+       Rcpp::function( "multiple_incident_field", &multiple_incident_field,
+	    "Incident field along multiple axes" ) ;
 }

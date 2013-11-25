@@ -89,7 +89,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' Y. Okada, Efficient numerical orientation averaging of light scattering properties with a quasi-Monte-Carlo method, Journal of Quantitative Spectroscopy and Radiative Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742.
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=100, 
                                         averaging = c("GL","QMC","grid", "cheap"),
-                                        iterative=FALSE, precision=1e-2, Nmax=1e4, dN=Nquad,
+                                        iterative=FALSE, precision=1e-3, Nmax=1e4, dN=Nquad,
                                         full=TRUE, progress=FALSE, verbose=TRUE,
                                         result.matrix=FALSE){
 
@@ -119,10 +119,10 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=10
       oldN <- Ntot
       old <- results[,1]
       Ntot <- Ntot + dN
-      quadrature <- integration_points(averaging, Nquad, FALSE)
+      quadrature <- integration_points(averaging, dN, FALSE)
       ## xsec at new points
       newres <-  cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
-                                     quadrature$angles, 
+                                     as.matrix(quadrature$angles), 
                                      quadrature$weights,
                                      full, progress)
       

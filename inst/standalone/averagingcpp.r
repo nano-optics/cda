@@ -302,9 +302,12 @@ print(p)
 #                                        medium=1.0,
 #                                        epsilon = dielectric::epsAu(wavelength)$epsilon)
 
-circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="QMC", Nquad=100, iterative=FALSE) -> a
-circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="GL", Nquad=40) -> b
+circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="QMC", Nquad=100, iterative=TRUE) -> a
+circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="GL", Nquad=100) -> b
+# circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="cheap") -> c
+# circular_dichroism_spectrum(cluster, epsAu(300:900), averaging="grid") -> d
 
 ggplot(a, aes(wavelength, value, colour=variable))+
-  facet_wrap(~type, ncol=1, scale="free")+ geom_line()+ geom_line(data=b, linetype=2)
+  facet_wrap(~type, ncol=1, scale="free")+ 
+  geom_line()+ geom_line(data=b, linetype=2)
 

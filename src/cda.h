@@ -14,6 +14,12 @@ arma::cx_mat incident_field(const arma::cx_colvec& E0,
 			    const arma::mat& R,
 			    const arma::mat& Angles);
 
+arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0, 
+				     const arma::colvec& k, 
+				     const arma::mat& R,
+				     const arma::ivec& Axes,
+				     const arma::colvec& Angles);
+
 arma::colvec extinction(const double kn, const arma::cx_mat& P, 
 				 const arma::cx_mat& Eincident);
 

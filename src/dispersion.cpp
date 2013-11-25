@@ -13,47 +13,16 @@ using namespace RcppArmadillo ;
 using namespace std;
 
 
-// calculate the incident field at each dipole location 
-// for multiple axis-angles of incidence
-arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0, 
-			     const arma::colvec& k, 
-			     const arma::mat& R,
-			     const arma::ivec& Axes,
-			     const arma::colvec& Angles)
-{
-  const int Nangles = Angles.n_elem;
-  const int N = R.n_rows;
-  const arma::cx_double i = arma::cx_double(0,1);
-  arma::mat Rot(3,3);
-  arma::cx_mat Ei = arma::cx_mat(3*N,Nangles);
-  arma::cx_colvec E0_r(3);
-  arma::cx_colvec expikr(N);
-  arma::colvec k_r(3);
-  arma::colvec kR(N);
-  arma::cx_colvec expikrrep(3*N);
-  arma::cx_colvec E0rep(3*N);
-  int jj=0;
-  for(jj=0; jj<Nangles; jj++)
-    {
-      Rot = axis_rotation(Angles(jj), Axes(jj));
-      k_r = Rot.st() * k;
-      E0_r = Rot.st() * E0;
-      kR = R * k_r ;
-      expikr = exp(i * kR);
-      expikrrep = strans(vectorise(repmat(expikr, 1, 3), 1));
-      E0rep = repmat(E0_r, N, 1);
-      Ei.col(jj) = E0rep % expikrrep;
-    }
-  return(Ei);
-}
-
-
-// // calculation for multiple angles of incidence
-// R: positions
-// A: interaction matrix
-// invalpha: inverse polarisabilities
-// kn: wavevector
-// Angles: incident angles
+//
+// Angle-resolved cross-sections for multiple directions of incidence
+//
+// R is the Nx3 matrix of positions
+// A is the 3Nx3N interaction matrix
+// Adiag is the 3Nx3N block-diagonal part of the interaction matrix
+// kn is the incident wavenumber (scalar)
+// Angles is the Nangles vector of incident beam angles
+// Axes is the Nangles vector of incident beam axes
+// polarisation is an integer flag to switch between linear and circular polarisation
  arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
 		      const arma::cx_mat& Adiag,			
 		      const double kn, const arma::vec& Angles, 
@@ -100,6 +69,17 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
    } 
 
 
+//
+// Angle-resolved spectra for linear or circular polarisations
+//
+// kn is the vector of incident wavenumbers
+// Beta is the 3N vector of inverse polarisabilities
+// R is the Nx3 matrix of positions
+// Euler is the Nx3 matrix of particle rotation angles
+// Angles is the Nangles vector of incident beam angles
+// Axes is the Nangles vector of incident beam axes
+// polarisation is an integer flag to switch between linear and circular polarisation
+// progress is a logical flag to display progress bars
 arma::cube dispersion_spectrum(const arma::colvec kn, 
 			       const arma::cx_mat& Beta, const arma::mat& R, 
 			       const arma::mat& Euler, const arma::vec& Angles,
@@ -130,8 +110,11 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
 
 
 RCPP_MODULE(dispersion){
+
        Rcpp::function( "dispersion", &dispersion,
-		       "Returns the absorption, scattering and extinction for 2 polarisations at specified angles of incidence" ) ;
+	    "Angle-resolved cross-sections for multiple directions of incidence" ) ;
+       Rcpp::function( "dispersion", &dispersion,
+	    "Angle-resolved cross-sections for multiple directions of incidence" ) ;
        Rcpp::function( "dispersion_spectrum", &dispersion_spectrum,
-		       "Returns the absorption, scattering and extinction spectra for 2 polarisations at specified angles of incidence" ) ;
+	   "Angle-resolved spectra for linear or circular polarisations" ) ;
 }
