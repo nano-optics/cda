@@ -2,19 +2,25 @@ Package: cda
 Version: 1.5
 Authors@R: c(person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com",
-    role = c("aut", "cre")))
+    role = c("aut", "cre")),
+    person("LAPACK authors",
+    role = "cph",
+    comment = "copyrights apply to src/zgels.f"))
 License: GPL-3
-Title: Coupled dipole approximation in electromagnetic scattering
+Copyright: file inst/COPYRIGHTS for src/zgels.f obtained from LAPACK
+Title: Coupled dipole approximation of light scattering by clusters of
+    nanoparticles
 Description: Solves the electromagnetic problem of coupled-dipoles (scattering
     and absorption by a cluster of subwavelength particles in arbitrary 3D
-    configuration) by direct inversion of the interaction matrix. Functions are
-    provided for linear polarisation with varying angle of incidence, as well
-    as circular polarisation with angular averaging (optical activity).
-    Retardation is included in the interaction.
+    configuration) by setting up the interaction matrix and solving the linear
+    system for multiple incident fields. Functions are provided for linear
+    polarisation as well as circular polarisation with full angular averaging
+    (optical activity). Retardation is included in the dipole-dipole
+    interaction.
 URL: https://github.com/baptiste/cda
 Type: Package
 LazyLoad: yes
-BuildVignettes: false
+VignetteBuilder: knitr
 SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
 Depends:

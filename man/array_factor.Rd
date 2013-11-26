@@ -18,7 +18,8 @@ S
 C++ calculation of the array factor
 }
 \details{
-C++ calculation of the array factor
+Brute-force numerical evaluation of the truncated 2D sum of
+dipole fields
 }
 \examples{
 S <- array_factor(seq(400, 600),  10,  500)

@@ -1,8 +1,9 @@
-
-
 Design considerations and structure of the CDA package
 ========================================================
-
+<!-- 
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{design}
+-->
 ## Description of a cluster at the R level
 
 A cluster describes the geometry of N particles in a list,

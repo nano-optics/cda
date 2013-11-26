@@ -30,10 +30,7 @@ using namespace std;
 		      const int polarisation)
    {
      const int N = R.n_rows, NAngles = Angles.n_elem;
-    //constants
-    const arma::cx_double i = arma::cx_double(0,1);
-    const double pi = arma::datum::pi;
-    arma::mat Rot(3,3);
+     arma::mat Rot(3,3);
 
 
     // incident field

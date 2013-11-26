@@ -27,9 +27,6 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
   {
 
     const int N = R.n_rows, Nangles = Angles.n_rows;
-    //constants
-    const arma::cx_double i = arma::cx_double(0,1);
-    const double pi = arma::datum::pi;
     arma::colvec res(4) ;   
 
     // incident field

@@ -56,7 +56,6 @@ arma::mat euler(const double phi, const double theta, const double psi)
 // Rotation matrix about a cartesian axis
  arma::mat axis_rotation(const double angle, const int axis)
   {
-    const double pi = arma::math::pi();
     arma::mat Rot(3,3);
     const double cosangle = cos(angle), sinangle = sin(angle);
 
