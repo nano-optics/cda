@@ -42,8 +42,9 @@ rgl_annotate()
 ## @knitr linear
 # calculate extinction spectrum at fixed incidence
 
-linear <- linear_extinction_spectrum(cl, gold)
-ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
+linear <- dispersion_spectrum(cl, gold, angles=0, axis='x')
+ggplot(linear, aes(wavelength, value, linetype=type)) +
+  facet_wrap(~polarisation) + geom_path()
 
 
 

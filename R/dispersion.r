@@ -15,7 +15,7 @@
 ##' @family user_level cda
 ##' @author baptiste Auguie
 dispersion_spectrum <- function (cluster, material, medium = 1.33,
-                                 angles, axis='z', 
+                                 angles=0, axis='z', 
                                  polarisation=c("linear", "circular"), 
                                  progress = FALSE) 
 {

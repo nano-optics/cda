@@ -35,19 +35,19 @@ cl2 <- cluster_dimer(d=100,
 
 ### Comparison
 ```{r comparison, tidy=FALSE, fig.path='averaging-'}
-params <- expand.grid(N=c(10, 50, 100, 1000),
+params <- expand.grid(Nquad=c(10, 50, 100, 1000),
                        averaging=c("grid", "GL", "QMC"),
                        stringsAsFactors=FALSE)
 
 comparison <- mdply(params, circular_dichroism_spectrum, cluster=cl, material=gold)
 cheap <- circular_dichroism_spectrum(cluster=cl, material=gold, averaging="cheap")
-converged <- circular_dichroism_spectrum(cluster=cl, material=gold, averaging="QMC", N=5000)
+converged <- circular_dichroism_spectrum(cluster=cl, material=gold, averaging="QMC", Nquad=5000)
 
 p <- 
   ggplot(subset(comparison, type == "CD" & variable == "extinction"),
          aes(wavelength, value)) + 
   facet_grid(averaging~., scales="free")+
-  geom_path(aes(colour=factor(N), group=N))+
+  geom_path(aes(colour=factor(Nquad), group=Nquad))+
   geom_path(data=subset(cheap, type == "CD" & variable == "extinction"), linetype=2)+
   geom_path(data=subset(converged, type == "CD" & variable == "extinction"))+
   labs(y=expression(sigma[ext]/nm^2),
@@ -58,7 +58,7 @@ p
 The dashed line is a "cheap" version of angular averaging, using only 4 orthogonal directions; it is reasonably close to the converged solution (solid line). QMC seems to perform best in terms of convergence, however, GL may appear more reliable when taking into account symmetry considerations: if a dimer is achiral, the CD signal should be zero. Because QMC uses uneven points on the sphere, it has a harder time at converging towards 0 in such cases. 
 
 ```{r achiral, tidy=FALSE, fig.path='averaging-'}
-params <- expand.grid(N=c(10, 100, 1000, 5000),
+params <- expand.grid(Nquad=c(10, 100, 1000, 5000),
                        averaging=c("grid", "GL", "QMC", "cheap"),
                        stringsAsFactors=FALSE)
 
@@ -67,7 +67,7 @@ comparison <- mdply(params, circular_dichroism_spectrum, cluster=cl2, material=g
 p <- 
   ggplot(subset(comparison, type == "CD" & variable == "extinction")) + 
   facet_grid(averaging~.)+
-  geom_path(aes(wavelength, value, colour=factor(N), group=N))+
+  geom_path(aes(wavelength, value, colour=factor(Nquad), group=Nquad))+
   labs(y=expression(sigma[ext]/nm^2),
        x=expression(wavelength/nm), colour=expression(N))
 

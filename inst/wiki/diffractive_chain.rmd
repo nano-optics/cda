@@ -41,20 +41,20 @@ rgl.viewpoint( theta = 0, phi = 20, fov = 70, zoom = 1)
 
 chain <- function(N, pitch = 500, ...){
   cl <- cluster_chain(N, pitch, ...)
-  linear_extinction_spectrum(cluster = cl, material = gold)
+  dispersion_spectrum(cluster = cl, material = gold)
 }
   
 params <- data.frame(N=c(1, 10, 50))
 comparison <- mdply(params, chain)
 
 p <- 
-  ggplot(data=comparison)+
-labs(y=expression(sigma[ext]*" /"*nm^2),
+  ggplot(data=comparison)+ facet_wrap(~type, ncol=1, scales="free")+
+labs(y=expression(sigma*" /"*nm^2),
        x=expression(wavelength*" /"*nm),
        colour = expression(N), linetype=expression(polarisation))+
-  geom_line(aes(wavelength, value, linetype=variable,
+  geom_line(aes(wavelength, value/N, linetype=polarisation,
                 colour=factor(N),
-                group=interaction(N,variable)))
+                group=interaction(N,polarisation)))
 
 p
 ```

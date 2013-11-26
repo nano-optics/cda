@@ -27,24 +27,24 @@ cluster_array <- function(N, pitch = 500, a = 50, b = 30, c = b, ...)
 
 array <- function(N, pitch = 500, ...){
   cl <- cluster_array(N, pitch, ...)
-  linear_extinction_spectrum(cluster = cl, material = gold, ...)
+  dispersion_spectrum(cluster = cl, material = gold, ...)
 }
   
 params <- data.frame(N=c(1, 10, 20))
-#comparison <- mdply(params, array, progress=TRUE)
-
+# comparison <- mdply(params, array, .progress='text')
+load("finite.rda")
 p <- 
-  ggplot(data=comparison)+
+  ggplot(data=comparison)+ facet_wrap(~type, ncol=1, scales="free")+
 labs(y=expression(sigma[ext]*" /"*nm^2),
        x=expression(wavelength*" /"*nm),
        colour = expression(N), linetype=expression(polarisation))+
-  geom_line(aes(wavelength, value, linetype=variable,
+  geom_line(aes(wavelength, value, linetype=polarisation,
                 colour=factor(N),
-                group=interaction(N,variable)))
+                group=interaction(N,polarisation)))
 
-#p
+p
 
-#save(comparison, params, file="cd.rda")
+# save(comparison, params, file="finite.rda")
 
 
 ## @knitr comparison
@@ -73,14 +73,16 @@ alpha_0 <- polarizability_ellipsoid(gold$wavelength, gold$epsilon, medium=1.33)[
 alpha_1 <- 1 / (1 / alpha_0 - S$S)
 alpha_2 <- 1 / (1 / alpha_0 - S$smooth)
 alpha_3 <- 1 / (1 / alpha_0 - G/pitch^3)
-str(alpha)
+
 k <- 2*pi * 1.33 / gold$wavelength
 palette(RColorBrewer::brewer.pal(5,"Set1"))
 par(mfrow=c(1,1),mar=c(2,2,1,1),lwd=2)
-plot(gold$wavelength, k*Im(alpha_0),t="l", xlim=c(400,800),col="black")
+plot(gold$wavelength, k*Im(alpha_0),t="l", 
+     xlim=c(400,800),ylim=c(0, 6000), col="black")
 #lines(gold$wavelength, k*Im(alpha_1),col=5)
 lines(gold$wavelength, k*Im(alpha_2),col=1)
 lines(gold$wavelength, k*Im(alpha_3),col=2)
-with(subset(comparison, variable == "s" & N == 20), 
-     lines(gold$wavelength, value/4/pi, lty=1,col=3))
-legend("topleft", lty=c(1,1,1,1),col=c("black", 1,2,3), c("isolated", "truncated", "converged", "finite" ))
+with(subset(comparison, polarisation == "p" & N == 20 & type == "extinction"), 
+     lines(gold$wavelength, value/4/pi/20^2, lty=1,col=3))
+legend("topleft", lty=c(1,1,1,1),col=c("black", 1,2,3), 
+       c("isolated", "truncated", "converged", "finite" ))

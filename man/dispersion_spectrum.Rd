@@ -2,8 +2,8 @@
 \alias{dispersion_spectrum}
 \title{dispersion_spectrum}
 \usage{
-dispersion_spectrum(cluster, material, medium = 1.33, angles, axis = "z",
-  polarisation = c("linear", "circular"), progress = FALSE)
+dispersion_spectrum(cluster, material, medium = 1.33, angles = 0,
+  axis = "z", polarisation = c("linear", "circular"), progress = FALSE)
 }
 \arguments{
   \item{cluster}{list describing a cluster}
