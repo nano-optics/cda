@@ -1,4 +1,4 @@
-In this example we consider a periodic arrangement of ellipsoid along a line, with a separation of the order of the wavelength. The incident light is perpendicular to the chain axis. As the number of particle grows, the signature of diffractive coupling rises from the shadows of the single-particle spectrum.
+In this example we consider a periodic arrangement of ellipsoids along a line, with a separation of the order of the wavelength. The incident light is perpendicular to the chain axis. As the number of particle grows, the signature of diffractive coupling rises from the shadows of the single-particle spectrum.
 
 ```{r load,message=FALSE}
 library(cda)

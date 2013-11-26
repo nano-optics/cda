@@ -1,12 +1,18 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
+library(reshape2)
+library(plyr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -17,7 +23,7 @@ title3d('','','x axis','y axis','z axis')
 theme_set(theme_minimal())
 
 
-## @knitr cluster
+## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="basic-"----
 
 # dielectric function
 wvl <- seq(400, 900)
@@ -25,11 +31,11 @@ gold <- epsAu(wvl)
 
 # define a cluster of particles
 cl <- list(r = rbind(c(0, 0, 0),
-                      c(0, 0, 200)),
+                      c(0, 0, -100)),
             angles = rbind(c(0, 0, 0),
                            c(pi/4, 0, 0)),
-            sizes = rbind(c(40, 20, 20),
-                          c(40, 20, 20)))
+            sizes = rbind(c(30, 10, 10),
+                          c(30, 10, 10)))
 
 # visualise
 rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
@@ -38,20 +44,19 @@ rgl_annotate()
 
 
 
-## @knitr linear
+## ----linear,echo=TRUE,tidy=FALSE,fig.path="basic-"-----------------------
 # calculate extinction spectrum at fixed incidence
 
-linear <- linear_extinction_spectrum(cl, gold)
-ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
+linear <- dispersion_spectrum(cl, gold)
+ggplot(linear, aes(wavelength, value, linetype=type)) +
+  facet_wrap(~polarisation) + geom_path()
 
 
-
-## @knitr oa
+## ----oa,echo=TRUE,tidy=FALSE,fig.path="basic-",fig.width=8---------------
 circular <- circular_dichroism_spectrum(cl, gold)
 
 ggplot(circular, aes(wavelength, value, color=variable)) + 
-  facet_grid(type~variable, scales="free") + geom_path() +
-  guides(colour="none")
+  facet_grid(type~., scales="free") + geom_line()
 
 
 

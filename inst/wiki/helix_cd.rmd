@@ -69,7 +69,7 @@ comparison <- mdply(params, simulation)
 p <- 
   ggplot(data=subset(comparison, type == "CD" & variable == "extinction")) + 
   facet_grid(ar ~ ., scales="free") +
-  geom_line(aes(wavelength, value, 
+  geom_line(aes(wavelength, value/N, 
                 colour=factor(N))) +
   labs(y=expression(sigma[ext]*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="# particles") 

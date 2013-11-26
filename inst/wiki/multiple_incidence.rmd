@@ -54,14 +54,14 @@ rgl.ellipsoids(cl$r+cbind(rep(-500, 2),0,0), cl$sizes, cl$angles, col="gold")
 Angles <- rep(seq(0, pi/2, length=12), 3)
 Axes <- rep(c('x','y','z'), each=12)
 
-results <- dispersion_spectrum(cl, Angles, Axes, gold, 
+results <- dispersion_spectrum(cl, gold, angles=Angles, axes = Axes, 
                                polarisation="linear")
 
 test <- melt(results, meas="value")
 
 ggplot(subset(test, type == "extinction"), 
        aes(wavelength, value, colour=angles, group=angles)) +
-  facet_grid(axis ~ polarisation, scales="free") +
+  facet_grid(axes ~ polarisation, scales="free") +
   geom_line() +
   labs(y=expression(sigma[ext]*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="incident angle")
@@ -74,12 +74,12 @@ ggplot(subset(test, type == "extinction"),
 variables <- expand.grid(Angles = seq(0, 2*pi, length=36),
                          Axes = c('x','y','z'))
 
-results <- dispersion_spectrum(cl2, variables$Angles, variables$Axes, gold, 
+results <- dispersion_spectrum(cl2, gold, angles=variables$Angles, axes = variables$Axes,
                                polarisation="circular")
 average <- circular_dichroism_spectrum(cl2, material = gold)
 
 ggplot(subset(results, polarisation == "CD"), aes(wavelength, value)) +
-  facet_grid(axis ~ polarisation, scales="free") +
+  facet_grid(axes ~ polarisation, scales="free") +
   geom_line(aes(colour=angles, group=angles)) +
   geom_line(data=subset(average, type == "CD" & variable =="extinction"), linetype=2, size=1.2) +
   labs(y=expression(sigma[CD]*" /"*nm^2),

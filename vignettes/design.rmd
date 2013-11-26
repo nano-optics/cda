@@ -1,12 +1,4 @@
 
-ideas
-
-- Raman with two lasers
-
-- self-consistent dipole summation
-
-
-
 
 Design considerations and structure of the CDA package
 ========================================================
