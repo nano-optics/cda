@@ -4,6 +4,7 @@ library(cda)
 library(rgl)
 library(reshape2)
 library(plyr)
+library(knitr)
 
 
 ## ----setup,echo=FALSE----------------------------------------------------

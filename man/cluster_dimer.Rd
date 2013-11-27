@@ -33,8 +33,8 @@ baptiste Auguie
 }
 \seealso{
 Other user_level cluster: \code{\link{cluster_chain}},
-\code{\link{cluster_dimer2}}, \code{\link{cluster_helix}},
-\code{\link{equal_angles}}, \code{\link{equal_sizes}},
-\code{\link{helix}}
+\code{\link{cluster_dimer_end}},
+\code{\link{cluster_helix}}, \code{\link{equal_angles}},
+\code{\link{equal_sizes}}, \code{\link{helix}}
 }
 

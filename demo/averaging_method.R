@@ -6,6 +6,7 @@ require(microbenchmark)
 require(xtable)
 library(reshape2)
 library(plyr)
+library(knitr)
 
 theme_set(theme_minimal())
 display_benchmark <- function(x, unit = "t"){

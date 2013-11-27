@@ -1,28 +1,27 @@
-\name{cluster_dimer2}
-\alias{cluster_dimer2}
-\title{cluster_dimer2}
+\name{cluster_dimer_end}
+\alias{cluster_dimer_end}
+\title{cluster_dimer_end}
 \usage{
-cluster_dimer2(d = a, dihedral = 0, alpha1 = 0, alpha2 = 0, a = 0.035,
-  b = 0.012)
+cluster_dimer_end(d = a, dihedral = 0, a = 0.035, b = 0.012,
+  rescale = TRUE)
 }
 \arguments{
-  \item{d}{center-to-center distance}
+  \item{d}{end-to-end distance}
 
   \item{dihedral}{dihedral angle}
-
-  \item{alpha1}{angle first rod}
-
-  \item{alpha2}{angle second rod}
 
   \item{a}{semi axis}
 
   \item{b}{semi axis}
+
+  \item{rescale}{logical, rescale the z coordinates so that
+  d is the center-to-center distance}
 }
 \value{
 list with r, sizes, angles
 }
 \description{
-cluster_dimer2
+cluster_dimer_end
 }
 \details{
 cluster with two nanorods first rod along x at (0, 0, -d/2)

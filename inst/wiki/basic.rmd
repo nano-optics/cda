@@ -6,6 +6,7 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
+library(knitr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {
@@ -46,8 +47,7 @@ rgl_annotate()
 ```
 # calculate extinction, absorption, scattering of linearly polarised light at fixed incidence
 
-```{r linear,echo=TRUE,tidy=FALSE,fig.path="basic-"}
-# calculate extinction spectrum at fixed incidence
+```{r linear,echo=TRUE,tidy=FALSE,fig.path="basic-", fig.height=4}
 
 linear <- dispersion_spectrum(cl, gold)
 ggplot(linear, aes(wavelength, value, linetype=type)) +

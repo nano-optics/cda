@@ -5,6 +5,7 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
+library(knitr)
 
 
 ## ----setup,echo=FALSE----------------------------------------------------
@@ -44,8 +45,7 @@ rgl_annotate()
 
 
 
-## ----linear,echo=TRUE,tidy=FALSE,fig.path="basic-"-----------------------
-# calculate extinction spectrum at fixed incidence
+## ----linear,echo=TRUE,tidy=FALSE,fig.path="basic-", fig.height=4---------
 
 linear <- dispersion_spectrum(cl, gold)
 ggplot(linear, aes(wavelength, value, linetype=type)) +

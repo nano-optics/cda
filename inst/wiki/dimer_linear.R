@@ -5,6 +5,7 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
+library(knitr)
 
 
 ## ----setup,echo=FALSE----------------------------------------------------
@@ -57,7 +58,7 @@ p <-
                 colour=d, group=d)) +
   geom_line(aes(wavelength, value), colour="red", linetype="dashed",
             data=subset(single, polarisation == "p")) +
-  labs(y=expression(sigma[ext]*" /"*nm^2),
+  labs(y=expression(sigma*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="distance /nm") 
 
 p

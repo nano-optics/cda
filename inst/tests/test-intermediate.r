@@ -17,11 +17,11 @@ cluster <- list(r = rbind(c(0, 0, 0),
            sizes = rbind(c(40, 20, 20),
                          c(40, 20, 20)))
 
-invalpha <- inverse_polarizability(cluster, material, 
+Beta <- inverse_polarizability(cluster, material, 
                                   polarizability_fun=polarizability_ellipsoid, 
                                   medium=medium, kuwata=TRUE)
 
-.invalpha <-structure(c(-1.82237397053259e-05-3.56779387878792e-05i, 2.89922059965679e-05-3.56779387878792e-05i, 
+.Beta <-structure(c(-1.82237397053259e-05-3.56779387878792e-05i, 2.89922059965679e-05-3.56779387878792e-05i, 
                         2.89922059965679e-05-3.56779387878792e-05i, -1.82237397053259e-05-3.56779387878792e-05i, 
                         2.89922059965679e-05-3.56779387878792e-05i, 2.89922059965679e-05-3.56779387878792e-05i, 
                         -1.40064964665508e-05-1.3699744599798e-05i, 3.2848949238791e-05-1.3699744599798e-05i, 
@@ -42,13 +42,12 @@ invalpha <- inverse_polarizability(cluster, material,
 # ac  2.899221e-05-3.567794e-05i  3.284895e-05-1.369974e-05i  4.417159e-05-5.469759e-06i
 
 test_that("the inverse polarisability is the same as earlier versions", {
-  expect_equal(invalpha,.invalpha)
+  expect_equal(Beta, .Beta)
 })
 
 
-Beta <- matrix(invalpha[1,], nrow=3)
 
-A <- cda$interaction_matrix(cluster$r, kn[1], Beta, cluster$angles, 1)
+A <- cda$interaction_matrix(cluster$r, kn[1], Beta, cluster$angles, TRUE)
 .A <- structure(c(-1.82237397053259e-05-3.56779387878792e-05i, 0+0i, 
                   0+0i, 1.14864729173871e-06+5.5676095065754e-07i, 0+0i, 0+0i, 
                   0+0i, 2.89922059965679e-05-3.56779387878792e-05i, 0+0i, 0+0i, 
@@ -67,17 +66,20 @@ test_that("the interaction matrix is the same as earlier versions", {
 
 ## cheap averaging
 
-nodes <- rbind(c(1/2, 0), # +x is phi=0, psi=0
-               c(1/2, 1/4), # +y is phi=pi/2, psi=0
-               c(1, 1/4)) # +z is phi=pi/2, psi=pi/2
+angles <- rbind(c(0, pi/2, 0), # +x is phi=0, psi=0
+                c(pi/2, pi/2, 0), # +y is phi=pi/2, psi=0
+                c(pi/2, pi/2, pi/2)) # +z is phi=pi/2, psi=pi/2
+weights <- rep(1/nrow(angles), nrow(angles)) 
 
-res <- cd$circular_dichroism_spectrum(kn, invalpha, cluster$r, cluster$angles, 
-                                       as.matrix(nodes),
-                                       as.integer(TRUE), as.integer(FALSE))
+res <- cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
+                                       as.matrix(angles), weights,
+                                       TRUE, FALSE)
 
-.res <- structure(c(7629.71366621336, 18093.6538420437, 6965.12045086035, 
-                   12499.019321288, -0.216853598901253, -533.349596245196, 2.67479400633874, 
-                   -361.940147617599), .Dim = c(2L, 4L))
+.res <- structure(c(7629.71366621337, 7180.9666774582, 18093.6538420437, 
+                    6965.12045086035, 5975.47136711237, 12499.019321288, 664.593215353016, 
+                    1205.49531034583, 5594.63452075571, -0.216853598899434, -26.9159455604804, 
+                    -533.349596245193, 2.67479400633692, -30.6246464849028, -361.940147617594, 
+                    -2.89164760523636, 3.70870092442237, -171.409448627599), .Dim = c(3L, 6L))
 
 
 test_that("the result of cheap orientation averaging is the same as earlier versions", {

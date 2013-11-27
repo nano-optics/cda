@@ -6,6 +6,7 @@ library(cda)
 library(rgl)
 library(reshape2)
 library(plyr)
+library(knitr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {
