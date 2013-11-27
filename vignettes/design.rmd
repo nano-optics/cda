@@ -34,7 +34,7 @@ This matrix is formed from the sizes of the cluster, and the material and medium
 
 * `cluster_dimer` 
 
-* `cluster_dimer2` 
+* `cluster_dimer_end` 
 
 * `cluster_helix`
 
