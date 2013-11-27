@@ -1,14 +1,19 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
-library(plyr)
 library(reshape2)
+library(plyr)
+library(knitr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -19,15 +24,15 @@ title3d('','','x axis','y axis','z axis')
 theme_set(theme_minimal())
 
 
-## @knitr cluster
+## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="dimerlinear-"----
 
 # dielectric function
-wvl <- seq(400, 900)
+wvl <- seq(500, 800)
 gold <- epsAu(wvl)
 
 
 
-## @knitr comparison
+## ----comparison,echo=TRUE,tidy=FALSE,fig.path="dimerlinear-",fig.width=8----
   
 dimer <- function(d=100, ...){
   
@@ -36,18 +41,24 @@ dimer <- function(d=100, ...){
   angles <- matrix(0, ncol=3, nrow=2)
 
   cl <- list(r=r, sizes=sizes, angles=angles)
-  linear_extinction_spectrum(cl, material = gold)
+  dispersion_spectrum(cl, material = gold)
   
 }
-params <- data.frame(d=seq(100, 500, length=50))
+params <- data.frame(d=seq(50, 500, by=10))
 comparison <- mdply(params, dimer)
 
+## compare with the single-particle response
+single <- dispersion_spectrum(list(r=cbind(0,0,0), angles = cbind(0,0,0),
+                                   sizes=cbind(a=50, b=20, c=20)), material = gold)
+
 p <- 
-  ggplot(data=comparison) + 
-  facet_grid(variable~., scales="free") +
-  geom_line(aes(wavelength, value, 
+  ggplot(data=subset(comparison, polarisation == "p")) + 
+  facet_grid(type~., scales="free") +
+  geom_line(aes(wavelength, value/2, 
                 colour=d, group=d)) +
-  labs(y=expression(sigma[ext]*" /"*nm^2),
+  geom_line(aes(wavelength, value), colour="red", linetype="dashed",
+            data=subset(single, polarisation == "p")) +
+  labs(y=expression(sigma*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="distance /nm") 
 
 p

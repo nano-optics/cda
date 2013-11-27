@@ -3,14 +3,13 @@
 \alias{array}
 \title{Rcpp module: array}
 \description{
-  Exposes a C++ calculation of the array factor.
+Exposes a C++ calculation of the array factor.
 }
 \details{
-  \itemize{ \item{array_factor}{ truncated lattice sum for
-  a finite 2D square array} }
+\itemize{ \item{array_factor}{truncated lattice sum for a
+finite 2D square array} }
 }
 \examples{
 show( array )
 }
-\keyword{datasets}
 

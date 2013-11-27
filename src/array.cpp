@@ -42,7 +42,7 @@ cx_colvec array_factor(const colvec& k, const mat& R) {
 
 
 RCPP_MODULE(array){
-  Rcpp::function( "array_factor", &array_factor ) ;
+  Rcpp::function( "array_factor", &array_factor, "Dipole sum (truncated) for 2D square array" ) ;
 }
 
 

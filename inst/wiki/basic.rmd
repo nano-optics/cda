@@ -6,6 +6,7 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
+library(knitr)
 ```
 ```{r setup,echo=FALSE}
 knit_hooks$set(rgl = function(before, options, envir) {
@@ -32,11 +33,11 @@ gold <- epsAu(wvl)
 
 # define a cluster of particles
 cl <- list(r = rbind(c(0, 0, 0),
-                      c(0, 0, 200)),
+                      c(0, 0, -100)),
             angles = rbind(c(0, 0, 0),
                            c(pi/4, 0, 0)),
-            sizes = rbind(c(40, 20, 20),
-                          c(40, 20, 20)))
+            sizes = rbind(c(30, 10, 10),
+                          c(30, 10, 10)))
 
 # visualise
 rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
@@ -46,12 +47,11 @@ rgl_annotate()
 ```
 # calculate extinction, absorption, scattering of linearly polarised light at fixed incidence
 
-```{r linear,echo=TRUE,tidy=FALSE,fig.path="basic-"}
-# calculate extinction spectrum at fixed incidence
+```{r linear,echo=TRUE,tidy=FALSE,fig.path="basic-", fig.height=4}
 
-linear <- linear_extinction_spectrum(cl, gold)
-ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
-
+linear <- dispersion_spectrum(cl, gold)
+ggplot(linear, aes(wavelength, value, linetype=type)) +
+  facet_wrap(~polarisation) + geom_path()
 ```
 
 # calculate orientation-averaged optical activity
@@ -60,6 +60,6 @@ ggplot(linear, aes(wavelength, value, color=variable)) + geom_path()
 circular <- circular_dichroism_spectrum(cl, gold)
 
 ggplot(circular, aes(wavelength, value, color=variable)) + 
-  facet_grid(type~variable, scales="free") + geom_path()
+  facet_grid(type~., scales="free") + geom_line()
 
 ```

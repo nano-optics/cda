@@ -16,21 +16,21 @@ cluster_chain(N, pitch = 500, a = 50, b = 30, c = b)
   \item{c}{semi axis}
 }
 \value{
-  list with r, sizes, angles
+list with r, sizes, angles
 }
 \description{
-  cluster_chain
+cluster_chain
 }
 \details{
-  linear chain of parallel nanorods
+linear chain of parallel nanorods
 }
 \author{
-  baptiste Auguie
+baptiste Auguie
 }
 \seealso{
-  Other user_level cluster: \code{\link{cluster_dimer}},
-  \code{\link{cluster_dimer2}},
-  \code{\link{cluster_helix}}, \code{\link{equal_angles}},
-  \code{\link{equal_sizes}}, \code{\link{helix}}
+Other user_level cluster: \code{\link{cluster_dimer}},
+\code{\link{cluster_dimer_end}},
+\code{\link{cluster_helix}}, \code{\link{equal_angles}},
+\code{\link{equal_sizes}}, \code{\link{helix}}
 }
 

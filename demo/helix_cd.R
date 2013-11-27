@@ -1,13 +1,19 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
+library(reshape2)
 library(plyr)
+library(knitr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -18,7 +24,7 @@ title3d('','','x axis','y axis','z axis')
 theme_set(theme_minimal())
 
 
-## @knitr cluster
+## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="helix-"----
 
 # dielectric function
 wvl <- seq(400, 900)
@@ -44,7 +50,7 @@ rgl.ellipsoids(cl2$r+shift, cl2$sizes, cl2$angles, col="gold")
 lines3d(hel$smooth + shifts, lwd=1, col="red")
 
 
-## @knitr comparison
+## ----comparison,echo=TRUE,tidy=FALSE,fig.path="helix-",fig.width=8-------
   
 simulation <- function(N=3, ar=1, ...){
   cl <- cluster_helix(N, R0=12, pitch=15, 
@@ -60,10 +66,10 @@ comparison <- mdply(params, simulation)
 p <- 
   ggplot(data=subset(comparison, type == "CD" & variable == "extinction")) + 
   facet_grid(ar ~ ., scales="free") +
-  geom_line(aes(wavelength, value, 
+  geom_line(aes(wavelength, value/N, 
                 colour=factor(N))) +
   labs(y=expression(sigma[ext]*" /"*nm^2),
-       x=expression(wavelength*" /"*nm), colour="N") 
+       x=expression(wavelength*" /"*nm), colour="# particles") 
 
 p
 

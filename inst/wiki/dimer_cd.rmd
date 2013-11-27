@@ -63,7 +63,7 @@ p <-
   facet_grid(type~variable, scales="free") +
   geom_line(aes(wavelength, value, 
                 colour=factor(dihedral))) +
-  labs(y=expression(sigma[ext]*" /"*nm^2),
+  labs(y=expression(sigma*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="dihedral angle") +
          scale_colour_brewer(type="div", palette=3)
 

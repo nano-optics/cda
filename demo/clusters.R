@@ -1,11 +1,18 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
+library(reshape2)
+library(plyr)
+library(knitr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -15,7 +22,7 @@ title3d('','','x axis','y axis','z axis')
 }
 
 
-## @knitr manual
+## ----manual, rgl=TRUE,echo=1:3,tidy=FALSE,fig.width=3,fig.height=3,fig.path="clusters-"----
 
 cl1 <- list(r = rbind(c(0, 0, 0),
                       c(0, 500, 0)),
@@ -29,7 +36,7 @@ rgl_annotate()
                       
 
 
-## @knitr dimer
+## ----dimer, rgl=TRUE,echo=1:3,tidy=FALSE,fig.width=3,fig.height=3,fig.path="clusters-"----
 cl2 <- cluster_dimer(d=100, 
                           dihedral=45*pi/180, alpha1=10*pi/180, alpha2=0,
                           a=35, b=12)
@@ -38,14 +45,14 @@ rgl.ellipsoids(cl2$r, cl2$sizes, cl2$angles, col="gold")
 rgl_annotate()
 
 
-## @knitr chain
+## ----chain, rgl=TRUE,echo=1:2,tidy=FALSE,fig.width=3,fig.height=3,fig.path="clusters-"----
 cl2 <- cluster_chain(10, pitch=100, a=50, b=30)
 rgl.ellipsoids(cl2$r, cl2$sizes, cl2$angles, col="gold")
 rgl.viewpoint( theta = 0, phi = 30, fov = 70, zoom = 1)
 rgl_annotate()
 
 
-## @knitr helix
+## ----helix, rgl=TRUE,echo=1:4,tidy=FALSE,fig.width=3,fig.height=3,fig.path="clusters-"----
 cl3 <- cluster_helix(N=20, R0=500, pitch=1000, 
                           delta=pi/7, delta0=0, right=TRUE,
                           a=100, b=50, c=20,

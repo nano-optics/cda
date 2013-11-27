@@ -119,29 +119,32 @@ cluster_dimer <- function(d=a,
   
 }
 
-##' cluster_dimer2
+##' cluster_dimer_end
 ##'
 ##' cluster with two nanorods
 ##' first rod along x at (0, 0, -d/2)
 ##' second rod at (0, 0, d/2)
-##' @title cluster_dimer2
-##' @param d center-to-center distance
+##' @title cluster_dimer_end
+##' @param d end-to-end distance
 ##' @param dihedral dihedral angle
-##' @param alpha1 angle first rod
-##' @param alpha2 angle second rod
 ##' @param a semi axis
 ##' @param b semi axis
+##' @param rescale logical, rescale the z coordinates so that d is the center-to-center distance
 ##' @return list with r,  sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-cluster_dimer2 <- function(d=a, 
-                          dihedral=0, alpha1=0, alpha2=0,
-                          a=35e-3, b=12e-3){
+cluster_dimer_end <- function(d=a, 
+                          dihedral=0, 
+                          a=35e-3, b=12e-3, rescale=TRUE){
+   if(rescale)
+     d <- sqrt(d^2 - 2*a^2*(1 - cos(dihedral)))
   
-  r <- cbind(c(0,0), c(0, 0), c(-d/2, d/2))
+  r <- rbind(c(a,0,0), 
+             c(a*cos(dihedral),a*sin(dihedral),d))
   sizes <- equal_sizes(a=a, b=b, c=b, N=2)  
-  angles <- cbind(c(dihedral, 0), c(pi/2, pi/2), c(alpha1, alpha2))
+  angles <- rbind(c(0, pi/2, 0), 
+                  c(dihedral, pi/2, 0))
   list(r=r, sizes=sizes, angles=angles)
   
 }

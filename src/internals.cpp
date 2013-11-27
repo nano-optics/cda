@@ -12,6 +12,28 @@ using namespace Rcpp ;
 using namespace RcppArmadillo ;
 using namespace std;
 
+// calculate the extinction cross section given wavenumber kn, Nx3
+// polarization P, Nx3 incident field Eincident
+double extinction_single(const double kn, const arma::cx_mat& P, 
+		  const arma::cx_mat& Eincident)
+{
+  const double c = 4*arma::math::pi()*kn * \
+    imag(cdot(vectorise(Eincident), vectorise(P))) / P.n_cols; 
+  return c;
+}
+
+// calculate the absorption cross section given wavenumber kn, Nx3
+// polarization P, 3Nx3N block diagonal matrix diagBeta of inverse polarizabilities
+double absorption_single(const double kn, const arma::cx_mat& P, 
+		  const arma::cx_mat& diagBeta)
+{
+  arma::cx_colvec Pvec = vectorise(P, 0); 
+  arma::cx_colvec Evec=vectorise(diagBeta * P, 0);
+  const double c = 4*arma::math::pi()*kn*(as_scalar(imag(Evec.t() * Pvec)) - \
+						    kn*kn*kn* 2/3 * \
+						    real(cdot(Pvec, Pvec))); 
+  return c/P.n_cols;
+}
 
 // constructs the interaction matrix from a Nx3 matrix of positions R,
 // a complex wavevector kn, a Nx3 matrix Beta of principal inverse polarizabilities, a

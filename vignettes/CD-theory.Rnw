@@ -30,7 +30,7 @@ modelling in the dipole approximation}
 \setcounter{topnumber}{50}
 \setcounter{bottomnumber}{50}    
 
-\SweaveOpts{pdf=TRUE, echo=FALSE, fig=FALSE, eps=FALSE, cache=FALSE, tidy=T}
+%\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{CD-theory}
 
 \begin{document}

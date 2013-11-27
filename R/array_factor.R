@@ -1,8 +1,6 @@
-
-
 ##' C++ calculation of the array factor
 ##'
-##' C++ calculation of the array factor
+##' Brute-force numerical evaluation of the truncated 2D sum of dipole fields
 ##' @title array factor
 ##' @param wavelength wavelength in nm
 ##' @param N half number of dipoles along one side

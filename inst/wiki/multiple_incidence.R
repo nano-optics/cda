@@ -1,14 +1,19 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
-library(plyr)
 library(reshape2)
+library(plyr)
+library(knitr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -19,7 +24,7 @@ title3d('','','x axis','y axis','z axis')
 theme_set(theme_minimal())
 
 
-## @knitr cluster
+## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="multiple-"----
 
 # dielectric function
 wvl <- seq(400, 900)
@@ -42,34 +47,35 @@ lines3d(hel$smooth, lwd=1, col="red")
 rgl.ellipsoids(cl$r+cbind(rep(-500, 2),0,0), cl$sizes, cl$angles, col="gold")
 
 
-## @knitr cd
+## ----cd,echo=TRUE,tidy=FALSE,fig.path="multiple-",fig.width=8------------
 
 Angles <- rep(seq(0, pi/2, length=12), 3)
 Axes <- rep(c('x','y','z'), each=12)
 
-results <- dispersion_spectrum(cl, Angles, Axes, gold, 
+results <- dispersion_spectrum(cl, gold, angles=Angles, axes = Axes, 
                                polarisation="linear")
 
 test <- melt(results, meas="value")
 
 ggplot(subset(test, type == "extinction"), 
        aes(wavelength, value, colour=angles, group=angles)) +
-  facet_grid(axis ~ polarisation, scales="free") +
+  facet_grid(axes ~ polarisation, scales="free") +
   geom_line() +
   labs(y=expression(sigma[ext]*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="incident angle")
 
-## @knitr comparison
+
+## ----comparison,echo=TRUE,tidy=FALSE,fig.path="multiple-",fig.width=8----
 
 variables <- expand.grid(Angles = seq(0, 2*pi, length=36),
                          Axes = c('x','y','z'))
 
-results <- dispersion_spectrum(cl2, variables$Angles, variables$Axes, gold, 
+results <- dispersion_spectrum(cl2, gold, angles=variables$Angles, axes = variables$Axes,
                                polarisation="circular")
 average <- circular_dichroism_spectrum(cl2, material = gold)
 
 ggplot(subset(results, polarisation == "CD"), aes(wavelength, value)) +
-  facet_grid(axis ~ polarisation, scales="free") +
+  facet_grid(axes ~ polarisation, scales="free") +
   geom_line(aes(colour=angles, group=angles)) +
   geom_line(data=subset(average, type == "CD" & variable =="extinction"), linetype=2, size=1.2) +
   labs(y=expression(sigma[CD]*" /"*nm^2),

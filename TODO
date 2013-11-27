@@ -1,13 +1,7 @@
-* fix Module loading from Rcpp
-
 * test examples
-
-* refactor averaging and cd_spectrum to switch between two functions
 
 * polarisability port to c++, higher-level function for fast optimization
 
-* check that the polarisability is passed from R to C++ in the best shape to avoid unnecessary transformations.
-
 * find/write an iterative solver for the CDA equations, e.g qmr, gmres, CG etc.
 
-* solve multiple angles at once using solve(A, B) where B is a matrix of incident fields.
+* check the cheap accuracy for short wavelengths

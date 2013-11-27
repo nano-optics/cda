@@ -7,6 +7,9 @@
 ##' @docType package
 ##' @useDynLib cda
 ##' @import Rcpp
+##' @import RcppArmadillo
+##' @import dielectric
+##' @import methods
 ##' @title cda
 ##' @keywords package
 ##' @author baptiste Auguie
@@ -42,10 +45,11 @@ NULL
 ##' @export
 ##' @details
 ##' \itemize{
-##'  \item{array_factor}{ truncated lattice sum for a finite 2D square array}
+##'  \item{array_factor}{truncated lattice sum for a finite 2D square array}
 ##' }
 ##' @examples
 ##' show( array )
+NULL
 
 ##' Rcpp module: cd
 ##' 
@@ -55,10 +59,11 @@ NULL
 ##' @export
 ##' @details
 ##' \itemize{
-##'  \item{circular_dichroism_spectrum}{Loop over wavelenghts and calculate the orientation averaging of the difference in extinction, absorption, scattering for left/right circularly polarised light}
+##'  \item{average_spectrum}{Loop over wavelengths and calculate the orientation averaging of the difference in extinction, absorption, scattering for left/right circularly polarised light}
 ##' }
 ##' @examples
 ##' show( cd )
+NULL
 
 ##' Rcpp module: cda
 ##' 
@@ -69,28 +74,17 @@ NULL
 ##' @details
 ##' \itemize{
 ##'   \item{absorption}{absorption cross-section}
-##'   \item{euler}{ 3D rotation matrix parametrized by Euler angles }
 ##'   \item{extinction}{ extinction cross-section }
+##'   \item{axis_rotation}{3D rotation matrix parametrized by axis + angle}
+##'   \item{euler}{3D rotation matrix parametrized by Euler angles }
 ##'   \item{interaction_matrix}{ build the coupled-dipole interaction matrix }
+##'   \item{block_diagonal}{diagonal blocks of the coupled-dipole interaction matrix }
+##'   \item{incident_field}{construct the incident fields for specific Euler angles}
+##'   \item{multiple_incident_field}{construct the incident fields for specific axes+angles}
 ##' }
 ##' @examples
 ##' show( cda )
-
-##' Rcpp module: linear
-##' 
-##' Exposes C++ calculation of scattering and absorption of dipolar particles by linearly polarised light in fixed orientation.
-##' @name linear
-##' @docType data
-##' @export
-##' @details
-##' \itemize{
-##'   \item{linear_extinction_spectrum}{Returns extinction spectra for x and y polarisation at one fixed incidence } 
-##'   \item{dispersion}{Returns absorption and extinction cross-sections for x and y polarisation at multiple angles of incidence, fixed wavelength (subroutine)} 
-##'   \item{dispersion_spectrum}{Returns absorption and extinction spectra for x and y polarisation at multiple angles of incidence.} 
-##' }
-##' @examples
-##' show( linear )
-	
+NULL
 
 ##' Lattice sum
 ##' 
@@ -109,5 +103,20 @@ NULL
 ##' @examples
 ##' data(G0)
 ##' \dontrun{demo(lattice_sum)}
-	
+NULL
 
+
+##' Rcpp module: dispersion
+##' 
+##' Exposes C++ calculation of scattering and absorption of dipolar particles by linearly polarised light in fixed orientation.
+##' @name dispersion
+##' @docType data
+##' @export
+##' @details
+##' \itemize{
+##'   \item{dispersion}{Returns absorption, scattering and extinction cross-sections for two orthogonal polarisations at multiple angles of incidence, fixed wavelength (subroutine)} 
+##'   \item{dispersion_spectrum}{Returns absorption, scattering and extinction spectra for two orthogonal polarisations at multiple angles of incidence} 
+##' }
+##' @examples
+##' show( dispersion )
+NULL

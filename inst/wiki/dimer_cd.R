@@ -1,14 +1,18 @@
 
-## @knitr load
+## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
-library(plyr)
 library(reshape2)
+library(plyr)
 
 
-## @knitr setup
-
+## ----setup,echo=FALSE----------------------------------------------------
+knit_hooks$set(rgl = function(before, options, envir) {
+  # if a device was opened before this chunk, close it
+  if (before && rgl.cur() > 0) rgl.close()
+  hook_rgl(before, options, envir)
+})
 rgl_annotate = function(){
   axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
 axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
@@ -19,7 +23,7 @@ title3d('','','x axis','y axis','z axis')
 theme_set(theme_minimal())
 
 
-## @knitr cluster
+## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="dimercd-"----
 
 # dielectric function
 wvl <- seq(400, 900)
@@ -37,7 +41,7 @@ rgl_annotate()
 
 
 
-## @knitr comparison
+## ----comparison,echo=TRUE,tidy=FALSE,fig.path="dimercd-",fig.width=8-----
   
 dimer <- function(dihedral=45, ...){
   cl <- cluster_dimer(dihedral = dihedral * pi/180, ...)
@@ -54,7 +58,7 @@ p <-
   facet_grid(type~variable, scales="free") +
   geom_line(aes(wavelength, value, 
                 colour=factor(dihedral))) +
-  labs(y=expression(sigma[ext]*" /"*nm^2),
+  labs(y=expression(sigma*" /"*nm^2),
        x=expression(wavelength*" /"*nm), colour="dihedral angle") +
          scale_colour_brewer(type="div", palette=3)
 

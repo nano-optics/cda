@@ -1,8 +1,8 @@
 
   cda <- new( "Module" )
   cd <- new( "Module" )
-  linear <- new( "Module" )
   array <- new( "Module" )
+  dispersion <- new( "Module" )
 
 
  .onLoad <- function(libname, pkgname){
