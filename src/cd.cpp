@@ -33,9 +33,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     // incident field
     arma::cx_mat Eincident(3*N, Nangles), P(3*N, Nangles);
     const arma::colvec  khat="1 0 0;", kvec = kn*khat;
-    arma::cx_colvec RCP, LCP;
-    LCP << 0 << 1 << 1i << endr;
-    RCP << 0 << 1i << 1 << endr;
+    arma::cx_colvec RCP="(0,0) (0,1) (1,0);", LCP="(0,0) (1,0) (0,1);";
     RCP = arma::datum::sqrt2/2 * RCP ;
     LCP = arma::datum::sqrt2/2 * LCP ;
     arma::colvec xsec(Nangles); // temporary storage of cross-sections
