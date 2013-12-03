@@ -1,3 +1,9 @@
+cda 1.5.1
+
+INTERNAL CHANGES
+
+* use symmetry to calculate only half of the off-diagonal interaction matrix blocks
+
 cda 1.5
 
 INTERNAL CHANGES

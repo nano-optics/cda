@@ -108,8 +108,7 @@ arma::cx_mat block_diagonal(const arma::cx_colvec& Beta, const arma::mat& Euler)
     Rot = euler(Euler(ii,0), Euler(ii,1), Euler(ii,2));
     polar.submat(ii*3,ii*3,ii*3+2,ii*3+2) =  Rot.st() * \
       diagmat(Beta.subvec(ii*3, ii*3+2)) * Rot; 
-    
-  } // polar is done
+  } 
   
   return polar;
 }
@@ -145,9 +144,9 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
   // nested for loop over dipole locations
   for(jj=0; jj<N; jj++)
     {
-      for(kk=0; kk<N; kk++)
+      for(kk=jj; kk<N; kk++)
 	{
-	  if(jj!=kk)
+	  if(kk > jj)
 	    {
 	      rk_to_rj = R.row(jj) - R.row(kk) ;
 	      rjk = norm(rk_to_rj, 2);
@@ -157,16 +156,19 @@ arma::cx_mat interaction_matrix(const arma::mat& R, const double kn,
 		Ajk = exp(i*kn*rjk) / rjk *  (kn*kn*(rjkrjk - I3) + \
 					      (i*kn*rjk - arma::cx_double(1,0)) / \
 					      (rjk*rjk) * (3*rjkrjk - I3)) ;
+		// assign block 
+		A.submat(jj*3,kk*3,jj*3+2,kk*3+2) = Ajk;
+		// symmetric block 
+		A.submat(kk*3,jj*3,kk*3+2,jj*3+2) = Ajk.st();
 	      } else {	      
 		Ajk = (I3 - 3*rjkrjk)/ (rjk*rjk*rjk)  ;
+		A.submat(jj*3,kk*3,jj*3+2,kk*3+2) = Ajk;
 	      }
-	    } else { // diagonal blocks
+	    } else if (kk == jj){ // diagonal blocks
 	    Rot = euler(Euler(jj,0), Euler(jj,1), Euler(jj,2));
 	    Ajk = Rot.st() * diagmat(Beta.subvec(jj*3, jj*3+2)) * Rot;
-	      
-	      }
-	  // assign block 
-	  A.submat(jj*3,kk*3,jj*3+2,kk*3+2) = Ajk;
+	    A.submat(jj*3,kk*3,jj*3+2,kk*3+2) = Ajk;
+	  }
 	}
     } // end loops
   

@@ -1,5 +1,5 @@
 Package: cda
-Version: 1.5
+Version: 1.5.1
 Authors@R: c(person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com",
     role = c("aut", "cre")),
