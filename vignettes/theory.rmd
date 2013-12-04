@@ -1,3 +1,9 @@
+Circular dichroism in assemblies of plasmonic nanoparticles -- modelling in the dipole approximation
+========================================================
+<!-- 
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{theory}
+-->
 The `cda` package implements the coupled-dipole approximation for
 electromagnetic scattering by sparse collections of subwavelength
 particles, with a particular focus on plasmonic nanoparticles in the
@@ -17,8 +23,7 @@ a helix.
 ![(a) Schematic of the 3D arrangement of particles. (b) Orientation of
 prolate particles in space using two Euler angles.](setup.png)
 
-Coupled dipole model
-====================
+## Coupled dipole model
 
 Each dipole scatters light in proportion to the local field it
 experiences,
@@ -90,8 +95,7 @@ equation [eq:DDAmatrix], the extinction cross-section can be obtained
 $$\sigma_{\rm ext}=\frac{4\pi k}{|{\mathrm{E}_{\text{inc}}}|^2}\Im({\mathbf{E}_{\text{inc}}}^*\cdot {\mathbf{P}}).
     \label{eq:extinctionDDA}$$
 
-Computation of circular dichroism
----------------------------------
+## Computation of circular dichroism
 
 Circular dichroism can be calculated from the difference in extinction
 for left-handed and right-handed circularly polarised light, averaged

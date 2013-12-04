@@ -2,6 +2,7 @@
 .git
 .RS_Store
 .travis.yml
+travis-tool.sh
 
 wiki/.*png$
 wiki/.*html$
