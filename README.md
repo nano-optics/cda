@@ -1,1 +1,3 @@
+[![Build Status](https://travis-ci.org/baptiste/cda.png?branch=master)](https://travis-ci.org/baptiste/cda)
+
 Solves the electromagnetic problem of coupled-dipoles (scattering and absorption by a cluster of subwavelength particles in arbitrary 3D configuration) by direct inversion of the interaction matrix. Functions are provided for linear polarisation with varying angle of incidence, as well as circular polarisation with angular averaging (optical activity). Retardation is included in the interaction.
