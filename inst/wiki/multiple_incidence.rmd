@@ -1,88 +1,25 @@
+## Multiple angles of incidence
+_baptiste Auguié -- `r format(Sys.time(), "%d %B, %Y")`_
+```{r demo, message=FALSE, echo=FALSE}
+knitr::read_demo("multiple_incidence", package="cda")
+knitr::read_chunk("load.R")
+```
+```{r load, message=FALSE, echo=FALSE}
+```
+```{r setup, message=FALSE, echo=FALSE}
+```
 The other demos present calculations either at a fixed incidence angle along z, typically (but not necessarily) a symmetry axis of the cluster, or with full angular averaging. This demo features the intermediate situation, where a fixed cluster is studied with multiple angles of incidence. Typical applications would be dispersion plots with linear polarisation, but it is also interesting to observe the angular dependence of optical activity.
-
-```{r load,message=FALSE}
-library(cda)
-library(rgl)
-library(ggplot2)
-library(reshape2)
-library(plyr)
-library(knitr)
-```
-```{r setup,echo=FALSE}
-knit_hooks$set(rgl = function(before, options, envir) {
-  # if a device was opened before this chunk, close it
-  if (before && rgl.cur() > 0) rgl.close()
-  hook_rgl(before, options, envir)
-})
-rgl_annotate = function(){
-  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
-axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
-axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
-axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
-title3d('','','x axis','y axis','z axis')
-}
-theme_set(theme_minimal())
-```
 
 ### Cluster definition
 ```{r cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="multiple-"}
-
-# dielectric function
-wvl <- seq(400, 900)
-gold <- epsAu(wvl)
-
-# two clusters
-cl <- cluster_chain(N=2, pitch=100)
-
-cl2 <- cluster_helix(5, R0=200, pitch=150, 
-                          delta=pi/2, delta0=0, right=TRUE,
-                          a=50, b=50/2, c=50/2,
-                          angles="helix")
-hel <- helix(N = 5, R0 = 200, pitch = 150, delta = pi/2, 
-             delta0 = 0, right = TRUE)
-
-# visualise
-rgl.ellipsoids(cl2$r, cl2$sizes, cl2$angles, col="gold")
-lines3d(hel$smooth, lwd=1, col="red")
-  shift <- cbind(rep(1000, nrow(cl$r)),0,0)
-rgl.ellipsoids(cl$r+cbind(rep(-500, 2),0,0), cl$sizes, cl$angles, col="gold")
 ```
 
 ### solving CD equations for two polarisations and a range of angles with rotations along x, y, z (uncoupled).
 
 ```{r cd,echo=TRUE,tidy=FALSE,fig.path="multiple-",fig.width=8}
-
-Angles <- rep(seq(0, pi/2, length=12), 3)
-Axes <- rep(c('x','y','z'), each=12)
-
-results <- dispersion_spectrum(cl, gold, angles=Angles, axes = Axes, 
-                               polarisation="linear")
-
-test <- melt(results, meas="value")
-
-ggplot(subset(test, type == "extinction"), 
-       aes(wavelength, value, colour=angles, group=angles)) +
-  facet_grid(axes ~ polarisation, scales="free") +
-  geom_line() +
-  labs(y=expression(sigma[ext]*" /"*nm^2),
-       x=expression(wavelength*" /"*nm), colour="incident angle")
 ```
 
 ### Optical activity 
 
 ```{r comparison,echo=TRUE,tidy=FALSE,fig.path="multiple-",fig.width=8}
-
-variables <- expand.grid(Angles = seq(0, 2*pi, length=36),
-                         Axes = c('x','y','z'))
-
-results <- dispersion_spectrum(cl2, gold, angles=variables$Angles, axes = variables$Axes,
-                               polarisation="circular")
-average <- circular_dichroism_spectrum(cl2, material = gold)
-
-ggplot(subset(results, polarisation == "CD"), aes(wavelength, value)) +
-  facet_grid(axes ~ polarisation, scales="free") +
-  geom_line(aes(colour=angles, group=angles)) +
-  geom_line(data=subset(average, type == "CD" & variable =="extinction"), linetype=2, size=1.2) +
-  labs(y=expression(sigma[CD]*" /"*nm^2),
-       x=expression(wavelength*" /"*nm), colour="incident angle")
 ```

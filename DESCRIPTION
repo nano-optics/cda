@@ -34,8 +34,7 @@ Suggests:
     testthat,
     knitr
 Imports:
-    Rcpp (>= 0.10.5),
-    RcppArmadillo (>= 0.3.900),
+    Rcpp,
     statmod,
     randtoolbox,
     reshape2,

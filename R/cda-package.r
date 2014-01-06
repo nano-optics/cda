@@ -6,9 +6,8 @@
 ##' @name cda-package
 ##' @docType package
 ##' @useDynLib cda
-##' @import Rcpp
-##' @import RcppArmadillo
 ##' @import dielectric
+##' @import Rcpp
 ##' @import methods
 ##' @title cda
 ##' @keywords package
@@ -104,7 +103,6 @@ NULL
 ##' data(G0)
 ##' \dontrun{demo(lattice_sum)}
 NULL
-
 
 ##' Rcpp module: dispersion
 ##' 
