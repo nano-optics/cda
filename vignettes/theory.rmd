@@ -32,7 +32,7 @@ $${\mathbf{p}_{\text{dip}}}=\alpha {\mathbf{E}_{\text{loc}}},
 \label{eq:localfield}$$
 
 where $\alpha$ is the polarizability tensor describing the individual
-nanoparticle. The prescription of Kuwata *et al.*@KT03 was chosen,
+nanoparticle. The prescription of Kuwata *et al.* @KT03 was chosen,
 which provides an accurate approximation for particles below
 $\sim 100$nm in size. Each dipole may be placed in arbitrary
 orientation, and to this end the polarizability tensor must be
@@ -41,7 +41,7 @@ transformed to a rotated frame.
 Let us describe each nanoparticle by a diagonal polarizability tensor in
 the reference frame of its principal axes. The rotation of this
 reference frame to the actual position of the particle can be described
-by three Euler angles $\phi, \theta, \psi$ and a rotation matrix[^1]
+by three Euler angles $\phi, \theta, \psi$ and a rotation matrix [^1]
 
 $$\mathrm{R}= \begin{bmatrix} 
     \cos \psi  \cos \phi  - \cos \theta  \sin \phi  \sin \psi &
@@ -72,7 +72,7 @@ radiated by a dipole reads,
 $${\mathbf{E}_{\text{d}}}=\frac{e^{i\omega r/c}}{4\pi\varepsilon_0}\left\{\frac{\omega^2}{c^2r}\mathbf{\hat r}\times{\mathbf{p}}\times\mathbf{\hat r}+\left(\frac{1}{r^3}-\frac{i\omega}{cr^2}\right)\left[3(\mathbf{\hat r}\cdot{\mathbf{p}})\mathbf{\hat r}-{\mathbf{p}}\right]\right\}.
     \label{eq:dipoleField}$$
 
-By grouping together the dipole moments we can cast equation[eq:dda] in
+By grouping together the dipole moments we can cast equation [eq:dda] in
 matrix form,
 
 $$A{\mathbf{P}}={\mathrm{E}_{\text{inc}}},
