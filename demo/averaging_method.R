@@ -2,21 +2,8 @@
 ## ----load,message=FALSE, echo=1:6----------------------------------------
 require(cda)
 require(ggplot2)
-require(microbenchmark)
-require(xtable)
 library(reshape2)
 library(plyr)
-library(knitr)
-
-theme_set(theme_minimal())
-display_benchmark <- function(x, unit = "t"){
-    x$time <- microbenchmark:::convert_to_unit(x$time, unit)
-    res <- aggregate(time ~ expr, x, function(.x) c(mean(.x), median(.x), min(.x), max(.x)))
-    res <- cbind(res$expr, as.data.frame(res$time))
-    colnames(res) <- c("expr",  "mean", "median", "min", "max")
-    print(xtable(res), type = 'html', html.table.attributes = '')
-}
-
 
 ## ----cluster, tidy=FALSE, fig.path='averaging-'--------------------------
 gold <- epsAu(seq(600, 800))
@@ -29,7 +16,6 @@ cl <- cluster_dimer(d=100,
 cl2 <- cluster_dimer(d=100, 
               dihedral=0*pi/180, alpha1=20*pi/180, alpha2=0,
               a=35, b=12)
-
 
 
 ## ----comparison, tidy=FALSE, fig.path='averaging-'-----------------------

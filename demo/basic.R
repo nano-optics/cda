@@ -1,28 +1,9 @@
-
 ## ----load,message=FALSE--------------------------------------------------
 library(cda)
 library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
-library(knitr)
-
-
-## ----setup,echo=FALSE----------------------------------------------------
-knit_hooks$set(rgl = function(before, options, envir) {
-  # if a device was opened before this chunk, close it
-  if (before && rgl.cur() > 0) rgl.close()
-  hook_rgl(before, options, envir)
-})
-rgl_annotate = function(){
-  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
-axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
-axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
-axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
-title3d('','','x axis','y axis','z axis')
-}
-theme_set(theme_minimal())
-
 
 ## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="basic-"----
 

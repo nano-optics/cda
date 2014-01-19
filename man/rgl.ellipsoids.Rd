@@ -32,6 +32,7 @@ sizes <- equal_sizes(0.04,0.02,0.02,NROW(cl$positions))
 baptiste Auguie
 }
 \seealso{
-Other user_level rgl: \code{\link{rgl.ellipsoid}}
+Other user_level rgl: \code{\link{rgl_annotate}},
+\code{\link{rgl.ellipsoid}}
 }
 

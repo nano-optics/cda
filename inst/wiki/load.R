@@ -15,13 +15,7 @@ knit_hooks$set(rgl = function(before, options, envir) {
   if (before && rgl.cur() > 0) rgl.close()
   hook_rgl(before, options, envir)
 })
-rgl_annotate = function(){
-  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
-axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
-axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
-axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
-title3d('','','x axis','y axis','z axis')
-}
+
 theme_set(theme_minimal())
 
 display_benchmark <- function(x, unit = "t"){

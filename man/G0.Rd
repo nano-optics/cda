@@ -4,9 +4,9 @@
 \alias{gfun}
 \title{Lattice sum}
 \format{\describe{
-   \item{\code{wavelength}}{a numeric vector}
-   \item{\code{Qx}}{a numeric vector}
-   \item{\code{Gxx}}{a complex vector}
+   \item{\code{wavelength}}{ A numeric vector}
+   \item{\code{Qx}}{ A numeric vector}
+   \item{\code{Gxx}}{ A complex vector}
  }}
 \description{
 Converged lattice sum G0 for an infinite 2D array of

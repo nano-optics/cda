@@ -5,12 +5,6 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
-library(knitr)
-
-
-## ----setup,echo=FALSE----------------------------------------------------
-theme_set(theme_minimal())
-
 
 ## ----comparison,echo=TRUE,tidy=FALSE,fig.path="array-",fig.width=10, warning=FALSE----
 data(G0)

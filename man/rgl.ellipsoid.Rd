@@ -47,6 +47,7 @@ shapelist3d(ee) }
 baptiste Auguie
 }
 \seealso{
-Other user_level rgl: \code{\link{rgl.ellipsoids}}
+Other user_level rgl: \code{\link{rgl_annotate}},
+\code{\link{rgl.ellipsoids}}
 }
 

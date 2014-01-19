@@ -68,6 +68,21 @@ rgl.ellipsoids <- function(positions, sizes, angles,...){
   
 }
 
+##' Add axes to a rgl scene
+##'
+##' x, y, z axes
+##' @title rgl_annotate
+##' @return draw axes
+##' @author baptiste Auguie
+##' @export
+##' @family user_level rgl
+rgl_annotate <- function(){
+  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
+  axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
+  axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
+  axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
+  title3d('','','x axis','y axis','z axis')
+}
 
 
 

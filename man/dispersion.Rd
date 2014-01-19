@@ -8,12 +8,13 @@ dipolar particles by linearly polarised light in fixed
 orientation.
 }
 \details{
-\itemize{ \item{dispersion}{Returns absorption, scattering
+\itemize{ \item{dispersion}{ Returns absorption, scattering
 and extinction cross-sections for two orthogonal
 polarisations at multiple angles of incidence, fixed
-wavelength (subroutine)} \item{dispersion_spectrum}{Returns
-absorption, scattering and extinction spectra for two
-orthogonal polarisations at multiple angles of incidence} }
+wavelength (subroutine)} \item{dispersion_spectrum}{
+Returns absorption, scattering and extinction spectra for
+two orthogonal polarisations at multiple angles of
+incidence} }
 }
 \examples{
 show( dispersion )

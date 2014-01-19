@@ -9,6 +9,7 @@ knitr::read_chunk("load.R")
 ```
 ```{r setup, message=FALSE, echo=FALSE}
 ```
+
 Three options are provided for angular averaging: Gauss-Legendre quadrature, regular grid in (theta, phi), and a quasi-random Monte Carlo sequence on the sphere. Here we compare their performance and accuracy.
 
 ### Cluster definitions

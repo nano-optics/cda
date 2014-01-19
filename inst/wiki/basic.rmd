@@ -9,6 +9,7 @@ knitr::read_chunk("load.R")
 ```
 ```{r setup, message=FALSE, echo=FALSE}
 ```
+
 In this example we define a dimer of nanorods,  model its optical response to linearly polarised light at fixed incidence, and orientation-averaged optical activity.
 
 ### Manually defining a cluster
