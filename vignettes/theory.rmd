@@ -32,7 +32,7 @@ $${\mathbf{p}_{\text{dip}}}=\alpha {\mathbf{E}_{\text{loc}}},
 \label{eq:localfield}$$
 
 where $\alpha$ is the polarizability tensor describing the individual
-nanoparticle. The prescription of Kuwata *et al.* @KT03 was chosen,
+nanoparticle. The prescription of Kuwata *et al.* (Appl. Phys. Lett. 83, 4625 (2003)) was chosen,
 which provides an accurate approximation for particles below
 $\sim 100$nm in size. Each dipole may be placed in arbitrary
 orientation, and to this end the polarizability tensor must be
@@ -89,7 +89,7 @@ polarizability of the individual dipoles, in the global $(x,y,z)$
 reference frame.
 
 When the dipole moments are known by inversion of
-equation[eq:DDAmatrix], the extinction cross-section can be obtained
+equation [eq:DDAmatrix], the extinction cross-section can be obtained
 *for a given incident field* following,
 
 $$\sigma_{\rm ext}=\frac{4\pi k}{|{\mathrm{E}_{\text{inc}}}|^2}\Im({\mathbf{E}_{\text{inc}}}^*\cdot {\mathbf{P}}).
