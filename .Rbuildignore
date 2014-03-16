@@ -13,3 +13,5 @@ presentation/
 develop/
 src/*.o
 src/*.so
+^.*\.Rproj$
+^\.Rproj\.user$

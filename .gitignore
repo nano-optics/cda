@@ -7,3 +7,6 @@ src/*.o
 src/*.so
 inst/publis
 inst/develop
+.Rproj.user
+
+*.Rproj
