@@ -11,6 +11,7 @@
 ##' @param polarisation linear or circular polarisation
 ##' @param progress logical, display progress bar
 ##' @return data.frame
+##' @note The incident wavevector is along the z direction.
 ##' @export
 ##' @family user_level cda
 ##' @author baptiste Auguie
