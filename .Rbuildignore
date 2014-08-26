@@ -9,6 +9,7 @@ wiki/.*html$
 wiki/.*r$
 wiki/.*\.md$
 publis/
+tmp/
 presentation/
 develop/
 src/*.o

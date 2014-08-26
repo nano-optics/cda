@@ -41,7 +41,7 @@ transformed to a rotated frame.
 Let us describe each nanoparticle by a diagonal polarizability tensor in
 the reference frame of its principal axes. The rotation of this
 reference frame to the actual position of the particle can be described
-by three Euler angles $\phi, \theta, \psi$ and a rotation matrix [^1]
+by three Euler angles $\phi, \theta, \psi$ and a rotation matrix [^1^]
 
 $$\mathrm{R}= \begin{bmatrix} 
     \cos \psi  \cos \phi  - \cos \theta  \sin \phi  \sin \psi &
@@ -142,5 +142,5 @@ so that the evaluation of the extinction cross-section is performed for
 a relatively low number of angles ($20\times 20$ seems sufficient).
 Other integration schemes are also possible.
 
-[^1]: using the same conventions as
+[^1^]: using the same conventions as
     <http://mathworld.wolfram.com/EulerAngles.html>
