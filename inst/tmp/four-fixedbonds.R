@@ -117,6 +117,7 @@ monitor <- function(object, digits = getOption("digits"), ...) {
 
 
 cl1 <- structure(p0, a0)
+r3dDefaults$windowRect <- c(0,50, 700, 700)
 open3d()
 bg3d("white")
 rgl.spheres(cl1$r, radius=cl1$sizes, col=1:4)
@@ -127,12 +128,19 @@ planes3d(0,0,1, 0, alpha=0.5)
 #           min = minp, max = maxp, popSize = 50,
 #           maxiter = 10, a=a0, monitor=monitor, draw=TRUE)
 # 
-# rgl.snapshot(filename="swarm.png")
+rgl.snapshot(filename="init.png")
 
+
+open3d()
+bg3d("white")
+#rgl.spheres(cl1$r, radius=cl1$sizes, col=1:4)
+planes3d(0,0,1, 0, alpha=0.5)
 GA <- ga(type = "real-valued",
          fitness = fitness, keepBest=TRUE,
          min = minp, max = maxp, popSize = 50,
-         maxiter = 500, a=a0, monitor=monitor, draw=FALSE)
+         maxiter = 10, a=a0, monitor=monitor, draw=TRUE)
+
+rgl.snapshot(filename="iterations.png")
 
 cl <- structure(GA@solution, a0, printChecks=TRUE)
 
@@ -162,11 +170,21 @@ sol <- circular_dichroism_spectrum(cluster=cl, result.matrix=FALSE,
                                      averaging="cheap",
                                      medium=1.33,
                                      material=gold)
+
+
+
+
 require(ggplot2)
 ggplot(subset(sol, variable == "extinction"), aes(wavelength, value))+
   facet_grid(type~., scales="free")+
   geom_line()+
-  geom_line(data=subset(first, variable == "extinction"), lty="dotted")
+  scale_x_continuous(expand=c(0,0))+
+  scale_y_continuous(expand=c(0,0))+
+  geom_line(data=subset(first, variable == "extinction"), lty="dotted")+
+  labs(y=expression(sigma*" /"*nm^2),
+       x=expression(wavelength*" /"*nm)) +
+  theme_minimal() + guides(colour="none") + theme(panel.border=element_rect(fill=NA))
 
-ggsave("cd.pdf")
+
+ggsave("cdopt.pdf",width=4,height=3)
 
