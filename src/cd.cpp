@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "cda.h"
 #include "cd.h"
+#include "cg.h"
 
 #include <RcppArmadillo.h>
 #include <iostream>
