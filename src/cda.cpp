@@ -3,6 +3,7 @@
 // 
 #include "utils.h"
 #include "cda.h"
+#include "cg.h"
 
 #include <RcppArmadillo.h>
 #include <iostream>
@@ -220,6 +221,8 @@ arma::colvec extinction(const double kn, const arma::cx_mat& P,
 
 
 RCPP_MODULE(cda){
+       Rcpp::function( "cg_solve", &cg_solve, 
+		       "Conjugate gradient solver" ) ;
        Rcpp::function( "euler", &euler, 
 		       "Euler rotation matrix" ) ;
        Rcpp::function( "axis_rotation", &axis_rotation, 
