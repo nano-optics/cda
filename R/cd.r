@@ -76,6 +76,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' @param Nmax maximum N if convergence not attained (QMC only)
 ##' @param dN iterative increase in N (QMC only)
 ##' @param full logical use full (retarded) dipolar field
+##' @param cg logical use conjugate gradient solver
 ##' @param progress print progress lines
 ##' @param verbose display messages
 ##' @param result.matrix logical return the results as a matrix
@@ -89,7 +90,8 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' Y. Okada, Efficient numerical orientation averaging of light scattering properties with a quasi-Monte-Carlo method, Journal of Quantitative Spectroscopy and Radiative Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742.
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=100, 
                                         averaging = c("GL","QMC","grid", "cheap"),
-                                        iterative=FALSE, precision=1e-3, Nmax=1e4, dN=Nquad,
+                                        iterative=FALSE, precision=1e-3, Nmax=1e4, 
+                                        dN=Nquad, cg = FALSE,
                                         full=TRUE, progress=FALSE, verbose=TRUE,
                                         result.matrix=FALSE){
 

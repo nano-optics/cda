@@ -7,6 +7,7 @@
 		      const arma::cx_mat& Adiag,			
 		      const double kn, const arma::vec& Angles, 
 		      const arma::ivec& Axes, 
-		      const int polarisation);
+		      const int polarisation,
+		      const bool cg);
 
 #endif

@@ -9,6 +9,7 @@
 ##' @param angles of incident field in radians
 ##' @param axes of incident field rotation character vector from ('x', 'y', 'z')
 ##' @param polarisation linear or circular polarisation
+##' @param cg logical, use conjugate gradient solver
 ##' @param progress logical, display progress bar
 ##' @return data.frame
 ##' @note The incident wavevector is along the z direction.
@@ -18,7 +19,7 @@
 dispersion_spectrum <- function (cluster, material, medium = 1.33,
                                  angles=0, axes='z', 
                                  polarisation=c("linear", "circular"), 
-                                 progress = FALSE) 
+                                 cg = FALSE, progress = FALSE) 
 {
   k0 <- 2 * pi/material[['wavelength']]
   kn <- k0 * medium
@@ -48,7 +49,7 @@ dispersion_spectrum <- function (cluster, material, medium = 1.33,
   
   res <- dispersion$dispersion_spectrum(kn, Beta, cluster$r, 
                                         cluster$angles, angles, axes, 
-                                        polarisation, progress)
+                                        polarisation, cg, progress)
   
   angles <- angles[rep(seq.int(Nangles), Nwavelengths)]
   axes <- axeso[rep(seq.int(Nangles), Nwavelengths)]

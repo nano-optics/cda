@@ -91,7 +91,6 @@ arma::cx_mat multiple_incident_field(const arma::cx_colvec& E0,
   return(Ei);
 }
 
-//
 // Construct the diagonal blocks of the interaction matrix
 // (inverse polarisabilities) for use in C_abs
 //
