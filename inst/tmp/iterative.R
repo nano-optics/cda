@@ -16,16 +16,16 @@ Angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
                 c(pi/2, pi/2, pi/2)) # +z is phi=pi/2, psi=pi/2
 
 A <- cda$interaction_matrix(cl$r, kn, c(Beta), cl$angles, TRUE)
-Ei <- cda$incident_field(E0L, k=kn*k0, r=cl$r, 0*Angles[1,,drop=FALSE])
+Ei <- cda$incident_field(E0L, k=kn*k0, r=cl$r, Angles)
 
-P <- solve(A, Ei)
-P2 <- cda$cg_solve(A, c(Ei),  0*c(Ei), 10, 1e-5)
-range(abs(P-P2)/max(Mod(P)))
+system.time(P2 <- cda$cg_solve(A, Ei,  0*Ei, 10, 1e-5))
+# P <- solve(A, Ei)
+# range(abs(P-P2)/max(Mod(P)))
 
 library(microbenchmark)
 
 microbenchmark(r = solve(A, Ei),
-               cpp = cda$cg_solve(A, c(Ei),  0*c(Ei), 10, 1e-5), times = 1)
+               cpp = cda$cg_solve(A, Ei,  0*Ei, 10, 1e-5), times = 5)
 
 # for 10 dipoles
 # Unit: microseconds

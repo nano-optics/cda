@@ -42,11 +42,12 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     arma::colvec xsec(Nangles); // temporary storage of cross-sections
     // left polarisation
     Eincident = incident_field(LCP, kvec, R, Angles);
-    //if(cg) {
-      //for y in colsofEincident
-      //P = cg_solve(A, y, x0,  nmax,  tol);
-      //};
-    P = solve(A, Eincident);
+    if(cg) {
+      arma::cx_mat guess = Eincident;
+      P = cg_solve(A, Eincident, guess, 10,  1e-3);
+    } else {
+      P = solve(A, Eincident);
+    }
     xsec = extinction(kn, P, Eincident);
     res(0) = dot(xsec, Weights); 
     xsec = absorption(kn, P, Adiag);
@@ -54,7 +55,12 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
       
     // right polarisation
     Eincident = incident_field(RCP, kvec, R, Angles);
-    P = solve(A, Eincident);
+    if(cg) {
+      arma::cx_mat guess = Eincident;
+      P = cg_solve(A, Eincident, guess, 10,  1e-3);
+    } else {
+      P = solve(A, Eincident);
+    }
     xsec = extinction(kn, P, Eincident);
     res(1) = dot(xsec, Weights); 
     xsec = absorption(kn, P, Adiag);

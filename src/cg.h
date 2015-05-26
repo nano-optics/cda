@@ -3,9 +3,9 @@
 
 #include <RcppArmadillo.h>
 
-arma::cx_colvec cg_solve(const arma::cx_mat& A, 
-			const arma::cx_vec& y,	
-			const arma::cx_vec& x0,		
-			const double nmax, 	
-			const double tol);
+arma::cx_mat cg_solve(const arma::cx_mat& A, 
+			 const arma::cx_mat& y,	
+			 arma::cx_mat& x0,		
+			 const double nmax, 	
+			 const double tol);
 #endif
