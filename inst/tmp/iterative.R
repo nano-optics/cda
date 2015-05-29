@@ -8,8 +8,9 @@ E0L=1/sqrt(2)*c(0,1,1i)
 E0R=1/sqrt(2)*c(0,1i,1)
 k0=c(1,0,0)
 
-cl <- cluster_chain(5000)
+cl <- cluster_chain(500)
 Beta <- inverse_polarizability(cl, material=epsAu(wavelength), medium=medium)
+
 
 Angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
                 c(pi/2, pi/2, 0), # +y is phi=pi/2, psi=0

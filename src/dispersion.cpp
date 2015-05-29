@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "cda.h"
 #include "dispersion.h"
+#include "cg.h"
 
 #include <RcppArmadillo.h>
 #include <iostream>
@@ -30,7 +31,9 @@ using namespace arma;
 		      const double kn, const arma::vec& Angles, 
 		      const arma::ivec& Axes, 
 		      const int polarisation,
-		      const bool cg)
+		      const bool cg, 
+		      const int nmax,
+		      const double tol)
    {
      const int N = R.n_rows, NAngles = Angles.n_elem;
      arma::mat Rot(3,3);
@@ -54,22 +57,25 @@ using namespace arma;
 
     // first polarisation
     Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
-    // if (cg){
-    //
-    //} else {
-    P = solve(A, Eincident);
-    //}
+    if(cg) {
+      arma::cx_mat guess = Eincident;
+      P = cg_solve(A, Eincident, guess, nmax,  tol);
+    } else {
+      P = solve(A, Eincident);
+    }
     res.col(0) =  extinction(kn, P, Eincident); 
     res.col(1) = absorption(kn, P, Adiag); 
     res.col(2) = res.col(0) - res.col(1); 
 
     // second polarisation
     Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
-    // if (cg){
-    //
-    //} else {
-    P = solve(A, Eincident);
-    //}
+    if(cg) {
+      arma::cx_mat guess = Eincident;
+      P = cg_solve(A, Eincident, guess, nmax,  tol);
+    } else {
+      P = solve(A, Eincident);
+    }
+    
     res.col(3) =  extinction(kn, P, Eincident); 
     res.col(4) = absorption(kn, P, Adiag); 
     res.col(5) = res.col(3) - res.col(4); 
@@ -88,14 +94,15 @@ using namespace arma;
 // Angles is the Nangles vector of incident beam angles
 // Axes is the Nangles vector of incident beam axes
 // polarisation is an integer flag to switch between linear and circular polarisation
-// progress is a logical flag to display progress bars
 // cg is a logical flag to use conjugate gradient solver
+// progress is a logical flag to display progress bars
 arma::cube dispersion_spectrum(const arma::colvec kn, 
 			       const arma::cx_mat& Beta, const arma::mat& R, 
 			       const arma::mat& Euler, const arma::vec& Angles,
 			       const arma::ivec& Axes,			
 			       const int polarisation, 
-			       const bool cg,
+			       const bool cg, 
+			       const int nmax, const double tol,
 			       const bool progress)
   {
 
@@ -110,7 +117,8 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
 	progress_bar(ll+1,N);
       A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, 1); // retarded
       Adiag = block_diagonal(Beta.col(ll), Euler);
-      tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, polarisation, cg);
+      tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, 
+		       polarisation, cg, nmax, tol);
       results.slice(ll) = tmp; 
     }
     if(progress)

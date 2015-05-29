@@ -8,6 +8,7 @@
 		      const double kn, const arma::vec& Angles, 
 		      const arma::ivec& Axes, 
 		      const int polarisation,
-		      const bool cg);
+		      const bool cg,
+		      const int nmax, const double tol);
 
 #endif

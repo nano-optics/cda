@@ -27,7 +27,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
 		       const double kn, 
 		       const arma::mat& Angles,
 		       const arma::colvec& Weights,
-		       const bool cg)
+		       const bool cg, const int nmax, const double tol)
   {
 
     const int N = R.n_rows, Nangles = Angles.n_rows;
@@ -44,7 +44,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     Eincident = incident_field(LCP, kvec, R, Angles);
     if(cg) {
       arma::cx_mat guess = Eincident;
-      P = cg_solve(A, Eincident, guess, 10,  1e-3);
+      P = cg_solve(A, Eincident, guess, nmax, tol);
     } else {
       P = solve(A, Eincident);
     }
@@ -57,7 +57,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     Eincident = incident_field(RCP, kvec, R, Angles);
     if(cg) {
       arma::cx_mat guess = Eincident;
-      P = cg_solve(A, Eincident, guess, 10,  1e-3);
+      P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);
     }
@@ -87,8 +87,11 @@ arma::mat average_spectrum(const arma::colvec kn,
 			   const arma::mat& Euler, 
 			   const arma::mat& Angles, 
 			   const arma::colvec& Weights, 
-			   const bool full, const bool progress, 
-			   const bool cg)
+			   const bool full, 
+			   const bool cg, 
+			   const int nmax, 
+			   const double tol,
+			   const bool progress)
   {
 
     int N = kn.n_elem, Nr = R.n_rows, ll;
@@ -103,7 +106,7 @@ arma::mat average_spectrum(const arma::colvec kn,
 
       A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, full);
       Adiag = block_diagonal(Beta.col(ll), Euler);
-      tmp = averaging(R, A, Adiag, kn(ll), Angles, Weights, cg);
+      tmp = averaging(R, A, Adiag, kn(ll), Angles, Weights, cg, nmax, tol);
 
       res(ll,0) = 0.5*(tmp(0) + tmp(1)); // extinction 
       res(ll,1) = 0.5*(tmp(2) + tmp(3)); // absorption

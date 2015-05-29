@@ -73,10 +73,12 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' @param averaging averaging method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, regular grid, or "cheap" (3 axes)
 ##' @param iterative logical, increase N until convergence (QMC only)
 ##' @param precision relative diff between two runs (QMC only)
-##' @param Nmax maximum N if convergence not attained (QMC only)
+##' @param Qmax maximum N if convergence not attained (QMC only)
 ##' @param dN iterative increase in N (QMC only)
 ##' @param full logical use full (retarded) dipolar field
 ##' @param cg logical use conjugate gradient solver
+##' @param nmax integer termination of conjugate gradient solver
+##' @param tol double, tolerance of conjugate gradient solver
 ##' @param progress print progress lines
 ##' @param verbose display messages
 ##' @param result.matrix logical return the results as a matrix
@@ -90,8 +92,8 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' Y. Okada, Efficient numerical orientation averaging of light scattering properties with a quasi-Monte-Carlo method, Journal of Quantitative Spectroscopy and Radiative Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742.
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=100, 
                                         averaging = c("GL","QMC","grid", "cheap"),
-                                        iterative=FALSE, precision=1e-3, Nmax=1e4, 
-                                        dN=Nquad, cg = FALSE,
+                                        iterative=FALSE, precision=1e-3, Qmax=1e4, 
+                                        dN=Nquad, cg = FALSE, nmax = 10, tol=1e-4,
                                         full=TRUE, progress=FALSE, verbose=TRUE,
                                         result.matrix=FALSE){
 
@@ -111,13 +113,13 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=10
   results <- cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
                                  as.matrix(quadrature$angles), 
                                  quadrature$weights,
-                                 full, progress)
+                                 full, cg, nmax, tol, progress)
   
-  ## iterative improvement: add new points until convergence or Nmax reached
+  ## iterative improvement: add new points until convergence or Qmax reached
   if(iterative && averaging == "QMC"){
     converged <- FALSE
     Ntot <- Nquad
-    while(Ntot < Nmax && !converged){
+    while(Ntot < Qmax && !converged){
       oldN <- Ntot
       old <- results[,1]
       Ntot <- Ntot + dN
@@ -126,7 +128,7 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=10
       newres <-  cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
                                      as.matrix(quadrature$angles), 
                                      quadrature$weights,
-                                     full, progress)
+                                     full, cg, nmax, tol, progress)
       
       ## average of the two results
       results <- (oldN * results + dN * newres) / (oldN + dN)
