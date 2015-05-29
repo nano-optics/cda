@@ -93,7 +93,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=100, 
                                         averaging = c("GL","QMC","grid", "cheap"),
                                         iterative=FALSE, precision=1e-3, Qmax=1e4, 
-                                        dN=Nquad, cg = FALSE, nmax = 10, tol=1e-4,
+                                        dN=Nquad, cg = FALSE, nmax = 30, tol=1e-4,
                                         full=TRUE, progress=FALSE, verbose=TRUE,
                                         result.matrix=FALSE){
 

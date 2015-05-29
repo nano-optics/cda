@@ -15,8 +15,8 @@ cl <- cluster_helix(N=10, R0=500, pitch=1000,
 
 
 ## ----comparison, tidy=FALSE, fig.path='averaging-'-----------------------
-params <- expand.grid(Nquad=100,
-                      nmax = c(5, 10, 15),
+params <- expand.grid(Nquad=50,
+                      nmax = c(5, 10, 15, 30),
                       tol=c(1e-4, 1e-5),
                       stringsAsFactors=FALSE)
 
@@ -24,7 +24,7 @@ comparison <- mdply(params, circular_dichroism_spectrum,
                     cluster=cl, material=gold, averaging="QMC", cg=TRUE)
 
 cheap <- circular_dichroism_spectrum(cluster=cl, 
-                                     material=gold, averaging="QMC",Nquad=100, cg=FALSE)
+                                     material=gold, averaging="QMC",Nquad=50, cg=FALSE)
 
 p <- 
   ggplot(subset(comparison, type == "CD" & variable == "extinction"),

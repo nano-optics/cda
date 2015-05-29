@@ -21,7 +21,7 @@
 dispersion_spectrum <- function (cluster, material, medium = 1.33,
                                  angles=0, axes='z', 
                                  polarisation=c("linear", "circular"), 
-                                 cg = FALSE, nmax=10, tol=1e-4, progress = FALSE) 
+                                 cg = FALSE, nmax=30, tol=1e-4, progress = FALSE) 
 {
   k0 <- 2 * pi/material[['wavelength']]
   kn <- k0 * medium
