@@ -28,7 +28,8 @@ arma::cx_mat cg_solve(const arma::cx_mat& A,
   
   // temporary variables
   double alpha_i, beta_i;
-  const arma::cx_mat B = A.t(); // Hermitian transpose of A
+  const arma::cx_mat B = A.t(); // Hermitian transpose. 
+                                // Note: diag blocks not symmetric, so no easier way
   arma::cx_colvec y_i(N), z_i(N), g_i(N), p_i(N), w_i(N), v_i(N), x_i(N); 
   arma::cx_colvec g_ip1(N), p_ip1(N), w_ip1(N), v_ip1(N), x_ip1(N);   
   

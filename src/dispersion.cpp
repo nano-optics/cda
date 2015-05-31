@@ -58,7 +58,7 @@ using namespace arma;
     // first polarisation
     Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
     if(cg) {
-      arma::cx_mat guess = Eincident;
+      arma::cx_mat guess = Adiag * Eincident;
       P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);
@@ -70,7 +70,7 @@ using namespace arma;
     // second polarisation
     Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
     if(cg) {
-      arma::cx_mat guess = Eincident;
+      arma::cx_mat guess = Adiag * Eincident;
       P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);

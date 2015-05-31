@@ -43,7 +43,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     // left polarisation
     Eincident = incident_field(LCP, kvec, R, Angles);
     if(cg) {
-      arma::cx_mat guess = Eincident;
+      arma::cx_mat guess = Adiag * Eincident; // first Born approx.
       P = cg_solve(A, Eincident, guess, nmax, tol);
     } else {
       P = solve(A, Eincident);
@@ -56,7 +56,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
     // right polarisation
     Eincident = incident_field(RCP, kvec, R, Angles);
     if(cg) {
-      arma::cx_mat guess = Eincident;
+      arma::cx_mat guess = Adiag * Eincident; // first Born approx.
       P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);
