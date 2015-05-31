@@ -2,12 +2,8 @@ Package: cda
 Version: 1.5.2
 Authors@R: c(person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com",
-    role = c("aut", "cre")),
-    person("LAPACK authors",
-    role = "cph",
-    comment = "copyrights apply to src/zgels.f"))
+    role = c("aut", "cre")))
 License: GPL-3
-Copyright: file inst/COPYRIGHTS for src/zgels.f obtained from LAPACK
 Title: Coupled dipole approximation of light scattering by clusters of
     nanoparticles
 Description: Solves the electromagnetic problem of coupled-dipoles (scattering
