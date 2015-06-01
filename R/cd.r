@@ -77,6 +77,7 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 ##' @param dN iterative increase in N (QMC only)
 ##' @param full logical use full (retarded) dipolar field
 ##' @param cg logical use conjugate gradient solver
+##' @param born logical first Born approx as cg guess
 ##' @param nmax integer termination of conjugate gradient solver
 ##' @param tol double, tolerance of conjugate gradient solver
 ##' @param progress print progress lines
@@ -93,7 +94,8 @@ integration_points <- function(method=c("cheap", "QMC", "GL", "grid"),
 circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=100, 
                                         averaging = c("GL","QMC","grid", "cheap"),
                                         iterative=FALSE, precision=1e-3, Qmax=1e4, 
-                                        dN=Nquad, cg = FALSE, nmax = 30, tol=1e-4,
+                                        dN=Nquad, cg = FALSE, born=FALSE, 
+                                        nmax = 30, tol=1e-4,
                                         full=TRUE, progress=FALSE, verbose=TRUE,
                                         result.matrix=FALSE){
 
@@ -113,7 +115,7 @@ circular_dichroism_spectrum <- function(cluster, material, medium=1.33, Nquad=10
   results <- cd$average_spectrum(kn, Beta, cluster$r, cluster$angles, 
                                  as.matrix(quadrature$angles), 
                                  quadrature$weights,
-                                 full, cg, nmax, tol, progress)
+                                 full, cg, born, nmax, tol, progress)
   
   ## iterative improvement: add new points until convergence or Qmax reached
   if(iterative && averaging == "QMC"){

@@ -32,6 +32,7 @@ using namespace arma;
 		      const arma::ivec& Axes, 
 		      const int polarisation,
 		      const bool cg, 
+		      const bool born, 
 		      const int nmax,
 		      const double tol)
    {
@@ -54,11 +55,17 @@ using namespace arma;
     arma::mat res(NAngles, 6) ;  
     arma::cx_mat Eincident(3*N,NAngles);
     arma::cx_mat P(3*N,NAngles);
+    arma::cx_mat guess(3*N,NAngles);
 
     // first polarisation
     Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
     if(cg) {
-      arma::cx_mat guess = Adiag * Eincident;
+      guess = 0 * Eincident;
+      if(born){ 
+	  // first Born approximation, solving (1/alpha) * P = E
+	  guess = cg_solve(Adiag, Eincident, guess, 5, 1e-3); 
+      } 
+      // guess = born ?  (Adiag * Eincident):  (0 * Eincident);
       P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);
@@ -70,7 +77,11 @@ using namespace arma;
     // second polarisation
     Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
     if(cg) {
-      arma::cx_mat guess = Adiag * Eincident;
+      guess = 0 * Eincident;
+      if(born){ 
+	  // first Born approximation, solving (1/alpha) * P = E
+	  guess = cg_solve(Adiag, Eincident, guess, 5, 1e-3); 
+      } 
       P = cg_solve(A, Eincident, guess, nmax,  tol);
     } else {
       P = solve(A, Eincident);
@@ -102,6 +113,7 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
 			       const arma::ivec& Axes,			
 			       const int polarisation, 
 			       const bool cg, 
+			       const bool born, 
 			       const int nmax, const double tol,
 			       const bool progress)
   {
@@ -118,7 +130,7 @@ arma::cube dispersion_spectrum(const arma::colvec kn,
       A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, 1); // retarded
       Adiag = block_diagonal(Beta.col(ll), Euler);
       tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, 
-		       polarisation, cg, nmax, tol);
+		       polarisation, cg, born, nmax, tol);
       results.slice(ll) = tmp; 
     }
     if(progress)

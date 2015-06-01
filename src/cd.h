@@ -8,7 +8,7 @@ arma::colvec averaging(const arma::mat& R, const arma::cx_mat& A,
 		       const double kn, 
 		       const arma::mat& Angles,
 		       const arma::colvec& Weights, 
-		       const bool cg, 
+		       const bool cg, const bool born, 
 		       const int nmax, 
 		       const double tol);
 #endif

@@ -8,7 +8,7 @@ E0L=1/sqrt(2)*c(0,1,1i)
 E0R=1/sqrt(2)*c(0,1i,1)
 k0=c(1,0,0)
 
-cl <- cluster_chain(500)
+cl <- cluster_chain(1000)
 Beta <- inverse_polarizability(cl, material=epsAu(wavelength), medium=medium)
 
 
@@ -17,16 +17,18 @@ Angles <- cbind(c(0, pi/2, 0), # +x is phi=0, psi=0
                 c(pi/2, pi/2, pi/2)) # +z is phi=pi/2, psi=pi/2
 
 A <- cda$interaction_matrix(cl$r, kn, c(Beta), cl$angles, TRUE)
+Adiag <- cda$block_diagonal(c(Beta), cl$angles)
 Ei <- cda$incident_field(E0L, k=kn*k0, r=cl$r, Angles)
 
-system.time(P2 <- cda$cg_solve(A, Ei,  0*Ei, 10, 1e-5))
+system.time(P2 <- cda$cg_solve(A, Ei,  Adiag%*%Ei, 10, 1e-5))
 # P <- solve(A, Ei)
 # range(abs(P-P2)/max(Mod(P)))
 
 library(microbenchmark)
 
 microbenchmark(r = solve(A, Ei),
-               cpp = cda$cg_solve(A, Ei,  0*Ei, 10, 1e-5), times = 5)
+               born = cda$cg_solve(A, Ei,  Adiag%*%Ei, 20, 1e-4),
+               clueless = cda$cg_solve(A, Ei,  0*Ei, 20, 1e-4), times = 5)
 
 # for 10 dipoles
 # Unit: microseconds

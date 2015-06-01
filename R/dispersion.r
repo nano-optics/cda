@@ -10,6 +10,7 @@
 ##' @param axes of incident field rotation character vector from ('x', 'y', 'z')
 ##' @param polarisation linear or circular polarisation
 ##' @param cg logical, use conjugate gradient solver
+##' @param born logical, use first Born approx as cg guess
 ##' @param nmax integer termination of conjugate gradient solver
 ##' @param tol double, tolerance of conjugate gradient solver
 ##' @param progress logical, display progress bar
@@ -21,7 +22,8 @@
 dispersion_spectrum <- function (cluster, material, medium = 1.33,
                                  angles=0, axes='z', 
                                  polarisation=c("linear", "circular"), 
-                                 cg = FALSE, nmax=30, tol=1e-4, progress = FALSE) 
+                                 cg = FALSE, born = FALSE, nmax=30, tol=1e-4,
+                                 progress = FALSE) 
 {
   k0 <- 2 * pi/material[['wavelength']]
   kn <- k0 * medium
@@ -51,7 +53,7 @@ dispersion_spectrum <- function (cluster, material, medium = 1.33,
   
   res <- dispersion$dispersion_spectrum(kn, Beta, cluster$r, 
                                         cluster$angles, angles, axes, 
-                                        polarisation, cg, nmax, tol, progress)
+                                        polarisation, cg, born, nmax, tol, progress)
   
   angles <- angles[rep(seq.int(Nangles), Nwavelengths)]
   axes <- axeso[rep(seq.int(Nangles), Nwavelengths)]

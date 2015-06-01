@@ -9,6 +9,7 @@
 		      const arma::ivec& Axes, 
 		      const int polarisation,
 		      const bool cg,
+		      const bool born,
 		      const int nmax, const double tol);
 
 #endif
