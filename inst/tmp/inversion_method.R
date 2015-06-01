@@ -56,14 +56,16 @@ p <-
   labs(y=expression(sigma[ext]/nm^2),
        x=expression(wavelength/nm), colour=expression(N))
 # 
-# p <- 
-#   ggplot(subset(comparison, type == "CD" & variable == "extinction"),
-#          aes(wavelength, value)) + 
-#   facet_wrap(~tol)+
-#   geom_path(aes(colour=factor(nmax), linetype=born))+
-#   geom_path(data=subset(cheap, type == "CD" & variable == "extinction"), linetype=2)+
-#   labs(y=expression(sigma[ext]/nm^2),
-#        x=expression(wavelength/nm), colour=expression(N))
-
 p
+
+p2 <- 
+  ggplot(subset(comparison, type == "CD" & variable == "extinction"),
+         aes(wavelength, value)) + 
+  facet_wrap(~tol)+
+  geom_path(aes(colour=factor(nmax), linetype=born))+
+  geom_path(data=subset(cheap, type == "CD" & variable == "extinction"), linetype=2)+
+  labs(y=expression(sigma[ext]/nm^2),
+       x=expression(wavelength/nm), colour=expression(N))
+
+p2
 
