@@ -305,21 +305,21 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_oa_oos
-arma::rowvec cpp_oa_oos(const arma::mat& R, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int maxiter, const double tol);
+arma::rowvec cpp_oa_oos(const arma::mat& R, const arma::cx_cube& AlphaBlocks, double kn, double medium, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, int maxiter, double tol);
 RcppExport SEXP cda_cpp_oa_oos(SEXP RSEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< const arma::mat& >::type R(RSEXP);
     Rcpp::traits::input_parameter< const arma::cx_cube& >::type AlphaBlocks(AlphaBlocksSEXP);
-    Rcpp::traits::input_parameter< const double >::type kn(knSEXP);
-    Rcpp::traits::input_parameter< const double >::type medium(mediumSEXP);
+    Rcpp::traits::input_parameter< double >::type kn(knSEXP);
+    Rcpp::traits::input_parameter< double >::type medium(mediumSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type IncidenceNodes(IncidenceNodesSEXP);
     Rcpp::traits::input_parameter< const arma::colvec& >::type IncidenceWeights(IncidenceWeightsSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type ScatteringNodes(ScatteringNodesSEXP);
     Rcpp::traits::input_parameter< const arma::colvec& >::type ScatteringWeights(ScatteringWeightsSEXP);
-    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
-    Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     __result = Rcpp::wrap(cpp_oa_oos(R, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, maxiter, tol));
     return __result;
 END_RCPP

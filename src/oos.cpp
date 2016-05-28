@@ -99,12 +99,12 @@ arma::colvec cpp_iterate_field(const arma::mat& R,
 // [[Rcpp::export]]
 arma::rowvec cpp_oa_oos(const arma::mat& R,
                        const arma::cx_cube& AlphaBlocks,
-                       const double kn, const double medium,
+                       double kn, double medium,
                        const arma::mat& IncidenceNodes,
                        const arma::colvec& IncidenceWeights,
                        const arma::mat& ScatteringNodes,
                        const arma::colvec& ScatteringWeights,
-                       const int maxiter, const double tol)
+                       int maxiter, double tol)
 {
 
   const int N = R.n_cols, Ni = IncidenceNodes.n_cols;
@@ -202,6 +202,7 @@ arma::mat cpp_oa_spectrum_oos(const arma::colvec kn,
   for(ll=0; ll<Nl; ll++){ // loop over kn
     if(progress)
       progress_bar(ll+1,Nl);
+
 
     AlphaBlocks = cpp_alpha_blocks(Alpha.col(ll), Angles);
     tmp = cpp_oa_oos(R, AlphaBlocks, kn(ll), medium,

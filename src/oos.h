@@ -10,11 +10,11 @@ arma::colvec cpp_iterate_field(const arma::mat& R,
 
   arma::rowvec cpp_oa_oos(const arma::mat& R,
     const arma::cx_cube& AlphaBlocks,
-    const double kn, const double medium,
+    double kn, double medium,
     const arma::mat& IncidenceNodes,
     const arma::colvec& IncidenceWeights,
     const arma::mat& ScatteringNodes,
     const arma::colvec& ScatteringWeights,
-    const int maxiter, const double tol);
+    int maxiter, double tol);
 
 #endif
