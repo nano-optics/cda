@@ -1,15 +1,16 @@
-#ifndef _cda_DISPERSION_H
-#define _cda_DISPERSION_H
+#ifndef _DISPERSION_H
+#define _DISPERSION_H
 
-#include <RcppArmadillo.h>
-
- arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
-		      const arma::cx_mat& Adiag,			
-		      const double kn, const arma::vec& Angles, 
-		      const arma::ivec& Axes, 
-		      const int polarisation,
-		      const bool cg,
-		      const bool born,
-		      const int nmax, const double tol);
+arma::mat cpp_dispersion(const arma::mat& R,
+                         const arma::cx_mat& A,
+                            const arma::cx_cube& AlphaBlocks,
+                            const double kn, const double medium,
+                            const arma::vec& Incidence,
+                            const arma::ivec& Axes,
+                            const arma::mat& ScatteringNodes,
+                            const arma::colvec& ScatteringWeights,
+                            const int polarisation,
+                            const bool cg, const bool born,
+                            const int maxiter, const double tol);
 
 #endif

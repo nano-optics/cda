@@ -1,10 +1,9 @@
-#ifndef _cda_UTILS_H
-#define _cda_UTILS_H
+#ifndef _UTILS_H
+#define _UTILS_H
 
-#include <RcppArmadillo.h>
-
-arma::mat euler(const double phi, const double theta, const double psi);
-arma::mat axis_rotation(const double angle, const int axis);
+arma::mat cpp_euler_active(const double phi, const double theta, const double psi);
+arma::mat cpp_euler_passive(const double phi, const double theta, const double psi);
+arma::mat cpp_axis_rotation(const double angle, const int axis);
 void progress_bar(double x, double N);
 
 #endif

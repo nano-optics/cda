@@ -1,8 +1,6 @@
-#ifndef _array_ARRAY_H
-#define _array_ARRAY_H
+#ifndef _ARRAY_H
+#define _ARRAY_H
 
-#include <RcppArmadillo.h>
-
-arma::cx_colvec array_factor(const arma::colvec& k, const arma::mat& R) ;
+arma::cx_colvec cpp_array_factor(const arma::colvec& kn, const arma::mat& R);
 
 #endif

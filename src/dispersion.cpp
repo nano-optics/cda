@@ -1,151 +1,168 @@
-// 
-// Multiple angles of incidence
-// 
-#include "utils.h"
-#include "cda.h"
-#include "dispersion.h"
-#include "cg.h"
+// [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>
 #include <iostream>
 
+#include "utils.h"
+#include "cdaglobal.h"
+#include "dispersion.h"
+#include "cg.h"
+#include "incident.h"
+#include "cross_sections.h"
+
 using namespace Rcpp ;
 using namespace RcppArmadillo ;
 using namespace std;
-using namespace arma;
-
 
 //
 // Angle-resolved cross-sections for multiple directions of incidence
 //
-// R is the Nx3 matrix of positions
-// A is the 3Nx3N interaction matrix
-// Adiag is the 3Nx3N block-diagonal part of the interaction matrix
-// kn is the incident wavenumber (scalar)
-// Angles is the Nangles vector of incident beam angles
-// Axes is the Nangles vector of incident beam axes
-// polarisation is an integer flag to switch between linear and circular polarisation
-// cg is a logical flag to use conjugate gradient solver
- arma::mat dispersion(const arma::mat& R, const arma::cx_mat& A, 
-		      const arma::cx_mat& Adiag,			
-		      const double kn, const arma::vec& Angles, 
-		      const arma::ivec& Axes, 
-		      const int polarisation,
-		      const bool cg, 
-		      const bool born, 
-		      const int nmax,
-		      const double tol)
-   {
-     const int N = R.n_rows, NAngles = Angles.n_elem;
-     arma::mat Rot(3,3);
-
+// R: Nx3 matrix of positions
+// A: 3Nx3N interaction matrix
+// AlphaBlocks:  3x3xN blocks of polarizabilities
+// Alpha: 3NxNl matrix of principal polarisabilities
+// kn:  incident wavenumber (scalar)
+// medium:  incident medium (scalar)
+// Incidence:  Ni vector of incident beam directions
+// Axes:  Ni vector of incident beam axes
+// ScatteringNodes:  2xNs matrix of scattered field directions
+// ScatteringWeights:  Ns vector of scattered field quadrature weights
+// polarisation: integer flag to switch between linear and circular polarisation
+// cg: logical flag to use conjugate gradient solver
+// born: logical flag, use first Born approx for cg solver
+// maxiter:  max number of cg iterations
+// tol:  cg tolerance
+// [[Rcpp::export]]
+arma::mat cpp_dispersion(const arma::mat& R,
+                         const arma::cx_mat& A,
+                            const arma::cx_cube& AlphaBlocks,
+                            const double kn, const double medium,
+                            const arma::vec& Incidence,
+                            const arma::ivec& Axes,
+                            const arma::mat& ScatteringNodes,
+                            const arma::colvec& ScatteringWeights,
+                            const int polarisation,
+                            const bool cg, const bool born,
+                            const int maxiter, const double tol)
+{
+  const int N = R.n_cols, Ni = Incidence.n_elem;
 
     // incident field
-    const arma::colvec  khat="0 0 1;"; 
-    const arma::colvec kvec = kn*khat; 
-    arma::cx_colvec LPP, LPS;
-    if(polarisation == 0){ // linear
-      LPP="(1,0) (0,0) (0,0);", LPS="(0,0) (1,0) (0,0);";
-    } else { // circular
-      LPP="(1,0) (0,1) (0,0);", LPS="(0,1) (1,0) (0,0);";
-      LPP = arma::datum::sqrt2/2 * LPP ;
-      LPS = arma::datum::sqrt2/2 * LPS ;
-    }
+    arma::cx_mat Ein(3*N, 2*Ni), Eloc(3*N, 2*Ni);
+    arma::cx_mat P(3*N, 2*Ni);
+    const arma::colvec  khat="0 0 1;";
 
-    arma::mat res(NAngles, 6) ;  
-    arma::cx_mat Eincident(3*N,NAngles);
-    arma::cx_mat P(3*N,NAngles);
-    arma::cx_mat guess(3*N,NAngles);
+  arma::cx_colvec Evec1, Evec2;
+  if(polarisation == 0){ // linear
+    Evec1="(1,0) (0,0) (0,0);", Evec2="(0,0) (1,0) (0,0);";
+  } else { // circular
+    Evec1="(0,1) (1,0) (0,0);", Evec2="(1,0) (0,1) (0,0);";
+    Evec1 = arma::datum::sqrt2/2 * Evec1 ;
+    Evec2 = arma::datum::sqrt2/2 * Evec2 ;
+  }
 
-    // first polarisation
-    Eincident = multiple_incident_field(LPP, kvec, R, Axes, Angles);
-    if(cg) {
-      guess = 0 * Eincident;
-      if(born){ 
-	  // first Born approximation, solving (1/alpha) * P = E
-	  guess = cg_solve(Adiag, Eincident, guess, 5, 1e-3); 
-      } 
-      // guess = born ?  (Adiag * Eincident):  (0 * Eincident);
-      P = cg_solve(A, Eincident, guess, nmax,  tol);
-    } else {
-      P = solve(A, Eincident);
-    }
-    res.col(0) =  extinction(kn, P, Eincident); 
-    res.col(1) = absorption(kn, P, Adiag); 
-    res.col(2) = res.col(0) - res.col(1); 
+  Ein.submat(0,0,3*N-1,Ni-1) = cpp_incident_field_axis(Evec1, kn*khat, R, Incidence, Axes);
+  Ein.submat(0,Ni,3*N-1,2*Ni-1) = cpp_incident_field_axis(Evec2, kn*khat, R, Incidence, Axes);
 
-    // second polarisation
-    Eincident = multiple_incident_field(LPS, kvec, R, Axes, Angles);
-    if(cg) {
-      guess = 0 * Eincident;
-      if(born){ 
-	  // first Born approximation, solving (1/alpha) * P = E
-	  guess = cg_solve(Adiag, Eincident, guess, 5, 1e-3); 
-      } 
-      P = cg_solve(A, Eincident, guess, nmax,  tol);
-    } else {
-      P = solve(A, Eincident);
+  arma::mat res(Ni, 6) ;
+  arma::colvec xsec(2*Ni); // temporary storage of cross-sections
+
+  if(cg) {
+    arma::cx_mat guess = arma::zeros<arma::cx_mat>(3*N,2*Ni);
+    if(born){ // first Born approximation
+      guess = Ein;
     }
-    
-    res.col(3) =  extinction(kn, P, Eincident); 
-    res.col(4) = absorption(kn, P, Adiag); 
-    res.col(5) = res.col(3) - res.col(4); 
-             
-    return res ;
-   } 
+    Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
+  } else {
+    Eloc = solve(A, Ein);
+  }
+  cpp_polarization_update(Eloc, AlphaBlocks, P);
+
+  // return angle-dependent cext, cabs, csca
+  // cext
+  xsec = cpp_extinction(kn, P, Ein);
+  res.col(0) = xsec.subvec(0, Ni-1);    // first polar
+  res.col(3) = xsec.subvec(Ni, 2*Ni-1); // second polar
+  // cabs
+  xsec = cpp_absorption(kn, P, Eloc);
+  res.col(1) = xsec.subvec(0, Ni-1);    // first polar
+  res.col(4) = xsec.subvec(Ni, 2*Ni-1); // second polar
+  // csca
+  xsec =  cpp_scattering(R, ScatteringNodes, ScatteringWeights, kn, P);
+  res.col(2) = xsec.subvec(0, Ni-1);    // first polar
+  res.col(5) = xsec.subvec(Ni, 2*Ni-1); // second polar
+
+  //res.col(2) = res.col(0) - res.col(1);// first polar
+  //res.col(5) = res.col(3) - res.col(4);// second polar
+
+  return res ;
+}
+
 
 
 //
 // Angle-resolved spectra for linear or circular polarisations
 //
-// kn is the vector of incident wavenumbers
-// Beta is the 3N vector of inverse polarisabilities
-// R is the Nx3 matrix of positions
-// Euler is the Nx3 matrix of particle rotation angles
-// Angles is the Nangles vector of incident beam angles
-// Axes is the Nangles vector of incident beam axes
-// polarisation is an integer flag to switch between linear and circular polarisation
-// cg is a logical flag to use conjugate gradient solver
-// progress is a logical flag to display progress bars
-arma::cube dispersion_spectrum(const arma::colvec kn, 
-			       const arma::cx_mat& Beta, const arma::mat& R, 
-			       const arma::mat& Euler, const arma::vec& Angles,
-			       const arma::ivec& Axes,			
-			       const int polarisation, 
-			       const bool cg, 
-			       const bool born, 
-			       const int nmax, const double tol,
-			       const bool progress)
+// kn: vector of incident wavenumbers
+// medium: surrounding refractive index
+// R: Nx3 matrix of positions
+// Alpha: 3NxNl matrix of principal polarisabilities
+// Angles:  Nx3 matrix of particle rotation angles
+// Incidence:  Ni vector of incident beam directions
+// Axes:  Ni vector of incident beam axes
+// ScatteringNodes:  2xNs matrix of scattered field directions
+// ScatteringWeights:  Ns vector of scattered field quadrature weights
+// polarisation: integer flag to switch between linear and circular polarisation
+// full: logical flag to switch off retardation terms
+// cg: logical flag to use conjugate gradient solver
+// born: logical flag, use first Born approx for cg solver
+// maxiter:  max number of cg iterations
+// tol:  cg tolerance
+// progress: logical flag to display progress bars
+// [[Rcpp::export]]
+arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
+             const double medium,
+			       const arma::mat& R,
+			       const arma::cx_mat& Alpha,
+			       const arma::mat& Angles,
+			       const arma::vec& Incidence,
+			       const arma::ivec& Axes,
+             const arma::mat& ScatteringNodes,
+			       const arma::vec& ScatteringWeights,
+			       const int polarisation,
+             const bool full,
+             const bool cg,
+             const bool born,
+             const int maxiter,
+             const double tol,
+             const bool progress)
   {
 
-    const int NAngles = Angles.n_elem;
-    int N = kn.n_elem, Nr = R.n_rows, ll;
-    arma::cube results(NAngles, 6, N);
-    arma::mat tmp(NAngles, 6);
-    arma::cx_mat A(3*Nr,3*Nr), Adiag(3*Nr,3*Nr);
+    const int Ni = Incidence.n_elem;
+    int Nl = kn.n_elem, Nr = R.n_cols, ll;
+    arma::cube res(Ni, 6, Nl);
+    arma::mat tmp(Ni, 6);
 
-    for(ll=0; ll<N; ll++){ // loop over kn   
+    // global, will update at each wavelength
+    arma::cx_mat A = arma::eye<arma::cx_mat>( 3*Nr, 3*Nr );
+    arma::cx_cube AlphaBlocks = arma::zeros<arma::cx_cube>(3, 3, Nr);
+
+    for(ll=0; ll<Nl; ll++){ // loop over kn
       if(progress)
-	progress_bar(ll+1,N);
-      A = interaction_matrix(R, kn(ll), Beta.col(ll), Euler, 1); // retarded
-      Adiag = block_diagonal(Beta.col(ll), Euler);
-      tmp = dispersion(R, A, Adiag, kn(ll), Angles, Axes, 
-		       polarisation, cg, born, nmax, tol);
-      results.slice(ll) = tmp; 
+	progress_bar(ll+1,Nl);
+
+      // update in place
+      cpp_alpha_blocks_update(Alpha.col(ll), Angles, AlphaBlocks);
+      cpp_interaction_matrix_update(R, kn(ll), AlphaBlocks, A);
+
+      tmp = cpp_dispersion(R, A, AlphaBlocks, kn(ll), medium,
+      Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol);
+      // Rcpp::Rcout << tmp << "\n";
+
+      res.slice(ll) = 1.0/Nr * tmp;
     }
     if(progress)
       Rcpp::Rcout << "\n";
 
-    return results ;
-  } 
-
-
-RCPP_MODULE(dispersion){
-
-       Rcpp::function( "dispersion", &dispersion,
-	    "Angle-resolved cross-sections for multiple directions of incidence" ) ;
-       Rcpp::function( "dispersion", &dispersion,
-	    "Angle-resolved cross-sections for multiple directions of incidence" ) ;
-       Rcpp::function( "dispersion_spectrum", &dispersion_spectrum,
-	   "Angle-resolved spectra for linear or circular polarisations" ) ;
-}
+    return res ;
+  }

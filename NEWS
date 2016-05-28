@@ -1,3 +1,17 @@
+cda 2.0.0
+
+INTERNAL CHANGES
+
+* rewritten core functions
+
+* the theory is now more accurately described and more closely implemented in the code
+
+USER-LEVEL CHANGES
+
+* clusters are now defined with column-major conventions
+
+* new clusters and functions for dye layers
+
 cda 1.5.1
 
 INTERNAL CHANGES

@@ -1,13 +1,14 @@
-#include "utils.h"
+// [[Rcpp::depends(RcppArmadillo)]]
+
 #include <RcppArmadillo.h>
 #include <iostream>
 
+#include "utils.h"
+
 using namespace Rcpp ;
 using namespace RcppArmadillo ;
-
 using namespace std;
 
-  
 void progress_bar(double x, double N)
   {
     // how wide you want the progress meter to be
@@ -15,7 +16,7 @@ void progress_bar(double x, double N)
     double fraction = x / N;
     // part of the progressmeter that's already "full"
     int dotz = round(fraction * totaldotz);
-    
+
     // create the "meter"
     int ii=0;
      Rprintf("%3.0f%% [",fraction*100);
@@ -27,58 +28,82 @@ void progress_bar(double x, double N)
     for ( ; ii < totaldotz;ii++) {
        Rprintf(" ");
     }
-    // and back to line begin - 
+    // and back to line begin -
     // do not forget the fflush to avoid output buffering problems!
     Rprintf("]\r");
     // fflush(stdout);
   }
-  
+
 // Euler rotation matrix
-arma::mat euler(const double phi, const double theta, const double psi)
+// ZYZ convention - active rotation
+// to rotate a colvec V, do R * V
+// [[Rcpp::export]]
+arma::mat cpp_euler_active(const double phi, const double theta, const double psi)
   {
     arma::mat Rot(3,3);
     const double cosphi = cos(phi), cospsi = cos(psi), costheta = cos(theta);
     const double sinphi = sin(phi), sinpsi = sin(psi), sintheta = sin(theta);
-    Rot(0,0) = cospsi*cosphi - costheta*sinphi*sinpsi;
-    Rot(0,1) = cospsi*sinphi + costheta*cosphi*sinpsi; 
-    Rot(0,2) = sinpsi*sintheta;
-       
-    Rot(1,0) = -sinpsi*cosphi - costheta*sinphi*cospsi; 
-    Rot(1,1) = -sinpsi*sinphi + costheta*cosphi*cospsi; 
-    Rot(1,2) = cospsi*sintheta;
-       
-    Rot(2,0) = sinphi*sintheta;
-    Rot(2,1) = -cosphi*sintheta; 
+
+    // note: indices have been simply swapped from passive version
+    Rot(0,0) = cosphi*costheta*cospsi - sinphi*sinpsi;
+    Rot(1,0) = sinphi*costheta*cospsi + cosphi*sinpsi;
+    Rot(2,0) = -sintheta*cospsi;
+
+    Rot(0,1) = -cosphi*costheta*sinpsi - sinphi*cospsi;
+    Rot(1,1) = -sinphi*costheta*sinpsi + cosphi*cospsi;
+    Rot(2,1) = sintheta*sinpsi;
+
+    Rot(0,2) = cosphi*sintheta;
+    Rot(1,2) = sinphi*sintheta;
+    Rot(2,2) = costheta;
+    return (Rot);
+  }
+
+// Euler rotation matrix
+// ZYZ convention - passive rotation
+// to rotate a colvec V, do Rt * V
+// [[Rcpp::export]]
+arma::mat cpp_euler_passive(const double phi, const double theta, const double psi)
+  {
+    arma::mat Rot(3,3);
+    const double cosphi = cos(phi), cospsi = cos(psi), costheta = cos(theta);
+    const double sinphi = sin(phi), sinpsi = sin(psi), sintheta = sin(theta);
+    Rot(0,0) = cosphi*costheta*cospsi - sinphi*sinpsi;
+    Rot(0,1) = sinphi*costheta*cospsi + cosphi*sinpsi;
+    Rot(0,2) = -sintheta*cospsi;
+
+    Rot(1,0) = -cosphi*costheta*sinpsi - sinphi*cospsi;
+    Rot(1,1) = -sinphi*costheta*sinpsi + cosphi*cospsi;
+    Rot(1,2) = sintheta*sinpsi;
+
+    Rot(2,0) = cosphi*sintheta;
+    Rot(2,1) = sinphi*sintheta;
     Rot(2,2) = costheta;
     return (Rot);
   }
 
 // Rotation matrix about a cartesian axis
- arma::mat axis_rotation(const double angle, const int axis)
+// [[Rcpp::export]]
+arma::mat cpp_axis_rotation(const double angle, const int axis)
   {
     arma::mat Rot(3,3);
-    const double cosangle = cos(angle), sinangle = sin(angle);
+    const double ca = cos(angle), sa = sin(angle);
 
     if(axis == 0) {// rotate about x axis
-      Rot << 1 << 0 << 0 << arma::endr
-	<< 0 << cosangle << -sinangle << arma::endr
-	<< 0 << sinangle << cosangle << arma::endr;
-
+      Rot(0,0) = 1;   Rot(0,1) = 0 ;  Rot(0,2) =   0;
+      Rot(1,0) = 0;   Rot(1,1) = ca;  Rot(1,2) = -sa;
+      Rot(2,0) = 0;   Rot(2,1) = sa;  Rot(2,2) =  ca;
     }
     if(axis == 1){// rotate about y axis
-    Rot << cosangle << 0 << sinangle << arma::endr
-	<< 0 << 1 << 0 << arma::endr
-	<< -sinangle << 0 << cosangle << arma::endr;
-
+      Rot(0,0) =  ca; Rot(0,1) = 0;   Rot(0,2) = sa;
+      Rot(1,0) =  0 ; Rot(1,1) = 1;   Rot(1,2) =  0;
+      Rot(2,0) = -sa; Rot(2,1) = 0;   Rot(2,2) = ca;
     }
     if(axis == 2){// rotate about z axis
-    Rot << cosangle << -sinangle << 0 << arma::endr
-	<< sinangle << cosangle << 0 << arma::endr
-	<< 0 << 0 << 1 << arma::endr;
-
+      Rot(0,0) = ca;  Rot(0,1) = -sa; Rot(0,2) = 0;
+      Rot(1,0) = sa;  Rot(1,1) =  ca; Rot(1,2) = 0;
+      Rot(2,0) =  0;  Rot(2,1) =   0; Rot(2,2) = 1;
     }
 
     return (Rot);
   }
-
-

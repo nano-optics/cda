@@ -1,11 +1,10 @@
-#ifndef _cda_CG_H
-#define _cda_CG_H
+#ifndef _CG_H
+#define _CG_H
 
-#include <RcppArmadillo.h>
-
-arma::cx_mat cg_solve(const arma::cx_mat& A, 
-			 const arma::cx_mat& y,	
-			 arma::cx_mat& x0,		
-			 const double nmax, 	
+arma::cx_mat cpp_cg_solve(const arma::cx_mat& A,
+			 const arma::cx_mat& y,
+			 arma::cx_mat& x0,
+			 const double nmax,
 			 const double tol);
+			 
 #endif

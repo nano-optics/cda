@@ -1,4 +1,4 @@
-averaging_method     compare the performance of 4 different methods for angular averaging
+averaging     compare the performance of different methods for angular averaging
 basic    simple example of cda calculations
 clusters    generate 3D views of some predefined cluster shapes using RGL rendering
 lattice_sum     lattice sum for a 2D square array of dipoles

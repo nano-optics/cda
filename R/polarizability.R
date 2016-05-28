@@ -1,11 +1,64 @@
-## 
-## Functions to calculate the dipole polarizability
-## 
+##
+## Dipole polarizability
+##
+
+## describes the bare (intrinsic) polarizability of a dye in vacuum
+##' @export
+alpha_bare <- function(wavelength=seq(300,800),
+                       alpha_inf=9.6e-39,
+                       alpha_k=c(5.76e-38),
+                       lambda_k=c(526),
+                       mu_k=c(10000)){
+  
+  eps0 <- 8.854e-12
+  nm3 <- 1e27
+  prefact <- nm3/(4*pi*eps0)
+  
+  lorentz <- function(alpha, lambda, mu) {
+    alpha * wavelength/mu * (1 - 1 / (1 - lambda^2/wavelength^2 - 1i*lambda^2/(wavelength*mu)))
+  }
+  
+  sums <- mapply(lorentz, alpha = alpha_k, lambda = lambda_k,
+                 mu = mu_k, SIMPLIFY=TRUE)
+  alpha <- alpha_inf - rowSums(sums)
+  
+ data.frame(wavelength=wavelength, alpha = prefact * alpha)
+}
+
+##' @export
+alpha_dye <- function(wavelength, sizes, medium, ...){
+  
+  # scalar polar, wavelength dependent
+  alphabar = alpha_bare(wavelength, ...)
+  
+  # effective macroscopic polarisability
+  alphaeff = alpha_embedded(alphabar[["alpha"]], medium)
+  
+  # rescaling with sizes
+  Alpha = alpha_rescale(alphaeff, sizes)
+  
+}
+
+##' @export
+alpha_rescale <- function(alpha, sizes){
+  
+  # a, b, c are normalised and stacked in a single row
+  if(ncol(sizes)==1) scaling <- matrix(sizes/sum(sizes), nrow=3, ncol=1) else
+  scaling = sweep(sizes, 2, colSums(sizes), `/`)
+  # alternative
+  # abc = colSums(sizes);
+  # scaling = sizes %*% diag(1/abc)
+  
+  # assuming all particles share same polarizability function
+  # and multiplied by a given value of alpha
+  tcrossprod(as.vector(scaling), alpha)
+}
+
 
 ##' principal polarizability components for an ellipsoidal particle
 ##'
 ##' uses the Kuwata prescription (see references)
-##' @title polarizability_ellipsoid
+##' @title alpha_ellipsoid
 ##' @param wavelength wavelength in nm
 ##' @param epsilon complex permittivity
 ##' @param a semi-axis in nm
@@ -19,55 +72,69 @@
 ##' @author baptiste Auguie
 ##' @references
 ##' Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
-##' @details 
+##' @details
 ##' The Kuwata version includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
-polarizability_ellipsoid <- function(wavelength, epsilon, a=50, b=30, c=b, 
-                                     medium = 1.33, kuwata= TRUE) 
-{
-  if(kuwata){
+## NOTE: implementation is neither clear nor efficient, should probably do it in c++, or vectorise everything
+alpha_ellipsoid <- function(wavelength, epsilon, medium, sizes){
+  
+  Nr <- ncol(sizes)
+  Nl = length(wavelength)
+  Alpha = matrix(NA, 3*Nr, Nl)
+  
+  for(jj in seq_len(Nr)){
+    a = sizes[1,jj]
+    b = sizes[2,jj]
+    c = sizes[3,jj]
     V <- 4 * pi/3 * a * b * c
-    chi.a <- La(a, b, c)
-    chi.b <- La(b, a, c)
-    chi.c <- La(c, a, b)
-
-    aa <- alpha_kuwata(wavelength, epsilon, V, a, chi.a, 
-                                   medium)
-    ab <- alpha_kuwata(wavelength, epsilon, V, b, chi.b, 
-                                   medium)
-    ac <- alpha_kuwata(wavelength, epsilon, V, c, chi.c, 
-                                   medium)
-    return(cbind(aa, ab, ac))
-  } else {
-    cm <- a^3*(epsilon - medium^2) / (epsilon +2*medium^2)
-    return(cbind(cm,cm,cm))
+    chi <- depolarisation(a, b, c)
+    ind = (jj-1)*3 # 0-index corresponding to particle jj
+    Alpha[ind+1, ] = alpha_kuwata(wavelength, epsilon, V, a, chi[1], medium)
+    Alpha[ind+2, ] = alpha_kuwata(wavelength, epsilon, V, b, chi[2], medium)
+    Alpha[ind+3, ] = alpha_kuwata(wavelength, epsilon, V, c, chi[3], medium)
   }
+  
+  Alpha
 }
 
-##' Shape factor for an ellipsoid
+##' @export
+alpha_embedded <- function(alphabar, medium){
+  
+  eps_m = medium^2
+  Lfact =  (eps_m + 2) /3
+  1/eps_m * Lfact^2 * alphabar
+}
+
+## low-level
+
+
+##' Depolarisation factor for an ellipsoid
 ##'
-##' calculates the shape factor for a general ellipsoid
-##' @title La
-##' @param a semi-axis in nm
-##' @param b semi-axis in nm
-##' @param c semi-axis in nm
-##' @return shape factor along a
+##' calculates the 3 depolarisation factors for a general ellipsoid
+##' @title depolarisation
+##' @param x1 semi-axis in nm
+##' @param x2 semi-axis in nm
+##' @param x3 semi-axis in nm
+##' @return shape factor along x1
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level polarizability
-La <- function (a = 50, b = a, c = a) 
+depolarisation <- function (x1, x2 = x1, x3 = x2)
 {
-  ## scaled version to help convergence
-  V <- a*b*c
-  b <- b/a
-  c <- c/a
-    integrand <- function(q) {
-      fq <- (q + 1) * (q + b^2) * (q + c^2)
-      1/((1 + q) * sqrt(fq))
-    }
-  I1 <- integrate(integrand, lower = 0, upper = Inf)$value
-  V/2 * I1 / a^3
+  ## scaled version to help integration
+  V = x1*x2*x3
   
+  integrand <- function(q, r, s) {
+    1/((1 + q) * sqrt((q + 1) * (q + r^2) * (q + s^2)))
+  }
+  I1 <- integrate(integrand, r=x2/x1, s=x3/x1, lower = 0, upper = Inf)
+  I2 <- integrate(integrand, r=x1/x2, s=x3/x2, lower = 0, upper = Inf)
+  I3 <- integrate(integrand, r=x1/x3, s=x2/x3, lower = 0, upper = Inf)
+  
+  V/2 * c(I1$value / x1^3,
+          I2$value / x2^3,
+          I3$value / x3^3)
 }
+
 ##' polarizability
 ##'
 ##' prescription from Kuwata
@@ -85,46 +152,24 @@ La <- function (a = 50, b = a, c = a)
 ##' @author baptiste Auguie
 ##' @references
 ##' Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
-alpha_kuwata <-
-function (wavelength, epsilon, V, axis, L, medium = 1.33) 
+alpha_kuwata <- function (wavelength, epsilon, V, axis, L, medium = 1.33)
 {
-    A <- Kuwata.A(L)
-    B <- Kuwata.B(L)
-    x0 <- 2 * pi * axis/wavelength
-    epsilon.medium <- medium^2
-    denom <- (L + epsilon.medium/(epsilon - epsilon.medium)) + A * epsilon.medium * 
-      x0^2 + B * epsilon.medium^2 * x0^4 - (0+1i)/3 * 4 * pi^2 * epsilon.medium^(3/2) * 
-        V/wavelength^3
-    V/denom/(4 * pi)
+  A <- Kuwata_A(L)
+  B <- Kuwata_B(L)
+  x0 <- 2 * pi * axis/wavelength
+  eps_m <- medium^2
+  denom <- (L + eps_m/(epsilon - eps_m)) +
+    A * eps_m * x0^2 +
+    B * eps_m^2 * x0^4 -
+    (0+1i)/3 * 4 * pi^2 * eps_m^(3/2) * V/wavelength^3
+  
+  V/denom/(4 * pi)
 }
 
-Kuwata.A <- function(L){
+Kuwata_A <- function(L){
   -0.4865*L - 1.046*L^2 + 0.8481*L^3
 }
 
-Kuwata.B <- function(L){
+Kuwata_B <- function(L){
   0.01909*L + 0.19999 * L^2 + 0.6077 * L^3
-}	
-	
-
-##' inverse polarizability tensors
-##'
-##' calculates and formats the principal polarizability of several particles
-##' @title inverse_polarizability
-##' @param cluster cluster
-##' @param material material
-##' @param polarizability_fun polarizability function
-##' @param ... additional arguments passed to polarizability_fun
-##' @return  matrix with each row being the 3 principal values of each polarizability tensor
-##' @importFrom plyr mlply
-##' @export
-##' @family user_level polarizability
-##' @author Baptiste Auguie
-inverse_polarizability <- function(cluster, material, 
-                          polarizability_fun = polarizability_ellipsoid, ...){
-  polar <- mlply(cluster[['sizes']], polarizability_fun,
-                 wavelength=material$wavelength,
-                 epsilon=material$epsilon, ...)
-  invalpha <- t(1/do.call(cbind, polar))
-  
 }

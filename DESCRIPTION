@@ -1,5 +1,5 @@
 Package: cda
-Version: 1.5.2
+Version: 2.0.0
 Authors@R: c(person("Baptiste", "Auguie",
     email = "baptiste.auguie@gmail.com",
     role = c("aut", "cre")))
@@ -21,8 +21,7 @@ VignetteBuilder: knitr
 SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
 Depends:
-    methods,
-    dielectric
+    methods
 Suggests:
     rgl,
     grid,
@@ -35,5 +34,6 @@ Imports:
     statmod,
     randtoolbox,
     reshape2,
-    plyr
-RcppModules: cda, cd, dispersion, array
+    plyr,
+    dielectric
+RoxygenNote: 5.0.1.9000

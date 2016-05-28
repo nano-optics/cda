@@ -1,38 +1,40 @@
+// [[Rcpp::depends(RcppArmadillo)]]
+
 #include <RcppArmadillo.h>
 #include <iostream>
+#include "cg.h"
 
 using namespace Rcpp ;
 using namespace RcppArmadillo ;
-using namespace arma;
-using namespace std;
 
 //
 // Solves a linear system iteratively via conjugate-gradient
 //
-// A is a complex matrix
-// y is the right-hand side
-// x0 is the initial guess
-// nmax is the max number of iterations
-// tol is the tolerance
-arma::cx_mat cg_solve(const arma::cx_mat& A, 
-			 const arma::cx_mat& y,	
-			 arma::cx_mat& x0,		
-			 const double nmax, 	
+// A: complex matrix
+// y:  right-hand side
+// x0:  initial guess
+// nmax:  max number of iterations
+// tol:  tolerance
+// [[Rcpp::export]]
+arma::cx_mat cpp_cg_solve(const arma::cx_mat& A,
+			 const arma::cx_mat& y,
+			 arma::cx_mat& x0,
+			 const double nmax,
 			 const double tol)
 {
-  
+
   int n = 0, ii = 0; // counter
   const int nr = y.n_cols; // number of right-hand side cols
   double rel_error = 1e4; // large value
   const int N = y.n_rows;
-  
+
   // temporary variables
   double alpha_i, beta_i;
-  const arma::cx_mat B = A.t(); // Hermitian transpose. 
+  const arma::cx_mat B = A.t(); // Hermitian transpose.
                                 // Note: diag blocks not symmetric, so no easier way
-  arma::cx_colvec y_i(N), z_i(N), g_i(N), p_i(N), w_i(N), v_i(N), x_i(N); 
-  arma::cx_colvec g_ip1(N), p_ip1(N), w_ip1(N), v_ip1(N), x_ip1(N);   
-  
+  arma::cx_colvec y_i(N), z_i(N), g_i(N), p_i(N), w_i(N), v_i(N), x_i(N);
+  arma::cx_colvec g_ip1(N), p_ip1(N), w_ip1(N), v_ip1(N), x_ip1(N);
+
   // loop over RHS cols
   for (ii=0; ii < nr; ii++){
 
@@ -46,8 +48,8 @@ arma::cx_mat cg_solve(const arma::cx_mat& A,
     v_i = A * p_i;
 
     n = 0; rel_error = 1e4;
-    while ((n < nmax) && (rel_error > tol)){ 
-      
+    while ((n < nmax) && (rel_error > tol)){
+
       alpha_i = real(cdot(g_i, g_i) / cdot(v_i, v_i));
       x_ip1 = x_i + alpha_i * p_i;
       w_ip1 = w_i + alpha_i * v_i;
@@ -66,6 +68,5 @@ arma::cx_mat cg_solve(const arma::cx_mat& A,
     x0.col(ii) = x_i;
   }; //end loop
 
-  return x0;  
-} 
-
+  return x0;
+}
