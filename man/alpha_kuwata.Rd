@@ -37,7 +37,8 @@ baptiste Auguie
 Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
 }
 \seealso{
-Other user_level polarizability: \code{\link{alpha_ellipsoid}},
+Other user_level polarizability: \code{\link{alpha_bare}},
+  \code{\link{alpha_ellipsoid}},
   \code{\link{depolarisation}}
 }
 

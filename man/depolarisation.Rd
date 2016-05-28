@@ -26,7 +26,7 @@ calculates the 3 depolarisation factors for a general ellipsoid
 baptiste Auguie
 }
 \seealso{
-Other user_level polarizability: \code{\link{alpha_ellipsoid}},
-  \code{\link{alpha_kuwata}}
+Other user_level polarizability: \code{\link{alpha_bare}},
+  \code{\link{alpha_ellipsoid}}, \code{\link{alpha_kuwata}}
 }
 

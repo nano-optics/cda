@@ -4,21 +4,26 @@
 ## Basic S3 methods are provided to get an overview of a cluster's definition
 ##
 
+##' @noRd
 ##' @export
-print.cluster <- function(x)  str(unclass(x))
+print.cluster <- function(x, ...)  str(unclass(x))
 
+##' @noRd
 ##' @export
 length.cluster <- function(x) nrow(x[["sizes"]])
 
+##' @noRd
 ##' @export
 plot.cluster <- function(x, ...){
   visualise_rgl(x, ...)
 }
 
+##' @noRd
 ##' @export
 visualise <- function (x, type, outfile=NULL, ...)
   UseMethod("visualise")
 
+##' @noRd
 ##' @export
 visualise.cluster <- function(x, type=c("rgl", "povray"), outfile=NULL, ...){
   type <- match.arg(type)
@@ -27,6 +32,7 @@ visualise.cluster <- function(x, type=c("rgl", "povray"), outfile=NULL, ...){
       visualise_povray(x, outfile=outfile, ...)
 }
 
+##' @noRd
 ##' @export
 equal_sizes <- function(a, b, c, N){
   
@@ -35,6 +41,7 @@ equal_sizes <- function(a, b, c, N){
         c = rep(c,N))
 }
 
+##' @noRd
 ##' @export
 equal_angles <- function(phi, theta, gamma, N){
   
@@ -101,8 +108,8 @@ cluster_ball <- function(N, R0=15, a=1, b=1, c=b){
   positions <- as.matrix(t(m[distances <= 1,]))
   N <- ncol(positions) # true N
   message(N)
-  sizes <- cd::equal_sizes(a=a, b=b, c=c, N=N)
-  angles <- cd::equal_angles(0,0,0, N=N)
+  sizes <- equal_sizes(a=a, b=b, c=c, N=N)
+  angles <- equal_angles(0,0,0, N=N)
   
   structure(list(positions = R0*positions,
                  sizes = sizes,
@@ -288,6 +295,7 @@ cluster_shell <- function(N=50, R0=30, d=1,
   
 }
 
+##' @noRd
 ##' @export
 helix <- function(R0=500, pitch=600, N=5,
                   delta=pi/8, delta0=pi/2, n.smooth=100*N, right=TRUE){

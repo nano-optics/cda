@@ -2,8 +2,19 @@
 ## Dipole polarizability
 ##
 
-## describes the bare (intrinsic) polarizability of a dye in vacuum
+##' Bare (intrinsic) polarizability of a dye in vacuum
+##'
+##' Sum of lorentz oscillators
+##' @title alpha_bare
+##' @param wavelength wavelength in nm
+##' @param alpha_inf scalar real offset
+##' @param alpha_k vector of oscillator strengths
+##' @param lambda_k vector of oscillator wavelengths 
+##' @param mu_k vector of oscillator damping terms
+##' @return data.frame
 ##' @export
+##' @family user_level polarizability
+##' @author baptiste Auguie
 alpha_bare <- function(wavelength=seq(300,800),
                        alpha_inf=9.6e-39,
                        alpha_k=c(5.76e-38),
@@ -39,6 +50,8 @@ alpha_dye <- function(wavelength, sizes, medium, ...){
   
 }
 
+
+##' @noRd
 ##' @export
 alpha_rescale <- function(alpha, sizes){
   
