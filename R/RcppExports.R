@@ -73,22 +73,6 @@ cpp_incident_field_axis <- function(Evec, kvec, R, Incidence, Axes) {
     .Call('cda_cpp_incident_field_axis', PACKAGE = 'cda', Evec, kvec, R, Incidence, Axes)
 }
 
-cpp_iterate_field <- function(R, kn, medium, Ein, AlphaBlocks, Eloc, P) {
-    .Call('cda_cpp_iterate_field', PACKAGE = 'cda', R, kn, medium, Ein, AlphaBlocks, Eloc, P)
-}
-
-cpp_oa_oos <- function(R, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, maxiter, tol) {
-    .Call('cda_cpp_oa_oos', PACKAGE = 'cda', R, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, maxiter, tol)
-}
-
-cpp_oa_spectrum_oos <- function(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, full, maxiter, tol, progress) {
-    .Call('cda_cpp_oa_spectrum_oos', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, full, maxiter, tol, progress)
-}
-
-cpp_dispersion_spectrum_oos <- function(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceAxes, ScatteringNodes, ScatteringWeights, polarisation, full, maxiter, tol, progress) {
-    .Call('cda_cpp_dispersion_spectrum_oos', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceAxes, ScatteringNodes, ScatteringWeights, polarisation, full, maxiter, tol, progress)
-}
-
 #' @export
 sample_random <- function(N) {
     .Call('cda_sample_random', PACKAGE = 'cda', N)
