@@ -36,6 +36,23 @@ alpha_bare <- function(wavelength=seq(300,800),
  data.frame(wavelength=wavelength, alpha = prefact * alpha)
 }
 
+
+##' @noRd
+##' @export
+alpha_rescale <- function(alpha, sizes){
+  
+  # a, b, c are normalised and stacked in a single row
+  if(ncol(sizes)==1) scaling <- matrix(sizes/sum(sizes), nrow=3, ncol=1) else
+    scaling = sweep(sizes, 2, colSums(sizes), `/`)
+  # alternative
+  # abc = colSums(sizes);
+  # scaling = sizes %*% diag(1/abc)
+  
+  # assuming all particles share same polarizability function
+  # and multiplied by a given value of alpha
+  tcrossprod(as.vector(scaling), alpha)
+}
+
 ##' @export
 alpha_dye <- function(wavelength, sizes, medium, ...){
   
@@ -51,21 +68,6 @@ alpha_dye <- function(wavelength, sizes, medium, ...){
 }
 
 
-##' @noRd
-##' @export
-alpha_rescale <- function(alpha, sizes){
-  
-  # a, b, c are normalised and stacked in a single row
-  if(ncol(sizes)==1) scaling <- matrix(sizes/sum(sizes), nrow=3, ncol=1) else
-  scaling = sweep(sizes, 2, colSums(sizes), `/`)
-  # alternative
-  # abc = colSums(sizes);
-  # scaling = sizes %*% diag(1/abc)
-  
-  # assuming all particles share same polarizability function
-  # and multiplied by a given value of alpha
-  tcrossprod(as.vector(scaling), alpha)
-}
 
 
 ##' principal polarizability components for an ellipsoidal particle
@@ -74,11 +76,8 @@ alpha_rescale <- function(alpha, sizes){
 ##' @title alpha_ellipsoid
 ##' @param wavelength wavelength in nm
 ##' @param epsilon complex permittivity
-##' @param a semi-axis in nm
-##' @param b semi-axis in nm
-##' @param c semi-axis in nm
-##' @param medium surrounding medium
-##' @param kuwata logical, use Kuwata or Clausius Mossotti prescription, see Details
+##' @param sizes matrix of cluster sizes in nm
+##' @param medium RI of surrounding medium
 ##' @return matrix of polarizability
 ##' @export
 ##' @family user_level polarizability
@@ -109,6 +108,8 @@ alpha_ellipsoid <- function(wavelength, epsilon, medium, sizes){
   Alpha
 }
 
+
+##' @noRd
 ##' @export
 alpha_embedded <- function(alphabar, medium){
   
@@ -127,6 +128,7 @@ alpha_embedded <- function(alphabar, medium){
 ##' @param x1 semi-axis in nm
 ##' @param x2 semi-axis in nm
 ##' @param x3 semi-axis in nm
+##' @importFrom stats integrate
 ##' @return shape factor along x1
 ##' @author baptiste Auguie
 ##' @export

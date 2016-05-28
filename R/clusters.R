@@ -5,6 +5,7 @@
 ##
 
 ##' @noRd
+##' @importFrom utils str
 ##' @export
 print.cluster <- function(x, ...)  str(unclass(x))
 
@@ -225,6 +226,7 @@ cluster_dimer <- function(d=100,
 ##' @param position type of angular orientation
 ##' @param seed random seed for reproducibility
 ##' @param ... extra arguments (ignored)
+##' @importFrom stats runif
 ##' @return list
 ##' @author baptiste Auguie
 ##' @export

@@ -11,15 +11,9 @@ alpha_ellipsoid(wavelength, epsilon, medium, sizes)
 
 \item{epsilon}{complex permittivity}
 
-\item{medium}{surrounding medium}
+\item{medium}{RI of surrounding medium}
 
-\item{a}{semi-axis in nm}
-
-\item{b}{semi-axis in nm}
-
-\item{c}{semi-axis in nm}
-
-\item{kuwata}{logical, use Kuwata or Clausius Mossotti prescription, see Details}
+\item{sizes}{matrix of cluster sizes in nm}
 }
 \value{
 matrix of polarizability
