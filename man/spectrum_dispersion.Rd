@@ -52,6 +52,6 @@ The incident wavevector is along the z direction.
 baptiste Auguie
 }
 \seealso{
-Other user_level cda: \code{\link{spectrum_shell}}
+Other user_level cda spectrum: \code{\link{spectrum_shell}}
 }
 

@@ -13,6 +13,6 @@ dye_coverage
 baptiste Auguie
 }
 \seealso{
-Other user_level cda util: \code{\link{spheroid_ar}}
+Other user_level cda utility: \code{\link{spheroid_ar}}
 }
 

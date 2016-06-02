@@ -7,7 +7,7 @@
 spheroid_ar(rv, h, type = c("prolate", "oblate"))
 }
 \description{
-spheroid_ar
+Spheroid described by effective radius and aspect ratio
 }
 \details{
 Describe a spheroid by the aspect ratio and effective radius of an equi-volume sphere
@@ -18,6 +18,6 @@ c = h * a
 baptiste Auguie
 }
 \seealso{
-Other user_level cda util: \code{\link{dye_coverage}}
+Other user_level cda utility: \code{\link{dye_coverage}}
 }
 

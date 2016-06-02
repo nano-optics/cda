@@ -1,5 +1,17 @@
+##
+## Functions for creating specific geometries
+##
 
 
+##' Fibonacci coverage of a sphere
+##'
+##' Produces a set of points that covers rather uniformly the unit sphere with N points
+##' with a spiral-like pattern based on a Fibonacci sequence
+##' @title sample_fibonacci
+##' @param N number of points
+##' @export
+##' @family low_level sample
+##' @author baptiste Auguie
 ##' @export
 sample_fibonacci <- function(N=301){
   N0 <- N

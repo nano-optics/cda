@@ -7,7 +7,7 @@
 ##'
 ##' Numerical integration points for angular averaging
 ##' @title quadrature_sphere
-##' @param Nquad number of integration points
+##' @param Nq number of integration points
 ##' @param quadrature quadrature method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, regular grid, or "cheap" (3 axes)
 ##' @param init (qmc method only) logical: restart, or continue from previous call
 ##' @importFrom randtoolbox halton
@@ -15,7 +15,7 @@
 ##' @export
 ##' @family low_level quadrature
 ##' @author baptiste Auguie
-quadrature_sphere <- function(Nquad = 30,
+quadrature_sphere <- function(Nq = 30,
     quadrature = c("qmc", "gl", "cheap", "random"),
     init = TRUE){
 
@@ -37,7 +37,7 @@ quadrature_sphere <- function(Nquad = 30,
 
   if(quadrature == "qmc"){ # quasi monte-carlo
 
-    p <- randtoolbox::halton(Nquad, dim = 2, normal=FALSE, init=init)
+    p <- randtoolbox::halton(Nq, dim = 2, normal=FALSE, init=init)
 
     alpha <- p[,1]*2*pi
     beta <- acos(2*p[,2] - 1) # cos(beta) in [-1,1]
@@ -48,8 +48,8 @@ quadrature_sphere <- function(Nquad = 30,
 
   if(quadrature == "random"){ # monte-carlo with random points
 
-    alpha <- runif(Nquad, -pi, pi) # uniform [-pi,pi]
-    beta <- acos(runif(Nquad, -1, 1)) # cos-uniform [-1,1]
+    alpha <- runif(Nq, -pi, pi) # uniform [-pi,pi]
+    beta <- acos(runif(Nq, -1, 1)) # cos-uniform [-1,1]
     nodes <- rbind(alpha=alpha, beta=beta, gamma=0)
     weights <- rep(1/ncol(nodes), ncol(nodes))
     return(list(nodes=nodes, weights=weights))
@@ -57,7 +57,7 @@ quadrature_sphere <- function(Nquad = 30,
 
   if(quadrature == "gl"){ #  gauss legendre
     # might have slightly more than N total points
-    rndN <- ceiling(sqrt(Nquad/2))
+    rndN <- ceiling(sqrt(Nq/2))
 
     # scale the coordinates from (-1, 1) to (0, 2pi)
     # and cos beta in (-1, 1) resp. (that one unnecessary btw)

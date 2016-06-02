@@ -44,26 +44,6 @@ visualise.cluster <- function(x, type=c("rgl", "povray"), outfile=NULL, ...){
 }
 
 
-## small utility functions
-
-##' @noRd
-##' @export
-equal_sizes <- function(a, b, c, N){
-  
-  rbind(a = rep(a,N),
-        b = rep(b,N),
-        c = rep(c,N))
-}
-
-##' @noRd
-##' @export
-equal_angles <- function(phi, theta, gamma, N){
-  
-  rbind(phi = rep(phi,N),
-        theta = rep(theta,N),
-        gamma = rep(gamma,N))
-}
-
 
 ##' Trivial cluster
 ##'

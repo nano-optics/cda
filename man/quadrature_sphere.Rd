@@ -4,11 +4,11 @@
 \alias{quadrature_sphere}
 \title{quadrature_sphere}
 \usage{
-quadrature_sphere(Nquad = 30, quadrature = c("qmc", "gl", "cheap",
-  "random"), init = TRUE)
+quadrature_sphere(Nq = 30, quadrature = c("qmc", "gl", "cheap", "random"),
+  init = TRUE)
 }
 \arguments{
-\item{Nquad}{number of integration points}
+\item{Nq}{number of integration points}
 
 \item{quadrature}{quadrature method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, regular grid, or "cheap" (3 axes)}
 

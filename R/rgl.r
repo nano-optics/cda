@@ -91,6 +91,7 @@ rgl.ellipsoids <- function(positions, sizes, angles, colour = "red", ...){
 ##' @title rgl_annotate
 ##' @return draw axes
 ##' @author baptiste Auguie
+##' @noRd
 ##' @export
 ##' @family user_level rgl
 rgl_annotate <- function(){
