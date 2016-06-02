@@ -1,11 +1,4 @@
-##' create include file for povray
-##'
-##' writes a list of particles
-##' @title visualise_povray
-##' @param cl cluster
-##' @param outfile output filename
-##' @return side-effect only
-##' @author baptiste Auguie
+##' @noRd
 ##' @export
 ##' @family user_level povray
 visualise_povray <- function(cl, outfile="positions.pov"){

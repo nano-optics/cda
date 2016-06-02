@@ -1,4 +1,4 @@
-
+##' @noRd
 ##' @export
 visualise_rgl <- function(cl, outfile=NULL, show_core=TRUE, ...){
   rgl.ellipsoids(cl$positions, cl$sizes, cl$angles, ...)
@@ -30,11 +30,11 @@ visualise_rgl <- function(cl, outfile=NULL, show_core=TRUE, ...){
 ##' @return an rgl mesh
 ##' @author baptiste Auguie
 ##' @export
+##' @noRd
 ##' @family user_level rgl
 ##' @examples
 ##' \dontrun{ require(rgl) ;  ee <- rgl.ellipsoid()
 ##' shapelist3d(ee) }
-
 rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
                            subdivide = 3, smooth = TRUE, ...)
 {
@@ -54,6 +54,7 @@ rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
   result <- rgl::translate3d(result, x,y,z)
   invisible(result)
 }
+
 ##' Create a list of rgl ellipsoids oriented in space
 ##'
 ##' each ellipsoid is specified by its position, dimensions, and Euler angles
@@ -65,6 +66,7 @@ rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
 ##' @return rgl mesh
 ##' @author baptiste Auguie
 ##' @export
+##' @noRd
 ##' @family user_level rgl
 ##' @examples
 ##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)

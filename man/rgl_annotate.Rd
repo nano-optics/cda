@@ -18,8 +18,4 @@ x, y, z axes
 \author{
 baptiste Auguie
 }
-\seealso{
-Other user_level rgl: \code{\link{rgl.ellipsoids}},
-  \code{\link{rgl.ellipsoid}}
-}
 
