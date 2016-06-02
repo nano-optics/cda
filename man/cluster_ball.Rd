@@ -11,20 +11,20 @@ cluster_ball(N, R0 = 15, a = 1, b = 1, c = b)
 
 \item{R0}{ball radius}
 
-\item{a}{semi axis}
+\item{a}{semi-axis along x}
 
-\item{b}{semi axis}
+\item{b}{semi-axis along y}
 
-\item{c}{semi axis}
+\item{c}{semi-axis along z}
 }
 \value{
 list of class cluster with fields: positions, sizes,  angles
 }
 \description{
-cluster_ball
+A ball of particles on a cubic lattice
 }
 \details{
-a ball of dipoles on a cubic lattice
+Identical particles fill a sphere with a cubic lattice
 }
 \examples{
 b = cluster_ball(1000); 

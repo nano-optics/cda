@@ -10,9 +10,11 @@ cluster_dimer(d = 100, a = 35, b = 12, c = b, dihedral = pi/4,
 \arguments{
 \item{d}{center-to-center distance}
 
-\item{a}{semi axis}
+\item{a}{semi-axis along x}
 
-\item{b}{semi axis}
+\item{b}{semi-axis along y}
+
+\item{c}{semi-axis along z}
 
 \item{dihedral}{dihedral angle}
 
@@ -24,12 +26,10 @@ cluster_dimer(d = 100, a = 35, b = 12, c = b, dihedral = pi/4,
 list of class cluster with fields: positions, sizes,  angles
 }
 \description{
-cluster_dimer
+A dimer of two particles
 }
 \details{
-cluster with two nanorods, dimer axis along z
-first rod along x at (0, 0, -d/2)
-second rod at (0, 0, d/2)
+A cluster describing two particles, with dimer axis along z
 }
 \author{
 baptiste Auguie

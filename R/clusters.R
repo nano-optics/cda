@@ -1,5 +1,5 @@
 ##
-## Clusters are lists with fields positions, angles and sizes
+## Clusters are lists with fields: positions, angles and sizes [+ optional info]
 ## which encode the geometric information about a cluster of particles.
 ## Basic S3 methods are provided to get an overview of a cluster's definition
 ##
@@ -19,7 +19,17 @@ plot.cluster <- function(x, ...){
   visualise_rgl(x, ...)
 }
 
-##' @noRd
+##' Visualise a cluster of particles
+##'
+##' Helper function for rapid visualisation of cluster geometries.
+##' @title visualise
+##' @param x cluster
+##' @param type type of visualisation (rgl or povray output)
+##' @param outfile optional output file for the results
+##' @param ... additional arguments passed to the visualise method
+##' @export
+##' @family high_level cluster visualise
+##' @author baptiste Auguie
 ##' @export
 visualise <- function (x, type, outfile=NULL, ...)
   UseMethod("visualise")
@@ -32,6 +42,9 @@ visualise.cluster <- function(x, type=c("rgl", "povray"), outfile=NULL, ...){
     visualise_rgl(x, outfile=outfile, ...) else if(type == "povray") 
       visualise_povray(x, outfile=outfile, ...)
 }
+
+
+## small utility functions
 
 ##' @noRd
 ##' @export
@@ -52,26 +65,22 @@ equal_angles <- function(phi, theta, gamma, N){
 }
 
 
-##' cluster_single
+##' Trivial cluster
 ##'
-##' a single particle
+##' A single particle cluster
 ##' @title cluster_single
-##' @param a semi axis
-##' @param b semi axis
-##' @param c semi axis
-##' @param phi angle
-##' @param theta angle
-##' @param psi angle
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
+##' @param phi first Euler angle
+##' @param theta second Euler angle
+##' @param psi third Euler angle
 ##' @return list of class cluster with fields: positions, sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
 ##' @examples 
-##' b = cluster_ball(1000); 
-##' library(rgl)
-##' open3d()
-##' rgl.spheres(t(b$positions))
-##' rgl.spheres(0,0, 0, radius = 15, alpha=0.2, col="red")
+##' cl = cluster_single(10)
 cluster_single <- function(a, b=a, c=b, phi=0, theta=0, psi=0)
   structure(list(positions=matrix(c(0, 0, 0),3,1), 
                  angles=matrix(c(phi, theta, psi),3,1), 
@@ -79,16 +88,15 @@ cluster_single <- function(a, b=a, c=b, phi=0, theta=0, psi=0)
             class="cluster")
 
 
-
-##' cluster_ball
+##' A ball of particles on a cubic lattice
 ##'
-##' a ball of dipoles on a cubic lattice
+##' Identical particles fill a sphere with a cubic lattice
 ##' @title cluster_ball
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
 ##' @param N number of particles
 ##' @param R0 ball radius
-##' @param a semi axis
-##' @param b semi axis
-##' @param c semi axis
 ##' @return list of class cluster with fields: positions, sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
@@ -121,20 +129,20 @@ cluster_ball <- function(N, R0=15, a=1, b=1, c=b){
 }
 
 
-##' cluster_array
+##' Square array of particles
 ##'
-##' cluster with a square of nanorods
+##' A cluster describing a 2D square array of identical particles
 ##' @title cluster_array
 ##' @param N number of particles
 ##' @param pitch center-to-center distance
-##' @param a semi axis
-##' @param b semi axis
-##' @param c semi axis
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
 ##' @return list of class cluster with fields: positions, sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
-cluster_array <- function(N, pitch=500, a=50, b=30, c=b){
+cluster_array <- function(N, pitch=500, a=50, b=50, c=b){
   
   sqN <- round(sqrt(N))
   xyz <- expand.grid(x=seq_len(sqN)* pitch, y=seq_len(sqN)* pitch, z=0)
@@ -149,15 +157,15 @@ cluster_array <- function(N, pitch=500, a=50, b=30, c=b){
   
 }
 
-##' cluster_chain
+##' Linear chain of particles
 ##'
-##' cluster with a chain of nanorods, chain axis along x
+##' A cluster describing a linear chain of identical particles
 ##' @title cluster_chain
 ##' @param N number of particles
 ##' @param pitch center-to-center distance
-##' @param a semi axis
-##' @param b semi axis
-##' @param c semi axis
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
 ##' @return list of class cluster with fields: positions, sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
@@ -176,18 +184,17 @@ cluster_chain <- function(N, pitch=500, a=50, b=30, c=b){
 }
 
 
-##' cluster_dimer
+##' A dimer of two particles
 ##'
-##' cluster with two nanorods, dimer axis along z
-##' first rod along x at (0, 0, -d/2)
-##' second rod at (0, 0, d/2)
+##' A cluster describing two particles, with dimer axis along z
 ##' @title cluster_dimer
 ##' @param d center-to-center distance
 ##' @param dihedral dihedral angle
 ##' @param alpha1 angle first rod
 ##' @param alpha2 angle second rod
-##' @param a semi axis
-##' @param b semi axis
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
 ##' @return list of class cluster with fields: positions, sizes,  angles
 ##' @author baptiste Auguie
 ##' @export
@@ -212,22 +219,23 @@ cluster_dimer <- function(d=100,
 }
 
 
-##' cluster_shell
+##' Sparse shell of nanoparticles around a spherical core
 ##'
-##' shell cluster
+##' A cluster describing a discrete shell of nanoparticles in a spherical geometry
 ##' @title cluster_shell
 ##' @param N number of particles
 ##' @param R0 radius of core
-##' @param d distance
-##' @param a ellipsoid semi-axis
-##' @param b ellipsoid semi-axis
-##' @param c ellipsoid semi-axis
+##' @param d distance from core
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
 ##' @param position type of random coverage
-##' @param position type of angular orientation
+##' @param orientation type of angular orientation
+##' @param exclusion minimum exclusion distance for 'hc' positions
 ##' @param seed random seed for reproducibility
 ##' @param ... extra arguments (ignored)
 ##' @importFrom stats runif
-##' @return list
+##' @return list of class cluster with fields: positions, sizes, angles
 ##' @author baptiste Auguie
 ##' @export
 ##' @family user_level cluster
@@ -297,6 +305,60 @@ cluster_shell <- function(N=50, R0=30, d=1,
   
 }
 
+
+
+##' Particles arranged along a helix
+##'
+##' Cluster describing a helical assembly of particles
+##' @title cluster_helix
+##' @param N number of particles
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
+##' @param R0 radius of helix
+##' @param pitch pitch of helix
+##' @param delta angle between particles
+##' @param delta0 initial angle
+##' @param right logical, helicity
+##' @param angles type of angular orientation
+##' @param seed random seed for reproducibility
+##' @param ... extra arguments (ignored)
+##' @return list of class cluster with fields: positions, sizes, angles
+##' @author baptiste Auguie
+##' @export
+##' @family user_level cluster
+cluster_helix <- function(N=5,
+                          a=10, b=10, c=20,
+                          R0=100, pitch=200,
+                          delta=pi/5, delta0=0, right=TRUE,
+                          angles=c("helix", "random", "fixed"),
+                          seed=123, ...){
+  
+  hel <- helix(R0=R0, pitch=pitch, N=N, delta=delta, delta0=delta0, right=right)
+  nr <- NROW(hel$angles)
+  positions <- as.matrix(hel$positions)
+  set.seed(seed) # reproducible
+  angles <- switch(match.arg(angles),
+                   "helix" = hel$angles,
+                   "fixed" = cbind(rep(0, nr),
+                                   rep(0, nr),
+                                   rep(0, nr)),
+                   "random" = matrix(cbind(runif(nr, 0, 2*pi),
+                                           runif(nr, 0, 2*pi),
+                                           runif(nr, 0, 2*pi)), ncol=3, byrow=T))
+  
+  sizes <- equal_sizes(a, b, c, N)
+  
+  structure(list(positions = positions,
+                 sizes = sizes,
+                 angles = as.matrix(angles),
+                 R0 = R0),
+            class="cluster")
+}
+
+
+## --------- helping functions --------
+
 ##' @noRd
 ##' @export
 helix <- function(R0=500, pitch=600, N=5,
@@ -329,54 +391,4 @@ helix <- function(R0=500, pitch=600, N=5,
   list(positions=as.matrix(positions),
        angles = rbind(phi, theta, 0),
        R0=R0, smooth=as.matrix(positions2))
-}
-
-
-##' cluster_helix
-##'
-##' helical cluster of ellipsoids
-##' @title cluster_helix
-##' @param N number of particles
-##' @param R0 radius of helix
-##' @param pitch pitch of helix
-##' @param delta angle between particles
-##' @param delta0 initial angle
-##' @param right logical, helicity
-##' @param a ellipsoid semi-axis
-##' @param b ellipsoid semi-axis
-##' @param c ellipsoid semi-axis
-##' @param angles type of angular orientation
-##' @param seed random seed for reproducibility
-##' @param ... extra arguments (ignored)
-##' @return list
-##' @author baptiste Auguie
-##' @export
-##' @family user_level cluster
-cluster_helix <- function(N=5,
-                          a=10, b=10, c=20,
-                          R0=100, pitch=200,
-                          delta=pi/5, delta0=0, right=TRUE,
-                          angles=c("helix", "random", "fixed"),
-                          seed=123, ...){
-  
-  hel <- helix(R0=R0, pitch=pitch, N=N, delta=delta, delta0=delta0, right=right)
-  nr <- NROW(hel$angles)
-  positions <- as.matrix(hel$positions)
-  set.seed(seed) # reproducible
-  angles <- switch(match.arg(angles),
-                   "helix" = hel$angles,
-                   "fixed" = cbind(rep(0, nr),
-                                   rep(0, nr),
-                                   rep(0, nr)),
-                   "random" = matrix(cbind(runif(nr, 0, 2*pi),
-                                           runif(nr, 0, 2*pi),
-                                           runif(nr, 0, 2*pi)), ncol=3, byrow=T))
-  
-  sizes <- equal_sizes(a, b, c, N)
-  
-  structure(list(positions = positions,
-                 sizes = sizes,
-                 angles = as.matrix(angles),
-                 R0 = R0),
-            class="cluster")
 }

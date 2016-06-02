@@ -13,30 +13,32 @@ cluster_shell(N = 50, R0 = 30, d = 1, a = 1, b = 1, c = 1,
 
 \item{R0}{radius of core}
 
-\item{d}{distance}
+\item{d}{distance from core}
 
-\item{a}{ellipsoid semi-axis}
+\item{a}{semi-axis along x}
 
-\item{b}{ellipsoid semi-axis}
+\item{b}{semi-axis along y}
 
-\item{c}{ellipsoid semi-axis}
+\item{c}{semi-axis along z}
+
+\item{orientation}{type of angular orientation}
 
 \item{position}{type of random coverage}
+
+\item{exclusion}{minimum exclusion distance for 'hc' positions}
 
 \item{seed}{random seed for reproducibility}
 
 \item{...}{extra arguments (ignored)}
-
-\item{position}{type of angular orientation}
 }
 \value{
-list
+list of class cluster with fields: positions, sizes, angles
 }
 \description{
-cluster_shell
+Sparse shell of nanoparticles around a spherical core
 }
 \details{
-shell cluster
+A cluster describing a discrete shell of nanoparticles in a spherical geometry
 }
 \author{
 baptiste Auguie

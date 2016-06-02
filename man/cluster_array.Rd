@@ -4,27 +4,27 @@
 \alias{cluster_array}
 \title{cluster_array}
 \usage{
-cluster_array(N, pitch = 500, a = 50, b = 30, c = b)
+cluster_array(N, pitch = 500, a = 50, b = 50, c = b)
 }
 \arguments{
 \item{N}{number of particles}
 
 \item{pitch}{center-to-center distance}
 
-\item{a}{semi axis}
+\item{a}{semi-axis along x}
 
-\item{b}{semi axis}
+\item{b}{semi-axis along y}
 
-\item{c}{semi axis}
+\item{c}{semi-axis along z}
 }
 \value{
 list of class cluster with fields: positions, sizes,  angles
 }
 \description{
-cluster_array
+Square array of particles
 }
 \details{
-cluster with a square of nanorods
+A cluster describing a 2D square array of identical particles
 }
 \author{
 baptiste Auguie

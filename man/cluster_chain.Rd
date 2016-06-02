@@ -11,20 +11,20 @@ cluster_chain(N, pitch = 500, a = 50, b = 30, c = b)
 
 \item{pitch}{center-to-center distance}
 
-\item{a}{semi axis}
+\item{a}{semi-axis along x}
 
-\item{b}{semi axis}
+\item{b}{semi-axis along y}
 
-\item{c}{semi axis}
+\item{c}{semi-axis along z}
 }
 \value{
 list of class cluster with fields: positions, sizes,  angles
 }
 \description{
-cluster_chain
+Linear chain of particles
 }
 \details{
-cluster with a chain of nanorods, chain axis along x
+A cluster describing a linear chain of identical particles
 }
 \author{
 baptiste Auguie

@@ -7,33 +7,29 @@
 cluster_single(a, b = a, c = b, phi = 0, theta = 0, psi = 0)
 }
 \arguments{
-\item{a}{semi axis}
+\item{a}{semi-axis along x}
 
-\item{b}{semi axis}
+\item{b}{semi-axis along y}
 
-\item{c}{semi axis}
+\item{c}{semi-axis along z}
 
-\item{phi}{angle}
+\item{phi}{first Euler angle}
 
-\item{theta}{angle}
+\item{theta}{second Euler angle}
 
-\item{psi}{angle}
+\item{psi}{third Euler angle}
 }
 \value{
 list of class cluster with fields: positions, sizes,  angles
 }
 \description{
-cluster_single
+Trivial cluster
 }
 \details{
-a single particle
+A single particle cluster
 }
 \examples{
-b = cluster_ball(1000); 
-library(rgl)
-open3d()
-rgl.spheres(t(b$positions))
-rgl.spheres(0,0, 0, radius = 15, alpha=0.2, col="red")
+cl = cluster_single(10)
 }
 \author{
 baptiste Auguie

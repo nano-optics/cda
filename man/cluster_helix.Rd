@@ -11,11 +11,11 @@ cluster_helix(N = 5, a = 10, b = 10, c = 20, R0 = 100, pitch = 200,
 \arguments{
 \item{N}{number of particles}
 
-\item{a}{ellipsoid semi-axis}
+\item{a}{semi-axis along x}
 
-\item{b}{ellipsoid semi-axis}
+\item{b}{semi-axis along y}
 
-\item{c}{ellipsoid semi-axis}
+\item{c}{semi-axis along z}
 
 \item{R0}{radius of helix}
 
@@ -34,13 +34,13 @@ cluster_helix(N = 5, a = 10, b = 10, c = 20, R0 = 100, pitch = 200,
 \item{...}{extra arguments (ignored)}
 }
 \value{
-list
+list of class cluster with fields: positions, sizes, angles
 }
 \description{
-cluster_helix
+Particles arranged along a helix
 }
 \details{
-helical cluster of ellipsoids
+Cluster describing a helical assembly of particles
 }
 \author{
 baptiste Auguie
