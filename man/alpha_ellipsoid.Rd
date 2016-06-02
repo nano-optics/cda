@@ -4,28 +4,28 @@
 \alias{alpha_ellipsoid}
 \title{alpha_ellipsoid}
 \usage{
-alpha_ellipsoid(wavelength, epsilon, medium, sizes)
+alpha_ellipsoid(sizes, wavelength, epsilon, medium)
 }
 \arguments{
+\item{sizes}{matrix of cluster sizes in nm}
+
 \item{wavelength}{wavelength in nm}
 
 \item{epsilon}{complex permittivity}
 
-\item{medium}{RI of surrounding medium}
-
-\item{sizes}{matrix of cluster sizes in nm}
+\item{medium}{refractive index of surrounding medium}
 }
 \value{
-matrix of polarizability
+matrix of polarisability
 }
 \description{
-principal polarizability components for an ellipsoidal particle
+Principal polarisability components for an ellipsoidal particle
 }
 \details{
-uses the Kuwata prescription (see references)
+This long-wavelength polarisability approximation uses the Kuwata prescription
 
 
-The Kuwata version includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
+The Kuwata prescription includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
 }
 \author{
 baptiste Auguie
@@ -34,7 +34,7 @@ baptiste Auguie
 Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
 }
 \seealso{
-Other user_level polarizability: \code{\link{alpha_bare}},
-  \code{\link{alpha_kuwata}}, \code{\link{depolarisation}}
+Other user_level polarisability: \code{\link{alpha_bare}},
+  \code{\link{alpha_dye}}
 }
 

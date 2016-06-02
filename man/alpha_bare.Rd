@@ -31,7 +31,7 @@ Sum of lorentz oscillators
 baptiste Auguie
 }
 \seealso{
-Other user_level polarizability: \code{\link{alpha_ellipsoid}},
-  \code{\link{alpha_kuwata}}, \code{\link{depolarisation}}
+Other user_level polarisability: \code{\link{alpha_dye}},
+  \code{\link{alpha_ellipsoid}}
 }
 

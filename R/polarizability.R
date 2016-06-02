@@ -2,6 +2,71 @@
 ## Dipole polarizability
 ##
 
+##' Principal polarisability components for a dye molecule
+##'
+##' The dye is modelled as a sum of Lorentz oscillators
+##' @title alpha_dye
+##' @param sizes matrix of particle sizes (scaling factors for polarisability tensor)
+##' @param wavelength wavelength in nm
+##' @param medium refractive index of incident medium
+##' @param ... further parameters passed to the Lorentzian function
+##' @return matrix of polarisability
+##' @export
+##' @family user_level polarisability
+##' @author baptiste Auguie
+alpha_dye <- function(sizes, wavelength, medium, ...){
+  
+  # scalar polar, wavelength dependent
+  alphabar = alpha_bare(wavelength, ...)
+  
+  # effective macroscopic polarisability
+  alphaeff = alpha_embedded(alphabar[["alpha"]], medium)
+  
+  # rescaling with sizes
+  Alpha = alpha_rescale(alphaeff, sizes)
+  
+}
+
+##' Principal polarisability components for an ellipsoidal particle
+##'
+##' This long-wavelength polarisability approximation uses the Kuwata prescription
+##' @title alpha_ellipsoid
+##' @param sizes matrix of cluster sizes in nm
+##' @param wavelength wavelength in nm
+##' @param epsilon complex permittivity
+##' @param medium refractive index of surrounding medium
+##' @return matrix of polarisability
+##' @export
+##' @family user_level polarisability
+##' @author baptiste Auguie
+##' @references
+##' Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
+##' @details
+##' The Kuwata prescription includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
+## NOTE: implementation is neither clear nor efficient, should probably do it in c++, or vectorise everything
+alpha_ellipsoid <- function(sizes, wavelength, epsilon, medium){
+  
+  Nr <- ncol(sizes)
+  Nl = length(wavelength)
+  Alpha = matrix(NA, 3*Nr, Nl)
+  
+  for(jj in seq_len(Nr)){
+    a = sizes[1,jj]
+    b = sizes[2,jj]
+    c = sizes[3,jj]
+    V <- 4 * pi/3 * a * b * c
+    chi <- depolarisation(a, b, c)
+    ind = (jj-1)*3 # 0-index corresponding to particle jj
+    Alpha[ind+1, ] = alpha_kuwata(wavelength, epsilon, V, a, chi[1], medium)
+    Alpha[ind+2, ] = alpha_kuwata(wavelength, epsilon, V, b, chi[2], medium)
+    Alpha[ind+3, ] = alpha_kuwata(wavelength, epsilon, V, c, chi[3], medium)
+  }
+  
+  Alpha
+}
+
+## ------------- mid-level ------------- 
+
 ##' Bare (intrinsic) polarizability of a dye in vacuum
 ##'
 ##' Sum of lorentz oscillators
@@ -13,7 +78,7 @@
 ##' @param mu_k vector of oscillator damping terms
 ##' @return data.frame
 ##' @export
-##' @family user_level polarizability
+##' @family user_level polarisability
 ##' @author baptiste Auguie
 alpha_bare <- function(wavelength=seq(300,800),
                        alpha_inf=9.6e-39,
@@ -53,60 +118,6 @@ alpha_rescale <- function(alpha, sizes){
   tcrossprod(as.vector(scaling), alpha)
 }
 
-##' @export
-alpha_dye <- function(wavelength, sizes, medium, ...){
-  
-  # scalar polar, wavelength dependent
-  alphabar = alpha_bare(wavelength, ...)
-  
-  # effective macroscopic polarisability
-  alphaeff = alpha_embedded(alphabar[["alpha"]], medium)
-  
-  # rescaling with sizes
-  Alpha = alpha_rescale(alphaeff, sizes)
-  
-}
-
-
-
-
-##' principal polarizability components for an ellipsoidal particle
-##'
-##' uses the Kuwata prescription (see references)
-##' @title alpha_ellipsoid
-##' @param wavelength wavelength in nm
-##' @param epsilon complex permittivity
-##' @param sizes matrix of cluster sizes in nm
-##' @param medium RI of surrounding medium
-##' @return matrix of polarizability
-##' @export
-##' @family user_level polarizability
-##' @author baptiste Auguie
-##' @references
-##' Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
-##' @details
-##' The Kuwata version includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
-## NOTE: implementation is neither clear nor efficient, should probably do it in c++, or vectorise everything
-alpha_ellipsoid <- function(wavelength, epsilon, medium, sizes){
-  
-  Nr <- ncol(sizes)
-  Nl = length(wavelength)
-  Alpha = matrix(NA, 3*Nr, Nl)
-  
-  for(jj in seq_len(Nr)){
-    a = sizes[1,jj]
-    b = sizes[2,jj]
-    c = sizes[3,jj]
-    V <- 4 * pi/3 * a * b * c
-    chi <- depolarisation(a, b, c)
-    ind = (jj-1)*3 # 0-index corresponding to particle jj
-    Alpha[ind+1, ] = alpha_kuwata(wavelength, epsilon, V, a, chi[1], medium)
-    Alpha[ind+2, ] = alpha_kuwata(wavelength, epsilon, V, b, chi[2], medium)
-    Alpha[ind+3, ] = alpha_kuwata(wavelength, epsilon, V, c, chi[3], medium)
-  }
-  
-  Alpha
-}
 
 
 ##' @noRd
@@ -118,8 +129,8 @@ alpha_embedded <- function(alphabar, medium){
   1/eps_m * Lfact^2 * alphabar
 }
 
-## low-level
 
+## ------------- low-level ------------- 
 
 ##' Depolarisation factor for an ellipsoid
 ##'
@@ -141,6 +152,7 @@ depolarisation <- function (x1, x2 = x1, x3 = x2)
   integrand <- function(q, r, s) {
     1/((1 + q) * sqrt((q + 1) * (q + r^2) * (q + s^2)))
   }
+  
   I1 <- integrate(integrand, r=x2/x1, s=x3/x1, lower = 0, upper = Inf)
   I2 <- integrate(integrand, r=x1/x2, s=x3/x2, lower = 0, upper = Inf)
   I3 <- integrate(integrand, r=x1/x3, s=x2/x3, lower = 0, upper = Inf)

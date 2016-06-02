@@ -42,8 +42,8 @@ spectrum_shell <- function (cluster, wavelength,
   
   k0 <- 2 * pi/wavelength
   kn <- k0 * medium
-  polar <- plyr::mlply(cluster[["sizes"]], fun, 
-                       wavelength = wavelength, medium=medium, ...)
+  polar <- apply(cluster[["sizes"]], MARGIN = 1, FUN = fun, 
+                 wavelength = wavelength, medium=medium, ...)
   if(core){
     core <- polarizability_ellipsoid(wavelength, 
                                      epsilon = silver$epsilon,
