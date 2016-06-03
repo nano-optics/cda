@@ -8,22 +8,18 @@
 \usage{
 sample_random(N)
 
-sample_hc(N, exclusion, maxiter = 200L, k = 30L)
+sample_hc(N, exclusion = 0.1, maxiter = 200L, k = 30L)
 
 sample_fibonacci(N = 301)
 }
 \arguments{
-\item{N}{requested number of points}
+\item{N}{number of points}
 
 \item{exclusion}{minimum distance allowed between points}
 
 \item{maxiter}{maximum number of iterations}
 
 \item{k}{number of extra new points to try at each iteration}
-
-\item{N}{requested number of points}
-
-\item{N}{number of points}
 }
 \value{
 3xN matrix

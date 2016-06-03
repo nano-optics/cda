@@ -9,9 +9,8 @@ using namespace std;
 
 //' @title Generate a random sample of points on the unit sphere
 //' @description Random sample
-//' @param N requested number of points
-//' @return 3xN matrix
 //' @describeIn  sample_random random sample
+//' @return 3xN matrix
 //' @family sample
 //' @examples 
 //' sample_random(10)
@@ -44,7 +43,6 @@ STRATEGY
 
 //' @title Generate a sample of points on the unit sphere
 //' @description Random sample with minimum exlusion zone ("hard-core process")
-//' @param N requested number of points
 //' @param exclusion minimum distance allowed between points
 //' @param maxiter maximum number of iterations
 //' @param k number of extra new points to try at each iteration
@@ -56,7 +54,7 @@ STRATEGY
 //' @export
 // [[Rcpp::export]]
 arma::mat sample_hc(const int N,
-  const double exclusion,
+  const double exclusion=0.1,
   const int maxiter=200,
   const int k=30){
 
@@ -85,7 +83,6 @@ arma::mat sample_hc(const int N,
     // if more than N, we're done
     uvec pick = find(indices);
     if(!todo){
-      // std::cout << "here" << std::endl;
       return(s.cols(pick(span(0,N-1))));
     }
 
@@ -97,7 +94,6 @@ arma::mat sample_hc(const int N,
 
       bad = find(indices == 0);
       p = bad.n_elem;
-      // std::cout << "iter: " << iter << ", p: " << p << std::endl;
       s.cols(bad) = sample_random(p);
       for(ii=0; ii<p; ii++){ // points to test
         indices(bad(ii)) = 1; // assume it is good until shown otherwise
@@ -114,7 +110,6 @@ arma::mat sample_hc(const int N,
       // if more than N, we're done
       pick = find(indices);
       if(pick.n_elem >= N){
-        // std::cout << "here2" << std::endl;
         return(s.cols(pick(span(0,N-1))));
       }
       if(iter >= maxiter){

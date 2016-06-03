@@ -21,12 +21,6 @@ helix(R0 = 500, pitch = 600, N = 5, delta = pi/8, delta0 = pi/2,
 \item{n.smooth}{number of points for a finer helix (useful for display)}
 
 \item{right}{logical, helicity}
-
-\item{a}{semi-axis along x}
-
-\item{b}{semi-axis along y}
-
-\item{c}{semi-axis along z}
 }
 \value{
 list of positions and angles

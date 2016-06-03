@@ -198,7 +198,6 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
                                  cg = FALSE, born = FALSE, 
                                  Nsca = 50,
                                  maxiter=30, tol=1e-4,
-                                 full = TRUE,
                                  progress = FALSE) 
 {
   

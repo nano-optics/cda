@@ -8,9 +8,9 @@
 ##' with a spiral-like pattern based on a Fibonacci sequence
 ##' @title sample_fibonacci
 ##' @param N number of points
+##' @describeIn sample_random 
 ##' @export
 ##' @family low_level sample fibonacci sampling of a sphere
-##' @describeIn sample_random 
 ##' @author baptiste Auguie
 ##' @export
 sample_fibonacci <- function(N=301){

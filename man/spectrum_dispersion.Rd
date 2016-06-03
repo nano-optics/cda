@@ -7,7 +7,7 @@
 spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
   Axes = "z", polarisation = c("linear", "circular"), method = c("ls",
   "oos"), cg = FALSE, born = FALSE, Nsca = 50, maxiter = 30,
-  tol = 1e-04, full = TRUE, progress = FALSE)
+  tol = 1e-04, progress = FALSE)
 }
 \arguments{
 \item{cluster}{list describing a cluster}
