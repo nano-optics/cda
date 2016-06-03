@@ -3,6 +3,8 @@
 ##'
 ##' @title dye_coverage
 ##' @export
+##' @param rho surface demsity
+##' @param R radius
 ##' @family user_level cda utility
 ##' @author baptiste Auguie
 dye_coverage <- function (rho, R) 
@@ -20,6 +22,9 @@ dye_coverage <- function (rho, R)
 ##' c = h * a
 ##' @title spheroid_ar
 ##' @export
+##' @param rv equivolume sphere radius
+##' @param h aspect ratio
+##' @param type class of spheroid
 ##' @family user_level cda utility
 ##' @author baptiste Auguie
 spheroid_ar <- function(rv, h, type=c("prolate","oblate")){
@@ -35,11 +40,21 @@ spheroid_ar <- function(rv, h, type=c("prolate","oblate")){
 }
 
 
-## small undocumented utility functions
+## small utility functions
 
-##' @noRd
-##' @family user_level cda utility
+
+##' Utility function to create clusters 
+##'
+##' Identical particles
+##' @title equal_sizes
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
+##' @param N number of particles
+##' @return 3xN matrix
+##' @author baptiste Auguie
 ##' @export
+##' @family user_level cda utility
 equal_sizes <- function(a, b, c, N){
   
   rbind(a = rep(a,N),
@@ -47,9 +62,19 @@ equal_sizes <- function(a, b, c, N){
         c = rep(c,N))
 }
 
-##' @noRd
-##' @family user_level cda utility
+
+##' Utility function to create clusters 
+##'
+##' Identical particles
+##' @title equal_angles
+##' @param phi Euler angle
+##' @param theta Euler angle
+##' @param gamma Euler angle
+##' @param N number of particles
+##' @return 3xN matrix
+##' @author baptiste Auguie
 ##' @export
+##' @family user_level cda utility
 equal_angles <- function(phi, theta, gamma, N){
   
   rbind(phi = rep(phi,N),

@@ -27,11 +27,7 @@ A ball of particles on a cubic lattice
 Identical particles fill a sphere with a cubic lattice
 }
 \examples{
-b = cluster_ball(1000); 
-library(rgl)
-open3d()
-rgl.spheres(t(b$positions))
-rgl.spheres(0,0, 0, radius = 15, alpha=0.2, col="red")
+b = cluster_ball(100)
 }
 \author{
 baptiste Auguie

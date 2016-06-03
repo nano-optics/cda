@@ -1,6 +1,3 @@
-##' @noRd
-##' @export
-##' @family user_level povray
 visualise_povray <- function(cl, outfile="positions.pov"){
 
   if(is.null(cl$colours)){

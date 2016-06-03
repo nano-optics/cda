@@ -1,13 +1,11 @@
-##' @noRd
-##' @export
 visualise_rgl <- function(cl, outfile=NULL, show_core=TRUE, ...){
   rgl.ellipsoids(cl$positions, cl$sizes, cl$angles, ...)
   
   if("R0" %in% names(cl) && show_core) 
-    rgl.spheres(0,0,0, radius=cl$R0, col="grey")
+    rgl::rgl.spheres(0,0,0, radius=cl$R0, col="grey")
   
   if(!is.null(outfile))
-    rgl.snapshot( outfile, fmt = "png", top = TRUE )
+    rgl::rgl.snapshot( outfile, fmt = "png", top = TRUE )
 }
 
 
@@ -27,15 +25,14 @@ visualise_rgl <- function(cl, outfile=NULL, show_core=TRUE, ...){
 ##' @param subdivide subdivision
 ##' @param smooth smoothing
 ##' @param ... additional params
+##' @export
 ##' @return an rgl mesh
 ##' @author baptiste Auguie
-##' @export
-##' @noRd
 ##' @family user_level rgl
 ##' @examples
 ##' \dontrun{ require(rgl) ;  ee <- rgl.ellipsoid()
 ##' shapelist3d(ee) }
-rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
+rgl.ellipsoid <- function (x=0, y=0, z=0, a = 1, b=1, c=1, phi=0, theta=0, psi=0,
                            subdivide = 3, smooth = TRUE, ...)
 {
   
@@ -62,11 +59,11 @@ rgl.ellipsoid <- function (x=0,y=0,z=0, a = 1,b=1,c=1, phi=0,theta=0,psi=0,
 ##' @param positions matrix of positions
 ##' @param sizes matrix of axis lengths
 ##' @param angles matrix of Euler angles
+##' @param colour colour of each ellipsoid
 ##' @param ... additional params
 ##' @return rgl mesh
 ##' @author baptiste Auguie
 ##' @export
-##' @noRd
 ##' @family user_level rgl
 ##' @examples
 ##' cl <- helix(0.5, 1, 36, delta=pi/6, n.smooth=1e3)
@@ -92,12 +89,11 @@ rgl.ellipsoids <- function(positions, sizes, angles, colour = "red", ...){
 ##' @return draw axes
 ##' @author baptiste Auguie
 ##' @noRd
-##' @export
 ##' @family user_level rgl
 rgl_annotate <- function(){
-  axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
-  axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
-  axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
-  axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
-  title3d('','','x axis','y axis','z axis')
+  rgl::axes3d( labels = FALSE, tick = FALSE, edges=c("x", "y", "z") )
+  rgl::axis3d(labels = FALSE, tick = FALSE, 'x',pos=c(NA, 0, 0))
+  rgl::axis3d(labels = FALSE, tick = FALSE, 'y',pos=c(0, NA, 0))
+  rgl::axis3d(labels = FALSE, tick = FALSE, 'z',pos=c(0, 0, NA))
+  rgl::title3d('','','x axis','y axis','z axis')
 }

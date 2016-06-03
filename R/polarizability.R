@@ -102,8 +102,6 @@ alpha_bare <- function(wavelength=seq(300,800),
 }
 
 
-##' @noRd
-##' @export
 alpha_rescale <- function(alpha, sizes){
   
   # a, b, c are normalised and stacked in a single row
@@ -119,9 +117,6 @@ alpha_rescale <- function(alpha, sizes){
 }
 
 
-
-##' @noRd
-##' @export
 alpha_embedded <- function(alphabar, medium){
   
   eps_m = medium^2
@@ -142,7 +137,6 @@ alpha_embedded <- function(alphabar, medium){
 ##' @importFrom stats integrate
 ##' @return shape factor along x1
 ##' @author baptiste Auguie
-##' @export
 ##' @family user_level polarizability
 depolarisation <- function (x1, x2 = x1, x3 = x2)
 {
@@ -174,7 +168,6 @@ depolarisation <- function (x1, x2 = x1, x3 = x2)
 ##' @param L shape factor
 ##' @param medium refractive index
 ##' @return polarizability
-##' @export
 ##' @family user_level polarizability
 ##' @author baptiste Auguie
 ##' @references

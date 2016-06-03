@@ -4,49 +4,64 @@
 \alias{spectrum_shell}
 \title{spectrum_shell}
 \usage{
-spectrum_shell(cluster, wavelength, fun = polarizability_dye, ...,
-  medium = 1.33, core = TRUE, Nq = 100, quadrature = c("cheap", "qmc",
-  "gl"), method = c("ls", "oos"), iterative = FALSE, precision = 0.001,
-  Qmax = 10000, dN = Nq, cg = TRUE, born = TRUE, nmax = 10,
-  tol = 0.01, full = TRUE, progress = FALSE, verbose = TRUE,
-  result.matrix = FALSE)
+spectrum_shell(cluster, material, medium = 1.33, core = NULL,
+  quadrature = c("gl", "qmc", "random", "cheap"), Nq = 100,
+  iterative = FALSE, precision = 0.001, Qmax = 10000, dN = Nq,
+  method = c("ls", "oos"), Nsca = 50, cg = FALSE, born = FALSE,
+  maxiter = 30, tol = 1e-04, full = TRUE, progress = FALSE,
+  verbose = TRUE)
 }
 \arguments{
-\item{cluster}{list describing a cluster}
+\item{cluster}{cluster (list)}
 
-\item{medium}{medium refractive index}
+\item{material}{material}
 
-\item{cg}{logical, use conjugate gradient solver}
+\item{medium}{refractive index medium}
 
-\item{born}{logical, use first Born approx as cg guess}
+\item{core}{list}
 
-\item{nmax}{integer termination of conjugate gradient solver}
+\item{quadrature}{quadrature method, using either Gauss Legendre quadrature (default), Quasi Monte Carlo, random, or "cheap" (3 Axes)}
+
+\item{Nq}{number of integration points}
+
+\item{iterative}{logical, increase N until convergence (QMC only)}
+
+\item{precision}{relative diff between two runs (QMC only)}
+
+\item{Qmax}{maximum N if convergence not attained (QMC only)}
+
+\item{dN}{iterative increase in N (QMC only)}
+
+\item{method}{linear system (ls), or order-of-scattering (oos)}
+
+\item{Nsca}{quadrature points for scattering cross-section}
+
+\item{cg}{logical use conjugate gradient solver}
+
+\item{born}{logical first Born approx as cg guess}
+
+\item{maxiter}{integer termination of conjugate gradient solver}
 
 \item{tol}{double, tolerance of conjugate gradient solver}
 
-\item{progress}{logical, display progress bar}
+\item{full}{logical use full (retarded) dipolar field}
 
-\item{material}{list}
+\item{progress}{print progress lines}
 
-\item{angles}{of incident field in radians}
-
-\item{axes}{of incident field rotation character vector from ('x', 'y', 'z')}
-
-\item{polarisation}{linear or circular polarisation}
-
-\item{method:}{linear system (ls), or order-of-scattering (oos)}
+\item{verbose}{display messages}
 }
 \value{
 data.frame
 }
 \description{
-shell spectrum
+Spectral simulation of a spherical shell of particles
 }
 \details{
-shell spectrum
+Particles are arranged in a spherical shell around a central core (currently void).
+A typical application will be to model the response of molecular layers.
 }
 \note{
-The incident wavevector is along the z direction.
+Core is not yet implemented (will rely on Mie theory)
 }
 \author{
 baptiste Auguie

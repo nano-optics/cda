@@ -6,6 +6,11 @@
 \usage{
 dye_coverage(rho, R)
 }
+\arguments{
+\item{rho}{surface demsity}
+
+\item{R}{radius}
+}
 \description{
 dye_coverage
 }
@@ -13,6 +18,7 @@ dye_coverage
 baptiste Auguie
 }
 \seealso{
-Other user_level cda utility: \code{\link{spheroid_ar}}
+Other user_level cda utility: \code{\link{equal_angles}},
+  \code{\link{equal_sizes}}, \code{\link{spheroid_ar}}
 }
 

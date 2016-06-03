@@ -16,25 +16,25 @@ spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
 
 \item{medium}{medium refractive index}
 
-\item{Axes}{of incident field rotation character vector from ('x', 'y', 'z')}
+\item{Incidence}{angular directions of incident field}
+
+\item{Axes}{incident field rotation axis}
 
 \item{polarisation}{linear or circular polarisation}
+
+\item{method}{linear system (ls), or order-of-scattering (oos)}
 
 \item{cg}{logical, use conjugate gradient solver}
 
 \item{born}{logical, use first Born approx as cg guess}
+
+\item{Nsca}{number of quadrature points in calculation of csca}
 
 \item{maxiter}{integer termination of conjugate gradient solver}
 
 \item{tol}{double, tolerance of conjugate gradient solver}
 
 \item{progress}{logical, display progress bar}
-
-\item{angles}{of incident field in radians}
-
-\item{method:}{linear system (ls), or order-of-scattering (oos)}
-
-\item{Nscat}{number of quadrature points in calculation of csca}
 }
 \value{
 data.frame

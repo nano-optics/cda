@@ -82,11 +82,7 @@ cluster_single <- function(a, b=a, c=b, phi=0, theta=0, psi=0)
 ##' @export
 ##' @family user_level cluster
 ##' @examples 
-##' b = cluster_ball(1000); 
-##' library(rgl)
-##' open3d()
-##' rgl.spheres(t(b$positions))
-##' rgl.spheres(0,0, 0, radius = 15, alpha=0.2, col="red")
+##' b = cluster_ball(100)
 cluster_ball <- function(N, R0=15, a=1, b=1, c=b){
   
   Nc <- 2*N # approx 1/2 dipoles are unoccupied in the cube
@@ -337,10 +333,6 @@ cluster_helix <- function(N=5,
 }
 
 
-## --------- helping functions --------
-
-##' @noRd
-##' @export
 helix <- function(R0=500, pitch=600, N=5,
                   delta=pi/8, delta0=pi/2, n.smooth=100*N, right=TRUE){
   

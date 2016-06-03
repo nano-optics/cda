@@ -6,6 +6,13 @@
 \usage{
 spheroid_ar(rv, h, type = c("prolate", "oblate"))
 }
+\arguments{
+\item{rv}{equivolume sphere radius}
+
+\item{h}{aspect ratio}
+
+\item{type}{class of spheroid}
+}
 \description{
 Spheroid described by effective radius and aspect ratio
 }
@@ -18,6 +25,7 @@ c = h * a
 baptiste Auguie
 }
 \seealso{
-Other user_level cda utility: \code{\link{dye_coverage}}
+Other user_level cda utility: \code{\link{dye_coverage}},
+  \code{\link{equal_angles}}, \code{\link{equal_sizes}}
 }
 

@@ -13,9 +13,8 @@ LazyLoad: yes
 VignetteBuilder: knitr
 SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
-Depends:
-    methods
 Suggests:
+    dielectric,
     rgl,
     grid,
     ggplot2,

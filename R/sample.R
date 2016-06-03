@@ -2,7 +2,6 @@
 ## Functions for creating specific geometries
 ##
 
-
 ##' Fibonacci coverage of a sphere
 ##'
 ##' Produces a set of points that covers rather uniformly the unit sphere with N points

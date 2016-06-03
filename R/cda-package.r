@@ -10,7 +10,6 @@
 ##' @name cda-package
 ##' @docType package
 ##' @useDynLib cda
-##' @import dielectric
 ##' @import Rcpp
 ##' @title cda
 ##' @keywords package
