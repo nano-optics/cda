@@ -332,7 +332,24 @@ cluster_helix <- function(N=5,
             class="cluster")
 }
 
-
+##' Positions along a helix
+##'
+##' 3D points following a helix
+##' @title helix
+##' @param N number of particles
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
+##' @param R0 radius of helix
+##' @param pitch pitch of helix
+##' @param delta angle between particles
+##' @param delta0 initial angle
+##' @param right logical, helicity
+##' @param n.smooth number of points for a finer helix (useful for display)
+##' @return list of positions and angles 
+##' @author baptiste Auguie
+##' @export
+##' @family user_level utility
 helix <- function(R0=500, pitch=600, N=5,
                   delta=pi/8, delta0=pi/2, n.smooth=100*N, right=TRUE){
   
