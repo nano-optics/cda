@@ -26,6 +26,5 @@ Imports:
     statmod,
     randtoolbox,
     reshape2,
-    plyr,
-    dielectric
+    plyr
 RoxygenNote: 5.0.1.9000
