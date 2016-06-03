@@ -73,11 +73,30 @@ cpp_incident_field_axis <- function(Evec, kvec, R, Incidence, Axes) {
     .Call('cda_cpp_incident_field_axis', PACKAGE = 'cda', Evec, kvec, R, Incidence, Axes)
 }
 
+#' @title Generate a random sample of points on the unit sphere
+#' @description Random sample
+#' @param N requested number of points
+#' @return 3xN matrix
+#' @describeIn  sample_random random sample
+#' @family sample
+#' @examples 
+#' sample_random(10)
 #' @export
 sample_random <- function(N) {
     .Call('cda_sample_random', PACKAGE = 'cda', N)
 }
 
+#' @title Generate a sample of points on the unit sphere
+#' @description Random sample with minimum exlusion zone ("hard-core process")
+#' @param N requested number of points
+#' @param exclusion minimum distance allowed between points
+#' @param maxiter maximum number of iterations
+#' @param k number of extra new points to try at each iteration
+#' @return 3xN matrix
+#' @describeIn sample_random random sample with exclusion zone
+#' @family sample
+#' @examples 
+#' sample_hc(10)
 #' @export
 sample_hc <- function(N, exclusion, maxiter = 200L, k = 30L) {
     .Call('cda_sample_hc', PACKAGE = 'cda', N, exclusion, maxiter, k)

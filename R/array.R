@@ -37,3 +37,17 @@ array_factor <- function(wavelength, N, pitch){
 #' }
 #' @source Javier Garcia de Abajo
 "G0"
+
+#' Precomputed array factor for a square lattice at normal incidence
+#'
+#' Exact calculation of the array factor using code from Javier Garcia de Abajo 
+#' (part of the pxtal program for multiple scattering calculations 
+#' in infinite layered 2D arrays)
+#'
+#' @format A list of two interpolation functions:
+#' \describe{
+#'   \item{re}{real part of G0}
+#'   \item{im}{imaginary part of G0}
+#' }
+#' @source Javier Garcia de Abajo
+"gfun"

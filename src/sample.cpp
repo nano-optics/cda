@@ -7,21 +7,14 @@ using namespace RcppArmadillo ;
 using namespace arma;
 using namespace std;
 
-/*
-GOAL
-"hard-core" process: generate N points on a sphere no closer than exclusion zone
-
-
-STRATEGY
-- generate N + k points at random, store col-wise in matrix s
-- test all pairwise dists, store results in bool vector indices
-- if more than N good points, return first N points
-- if n missing, generate n + k new random points and iterate
-- terminate with warning if more than nmax iterations,
-- always return N points
-*/
-
-
+//' @title Generate a random sample of points on the unit sphere
+//' @description Random sample
+//' @param N requested number of points
+//' @return 3xN matrix
+//' @describeIn  sample_random random sample
+//' @family sample
+//' @examples 
+//' sample_random(10)
 //' @export
 // [[Rcpp::export]]
 arma::mat sample_random(const int N){
@@ -35,6 +28,31 @@ arma::mat sample_random(const int N){
   return(result);
 }
 
+/*
+ GOAL
+"hard-core" process: generate N points on a sphere no closer than exclusion zone
+
+
+STRATEGY
+- generate N + k points at random, store col-wise in matrix s
+- test all pairwise dists, store results in bool vector indices
+- if more than N good points, return first N points
+- if n missing, generate n + k new random points and iterate
+- terminate with warning if more than nmax iterations,
+- always return N points
+*/
+
+//' @title Generate a sample of points on the unit sphere
+//' @description Random sample with minimum exlusion zone ("hard-core process")
+//' @param N requested number of points
+//' @param exclusion minimum distance allowed between points
+//' @param maxiter maximum number of iterations
+//' @param k number of extra new points to try at each iteration
+//' @return 3xN matrix
+//' @describeIn sample_random random sample with exclusion zone
+//' @family sample
+//' @examples 
+//' sample_hc(10)
 //' @export
 // [[Rcpp::export]]
 arma::mat sample_hc(const int N,

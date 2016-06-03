@@ -9,7 +9,8 @@
 ##' @title sample_fibonacci
 ##' @param N number of points
 ##' @export
-##' @family low_level sample
+##' @family low_level sample fibonacci sampling of a sphere
+##' @describeIn sample_random 
 ##' @author baptiste Auguie
 ##' @export
 sample_fibonacci <- function(N=301){
