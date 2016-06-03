@@ -185,6 +185,7 @@ spectrum_oa <- function(cluster, material, medium=1.33,
 ##' @param born logical, use first Born approx as cg guess
 ##' @param maxiter integer termination of conjugate gradient solver
 ##' @param tol double, tolerance of conjugate gradient solver
+##' @param full logical use full (retarded) dipolar field
 ##' @param progress logical, display progress bar
 ##' @return data.frame
 ##' @note The incident wavevector is along the z direction.
@@ -196,7 +197,7 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
                                  polarisation=c("linear", "circular"), 
                                  method = c("ls", "oos"),
                                  cg = FALSE, born = FALSE, 
-                                 Nsca = 50,
+                                 Nsca = 50, full = TRUE,
                                  maxiter=30, tol=1e-4,
                                  progress = FALSE) 
 {
@@ -372,7 +373,7 @@ spectrum_shell <- function (cluster, material, medium = 1.33,
                             quadrature = c("gl","qmc","random", "cheap"), Nq=100, 
                             iterative=FALSE, precision=1e-3, Qmax=1e4, dN=Nq, 
                             method = c("ls", "oos"),
-                            Nsca = 50,
+                            Nsca = 50, 
                             cg = FALSE, born=FALSE, 
                             maxiter = 30, tol=1e-4,
                             full=TRUE, progress=FALSE, verbose=TRUE) 
