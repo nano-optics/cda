@@ -3,15 +3,19 @@
 # See the r-travis repo and its wiki
 #   https://github.com/craigcitro/r-travis/wiki
 
-language: c
+language: r
+cache: packages
+
+r:
+  - release
+
+repos:
+  CRAN: https://cloud.r-project.org
 
 env:
   global:
     - R_BUILD_ARGS="--no-build-vignettes --no-manual"
     - R_CHECK_ARGS="--no-build-vignettes --no-manual --as-cran"
-
-repos:
-  CRAN: https://cloud.r-project.org
 
 before_install:
   ## PPA for Rcpp and some other packages
