@@ -15,6 +15,7 @@ SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
 Suggests:
     dielectric,
+    plyr,
     rgl,
     grid,
     ggplot2,
@@ -26,6 +27,5 @@ Imports:
     Rcpp,
     statmod,
     randtoolbox,
-    reshape2,
-    plyr
+    reshape2
 RoxygenNote: 5.0.1.9000
