@@ -6,8 +6,8 @@
 \usage{
 spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
   Axes = "z", polarisation = c("linear", "circular"), method = c("ls",
-  "oos"), cg = FALSE, born = FALSE, Nsca = 50, full = TRUE,
-  maxiter = 30, tol = 1e-04, progress = FALSE)
+  "oos"), cg = FALSE, born = FALSE, Nsca = 50, maxiter = 30,
+  tol = 1e-04, progress = FALSE)
 }
 \arguments{
 \item{cluster}{list describing a cluster}
@@ -22,15 +22,13 @@ spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
 
 \item{polarisation}{linear or circular polarisation}
 
-\item{method}{linear system (ls), or order-of-scattering (oos)}
+\item{method}{linear system (ls), or order-of-scattering (oos - not implemented)}
 
 \item{cg}{logical, use conjugate gradient solver}
 
 \item{born}{logical, use first Born approx as cg guess}
 
 \item{Nsca}{number of quadrature points in calculation of csca}
-
-\item{full}{logical use full (retarded) dipolar field}
 
 \item{maxiter}{integer termination of conjugate gradient solver}
 

@@ -1,3 +1,7 @@
+//
+// Note: see cdaglobal.cpp for faster strategy (updating arguments)
+//
+
 // [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>
@@ -67,12 +71,10 @@ arma::cx_mat cpp_polarization(const arma::cx_mat& E,
 // R:  Nx3 matrix of positions
 // kn:  incident wavenumber (scalar)
 // AlphaBlocks:  3x3xN blocks of polarizabilities
-// full: boolean flag to use only static terms
 // return the 3Nx3N interaction matrix
 // [[Rcpp::export]]
 arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn,
-                                    const arma::cx_cube& AlphaBlocks,
-                                    const bool full) {
+                                    const arma::cx_cube& AlphaBlocks) {
 
 
   const int N = R.n_cols;
@@ -117,54 +119,4 @@ arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn,
   } // end jj
 
   return(A);
-}
-
-
-/////////////////////////////////////////////////////////
-///// DEVELOPMENT === UNTESTED
-/////////////////////////////////////////////////////////
-
-// Static interaction matrix (for BOOSE)
-//
-// R:  Nx3 matrix of positions
-// [[Rcpp::export]]
-arma::cx_mat cpp_interaction_static(const arma::mat& R) {
-
-  const int N = R.n_cols;
-  // constants
-  const arma::cx_mat I3 = arma::eye<arma::cx_mat>( 3, 3 );
-  arma::cx_mat G0 = arma::eye<arma::cx_mat>( 3*N, 3*N );
-
-  // temporary vars
-
-  int jj=0, kk=0;
-  arma::mat rk_to_rj = arma::mat(3,1), rjkhat = arma::mat(3,1) ,
-    rjkrjk = arma::mat(3,3);
-
-  double rjk;
-  arma::cx_mat G0jk = arma::cx_mat(3,3);
-
-  // nested for loop over N dipoles
-  for(jj=0; jj<N; jj++)
-  {
-
-    for(kk=jj+1; kk<N; kk++)
-    {
-
-      rk_to_rj = R.col(jj) - R.col(kk) ;
-      rjk = norm(rk_to_rj, 2);
-      rjkhat = rk_to_rj / rjk;
-      rjkrjk =  rjkhat * rjkhat.st();
-
-      G0jk = (I3 - 3*rjkrjk)/ (rjk*rjk*rjk) ;
-
-      // assign block
-      G0.submat(jj*3,kk*3,jj*3+2,kk*3+2) = G0jk;
-      // symmetric block
-      G0.submat(kk*3,jj*3,kk*3+2,jj*3+2) = G0jk.st();
-
-    } // end kk
-  } // end jj
-
-  return(G0);
 }

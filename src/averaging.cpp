@@ -54,8 +54,7 @@ arma::rowvec cpp_oa(const arma::mat& R,
   arma::rowvec res(6) ;
 
   // incident field
-  arma::cx_mat Ein(3*N, 2*Ni), Eloc(3*N, 2*Ni);
-  arma::cx_mat P(3*N, 2*Ni);
+  arma::cx_mat Ein(3*N, 2*Ni), Eloc(3*N, 2*Ni), P(3*N, 2*Ni);
   const arma::colvec  khat="0 0 1;";
 
   arma::cx_colvec Evec = "(0,1) (1,0) (0,0);";
@@ -64,6 +63,7 @@ arma::rowvec cpp_oa(const arma::mat& R,
   Evec = "(1,0) (0,1) (0,0);";
   Evec = arma::datum::sqrt2/2 * Evec ;
   Ein.submat(0,Ni,3*N-1,2*Ni-1) = cpp_incident_field(Evec, kn*khat, R, IncidenceNodes);
+
   arma::colvec xsec(Ni); // temporary storage of cross-sections
 
   if(cg) {
@@ -111,7 +111,6 @@ arma::rowvec cpp_oa(const arma::mat& R,
 // IncidenceWeights:  Ni vector of incident field quadrature weights
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
-// full: logical flag to switch off retardation terms
 // cg: logical flag to use conjugate gradient solver
 // born: logical flag, use first Born approx for cg solver
 // maxiter:  max number of cg iterations
@@ -127,7 +126,6 @@ arma::mat cpp_oa_spectrum(const arma::colvec kn,
                           const arma::colvec& IncidenceWeights,
                           const arma::mat& ScatteringNodes,
                           const arma::colvec& ScatteringWeights,
-                          const bool full,
                           const bool cg, const bool born,
                           const int maxiter,
                           const double tol,

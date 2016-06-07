@@ -2,7 +2,7 @@
 ##'
 ##' Coupled-dipole simulations for electromagnetic scattering of light by subwavelength 
 ##' particles in arbitrary 3-dimensional configurations. Scattering and absorption 
-##' spectra simulated by direct or iterative inversion of the interaction matrix. 
+##' spectra simulated by direct inversion of the interaction matrix. 
 ##' Functions are provided for linear polarisation with varying angle of incidence, 
 ##' as well as circular polarisation with angular averaging (optical activity). 
 ##'

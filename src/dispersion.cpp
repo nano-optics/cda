@@ -113,7 +113,6 @@ arma::mat cpp_dispersion(const arma::mat& R,
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
 // polarisation: integer flag to switch between linear and circular polarisation
-// full: logical flag to switch off retardation terms
 // cg: logical flag to use conjugate gradient solver
 // born: logical flag, use first Born approx for cg solver
 // maxiter:  max number of cg iterations
@@ -130,7 +129,6 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
              const arma::mat& ScatteringNodes,
 			       const arma::vec& ScatteringWeights,
 			       const int polarisation,
-             const bool full,
              const bool cg,
              const bool born,
              const int maxiter,

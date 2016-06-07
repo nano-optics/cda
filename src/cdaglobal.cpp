@@ -1,3 +1,9 @@
+//
+// These functions provide an alternative to cda.cpp
+// whereby they update one argument, instead of returning a copy
+// This is somewhat faster, but less transparent to use (hence the two versions)
+//
+
 // [[Rcpp::depends(RcppArmadillo)]]
 
 #include <RcppArmadillo.h>
@@ -64,7 +70,6 @@ void cpp_polarization_update(const arma::cx_mat& E,
 // R:  Nx3 matrix of positions
 // kn:  incident wavenumber (scalar)
 // AlphaBlocks:  3x3xN blocks of polarizabilities
-// full: boolean flag to use only static terms
 // updates the 3Nx3N interaction matrix
 // [[Rcpp::export]]
 void cpp_interaction_matrix_update(const arma::mat& R, const double kn,

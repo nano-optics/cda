@@ -8,8 +8,7 @@ spectrum_shell(cluster, material, medium = 1.33, core = NULL,
   quadrature = c("gl", "qmc", "random", "cheap"), Nq = 100,
   iterative = FALSE, precision = 0.001, Qmax = 10000, dN = Nq,
   method = c("ls", "oos"), Nsca = 50, cg = FALSE, born = FALSE,
-  maxiter = 30, tol = 1e-04, full = TRUE, progress = FALSE,
-  verbose = TRUE)
+  maxiter = 30, tol = 1e-04, progress = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{cluster}{cluster (list)}
@@ -32,7 +31,7 @@ spectrum_shell(cluster, material, medium = 1.33, core = NULL,
 
 \item{dN}{iterative increase in N (QMC only)}
 
-\item{method}{linear system (ls), or order-of-scattering (oos)}
+\item{method}{linear system (ls), or order-of-scattering (oos - not implemented)}
 
 \item{Nsca}{quadrature points for scattering cross-section}
 
@@ -43,8 +42,6 @@ spectrum_shell(cluster, material, medium = 1.33, core = NULL,
 \item{maxiter}{integer termination of conjugate gradient solver}
 
 \item{tol}{double, tolerance of conjugate gradient solver}
-
-\item{full}{logical use full (retarded) dipolar field}
 
 \item{progress}{print progress lines}
 

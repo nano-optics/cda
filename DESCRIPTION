@@ -5,7 +5,7 @@ Authors@R: c(person("Baptiste", "Auguie",
     role = c("aut", "cre")))
 License: GPL-3
 Title: Coupled-dipole approximation for electromagnetic scattering by three-dimensional clusters of subwavelength particles
-Description: Coupled-dipole simulations for electromagnetic scattering of light by subwavelength particles in arbitrary 3-dimensional configurations. Scattering and absorption spectra simulated by direct or iterative inversion of the interaction matrix. Functions are provided for linear polarisation with varying angle of incidence, as well as circular polarisation with angular averaging (optical activity). 
+Description: Coupled-dipole simulations for electromagnetic scattering of light by subwavelength particles in arbitrary 3-dimensional configurations. Scattering and absorption spectra simulated by direct inversion of the interaction matrix. Functions are provided for linear polarisation with varying angle of incidence, as well as circular polarisation with angular averaging (optical activity). 
 URL: https://github.com/baptiste/cda
 DOI: http://dx.doi.org/10.5281/zenodo.11418
 Type: Package

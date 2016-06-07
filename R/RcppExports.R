@@ -9,8 +9,8 @@ cpp_oa <- function(R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeigh
     .Call('cda_cpp_oa', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, cg, born, maxiter, tol)
 }
 
-cpp_oa_spectrum <- function(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, full, cg, born, maxiter, tol, progress) {
-    .Call('cda_cpp_oa_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, full, cg, born, maxiter, tol, progress)
+cpp_oa_spectrum <- function(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, cg, born, maxiter, tol, progress) {
+    .Call('cda_cpp_oa_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, cg, born, maxiter, tol, progress)
 }
 
 cpp_alpha_blocks <- function(Alpha, Angles) {
@@ -21,12 +21,8 @@ cpp_polarization <- function(E, AlphaBlocks) {
     .Call('cda_cpp_polarization', PACKAGE = 'cda', E, AlphaBlocks)
 }
 
-cpp_interaction_matrix <- function(R, kn, AlphaBlocks, full) {
-    .Call('cda_cpp_interaction_matrix', PACKAGE = 'cda', R, kn, AlphaBlocks, full)
-}
-
-cpp_interaction_static <- function(R) {
-    .Call('cda_cpp_interaction_static', PACKAGE = 'cda', R)
+cpp_interaction_matrix <- function(R, kn, AlphaBlocks) {
+    .Call('cda_cpp_interaction_matrix', PACKAGE = 'cda', R, kn, AlphaBlocks)
 }
 
 cpp_alpha_blocks_update <- function(Alpha, Angles, AlphaBlocks) {
@@ -61,8 +57,8 @@ cpp_dispersion <- function(R, A, AlphaBlocks, kn, medium, Incidence, Axes, Scatt
     .Call('cda_cpp_dispersion', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol)
 }
 
-cpp_dispersion_spectrum <- function(kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, full, cg, born, maxiter, tol, progress) {
-    .Call('cda_cpp_dispersion_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, full, cg, born, maxiter, tol, progress)
+cpp_dispersion_spectrum <- function(kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol, progress) {
+    .Call('cda_cpp_dispersion_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol, progress)
 }
 
 cpp_incident_field <- function(Evec, kvec, R, Incidence) {

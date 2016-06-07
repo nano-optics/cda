@@ -2,8 +2,7 @@
 #define _CDA_H
 
 arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn,
-                                    const arma::cx_cube& AlphaBlocks,
-                                    const bool full);
+                                    const arma::cx_cube& AlphaBlocks);
 
 arma::cx_mat cpp_interaction_static(const arma::mat& R);
 
