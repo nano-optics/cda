@@ -2,7 +2,7 @@ visualise_rgl <- function(cl, outfile=NULL, show_core=TRUE, ...){
   rgl.ellipsoids(cl$positions, cl$sizes, cl$angles, ...)
   
   if("R0" %in% names(cl) && show_core) 
-    rgl::rgl.spheres(0,0,0, radius=cl$R0, col="grey")
+    rgl::rgl.spheres(0,0,0, radius=cl$R0, col="grey", alpha=0.9)
   
   if(!is.null(outfile))
     rgl::rgl.snapshot( outfile, fmt = "png", top = TRUE )

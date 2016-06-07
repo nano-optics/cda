@@ -32,8 +32,7 @@ alpha_dye <- function(sizes, wavelength, medium, ...){
 ##' This long-wavelength polarisability approximation uses the Kuwata prescription
 ##' @title alpha_ellipsoid
 ##' @param sizes matrix of cluster sizes in nm
-##' @param wavelength wavelength in nm
-##' @param epsilon complex permittivity
+##' @param material data.frame with wavelength and epsilon
 ##' @param medium refractive index of surrounding medium
 ##' @return matrix of polarisability
 ##' @export
@@ -44,10 +43,10 @@ alpha_dye <- function(sizes, wavelength, medium, ...){
 ##' @details
 ##' The Kuwata prescription includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
 ## NOTE: implementation is neither clear nor efficient, should probably do it in c++, or vectorise everything
-alpha_ellipsoid <- function(sizes, wavelength, epsilon, medium){
+alpha_ellipsoid <- function(sizes, material, medium){
   
   Nr <- ncol(sizes)
-  Nl = length(wavelength)
+  Nl = length(material$wavelength)
   Alpha = matrix(NA, 3*Nr, Nl)
   
   for(jj in seq_len(Nr)){
@@ -57,9 +56,9 @@ alpha_ellipsoid <- function(sizes, wavelength, epsilon, medium){
     V <- 4 * pi/3 * a * b * c
     chi <- depolarisation(a, b, c)
     ind = (jj-1)*3 # 0-index corresponding to particle jj
-    Alpha[ind+1, ] = alpha_kuwata(wavelength, epsilon, V, a, chi[1], medium)
-    Alpha[ind+2, ] = alpha_kuwata(wavelength, epsilon, V, b, chi[2], medium)
-    Alpha[ind+3, ] = alpha_kuwata(wavelength, epsilon, V, c, chi[3], medium)
+    Alpha[ind+1, ] = alpha_kuwata(material$wavelength, material$epsilon, V, a, chi[1], medium)
+    Alpha[ind+2, ] = alpha_kuwata(material$wavelength, material$epsilon, V, b, chi[2], medium)
+    Alpha[ind+3, ] = alpha_kuwata(material$wavelength, material$epsilon, V, c, chi[3], medium)
   }
   
   Alpha

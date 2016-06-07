@@ -81,3 +81,4 @@ equal_angles <- function(phi, theta, gamma, N){
         theta = rep(theta,N),
         gamma = rep(gamma,N))
 }
+

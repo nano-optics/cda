@@ -4,14 +4,12 @@
 \alias{alpha_ellipsoid}
 \title{alpha_ellipsoid}
 \usage{
-alpha_ellipsoid(sizes, wavelength, epsilon, medium)
+alpha_ellipsoid(sizes, material, medium)
 }
 \arguments{
 \item{sizes}{matrix of cluster sizes in nm}
 
-\item{wavelength}{wavelength in nm}
-
-\item{epsilon}{complex permittivity}
+\item{material}{data.frame with wavelength and epsilon}
 
 \item{medium}{refractive index of surrounding medium}
 }

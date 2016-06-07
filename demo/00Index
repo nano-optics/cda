@@ -1,9 +1,11 @@
-averaging     compare the performance of different methods for angular averaging
-basic    simple example of cda calculations
-clusters    generate 3D views of some predefined cluster shapes using RGL rendering
-lattice_sum     lattice sum for a 2D square array of dipoles
-diffractive_chain   extinction spectrum of a linear chain of gold nanorods
+clusters   generate 3D views of some predefined cluster shapes using RGL rendering
 dimer_linear   extinction spectrum of a dimer of gold nanorods
-helix_cd   circular dichroism for a helix of gold nanoparticles
 dimer_cd   circular dichroism for a chiral dimer of gold nanorods
-multiple_incidence     solves the coupled dipole equations for multiple angles of incidence
+helix_cd   circular dichroism for a helix of gold nanoparticles
+dispersion     spectra for multiple angles of incidence
+averaging     compare the angle-averaged spectrum with spectra at fixed orientations
+lattice_sum     lattice sum for a 2D square array of dipoles
+diffractive   extinction spectrum of a linear chain and array of gold nanorods
+shell   absorption spectrum of a spherical shell of dye molecules
+dimer_dye   absorption spectrum of a dimer of dyes
+low_level   exposing low-level steps in the calculations

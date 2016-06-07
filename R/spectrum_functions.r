@@ -39,41 +39,39 @@ spectrum_oa <- function(cluster, material, medium=1.33,
                         cg = FALSE, born=FALSE,
                         maxiter = 30, tol=1e-4,
                         progress=FALSE, verbose=TRUE){
-
+  
   quadrature <- match.arg(quadrature)
   method <- match.arg(method)
-
+  
   ## check whether material parameters correspond to
   ## epsilon (NPs) pr alpha (dyes)
   isMolecular <- "alpha" %in% names(material)
-
+  
   if(isMolecular){
     alphabar <- material[["alpha"]]
     alphaeff = alpha_embedded(alphabar, medium)
     Alpha = alpha_rescale(alphaeff, cluster[["sizes"]])
-
+    
   } else {  ## other alternative must be dielectric function
     stopifnot("epsilon" %in% names(material))
-    Alpha <- alpha_ellipsoid(material[["wavelength"]],
-                             material[["epsilon"]], medium,
-                             cluster[["sizes"]])
+    Alpha <- alpha_ellipsoid(cluster[["sizes"]], material, medium)
   }
-
+  
   # incident field
   kn <- 2*pi/material[["wavelength"]]*medium
-
+  
   Incidence <- quadrature_sphere(Nq=Nq, quadrature)
-
+  
   Scattering <- quadrature_sphere(Nq=Nsca, "gl")
-
-    results <- cpp_oa_spectrum(kn, medium, cluster$positions, Alpha,
-                               cluster$angles,
-                               Incidence$nodes,
-                               Incidence$weights,
-                               Scattering$nodes,
-                               Scattering$weights,
-                               cg, born, maxiter, tol, progress)
-
+  
+  results <- cpp_oa_spectrum(kn, medium, cluster$positions, Alpha,
+                             cluster$angles,
+                             Incidence$nodes,
+                             Incidence$weights,
+                             Scattering$nodes,
+                             Scattering$weights,
+                             cg, born, maxiter, tol, progress)
+  
   ## iterative improvement: add new points
   ## until convergence or Qmax reached
   if(iterative && quadrature == "qmc"){
@@ -85,19 +83,19 @@ spectrum_oa <- function(cluster, material, medium=1.33,
       Ntot <- Ntot + dN
       Incidence <- quadrature_sphere(dN, quadrature, FALSE)
       ## xsec at new points
-
-        newres <- cpp_oa_spectrum(kn, cluster$positions, Alpha,
-                                  cluster$angles,
-                                  Incidence$nodes,
-                                  Incidence$weights,
-                                  Scattering$nodes,
-                                  Scattering$weights,
-                                  cg, born, maxiter,
-                                  tol, progress)
-
+      
+      newres <- cpp_oa_spectrum(kn, cluster$positions, Alpha,
+                                cluster$angles,
+                                Incidence$nodes,
+                                Incidence$weights,
+                                Scattering$nodes,
+                                Scattering$weights,
+                                cg, born, maxiter,
+                                tol, progress)
+      
       ## average of the two results
       results <- (oldN * results + dN * newres) / (oldN + dN)
-
+      
       test <- max(abs(old - results[,1]) / results[,1])
       ## max relative difference in extinction cross section
       if(verbose)
@@ -105,42 +103,42 @@ spectrum_oa <- function(cluster, material, medium=1.33,
       converged <- test < precision
     }
   }
-
-
+  
+  
   d <- data.frame(material[["wavelength"]], results) # L - R
   names(d) <- c("wavelength", 'cext', 'cabs', 'csca',
                 "dext", "dabs", "dsca")
-
+  
   ## checking consistency of csca
   sca2 <- d[,"cext"] - d[,"cabs"]
   error_csca <- max(abs(sca2 - d[,"csca"])/ abs(sca2 + d[,"csca"]))
-
+  
   if(error_csca > 1e-3)
     warning(sprintf('consistency check: cext - cabs differs from csca by %.1f %%, try increasing Nsca [%i]',
                     100*error_csca, Nsca))
-
+  
   L2eV <- 6.62606896e-34 * 299792458/1.602176487e-19
   d[["energy"]] <- L2eV / d[["wavelength"]] * 1e9
   m <- melt(d, id=c("wavelength", "energy"))
-
+  
   m$type <- m$variable
-
+  
   levels(m$type) <- list(`cross-section`="cext",
                          `cross-section`="cabs",
                          `cross-section`="csca",
                          `dichroism`="dext",
                          `dichroism`="dabs",
                          `dichroism`="dsca")
-
+  
   levels(m$variable) <- list(extinction="cext",
                              absorption="cabs",
                              scattering="csca",
                              extinction="dext",
                              absorption="dabs",
                              scattering="dsca")
-
+  
   return(m)
-
+  
 }
 
 
@@ -176,73 +174,70 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
                                  maxiter=30, tol=1e-4,
                                  progress = FALSE)
 {
-
+  
   ## check whether material parameters correspond to
   ## epsilon (NPs) pr alpha (dyes)
   isMolecular <- "alpha" %in% names(material)
-
+  
   if(isMolecular){
     message("seems we are dealing with molecular dipoles...")
     alphabar <- material[["alpha"]]
     alphaeff = alpha_embedded(alphabar, medium)
     Alpha = alpha_rescale(alphaeff, cluster[["sizes"]])
-
+    
   } else {
-    Alpha <- alpha_ellipsoid(material[["wavelength"]],
-                             material[["epsilon"]], medium,
-                             cluster[["sizes"]])
+    Alpha <- alpha_ellipsoid(cluster[["sizes"]], material, medium)
   }
-
+  
   # incident field
   kn <- 2*pi/material[["wavelength"]]*medium
-
+  
   polarisation <- match.arg(polarisation)
   method <- match.arg(method)
-
+  
   if(polarisation == "linear") polarisation <- 0L else
     if(polarisation == "circular") polarisation <- 1L
-
-
+  
+  
   Nl <- length(kn)
   Nr <- ncol(cluster$positions)
   Ni <- length(Incidence)
-
+  
   if(length(Axes) == 1) Axes <- rep(Axes, length.out=Ni)
   Axeso <- Axes # original codes
   Axes <- as.integer(factor(Axes, levels=c('x','y','z')))-1L
   stopifnot(all(Axes %in% c(0L, 1L, 2L)), !any(is.na(Axes)))
-
+  
   stopifnot(Ni == length(Axes))
   stopifnot(is.matrix(Alpha), is.vector(Incidence),
             is.matrix(cluster$positions),
             is.matrix(cluster$angles))
-
+  
   stopifnot(nrow(Alpha)/3 == Nr,
             ncol(Alpha) == Nl)
-
+  
   Scattering <- quadrature_sphere(Nq=Nsca, "gl")
-
-    res <- cpp_dispersion_spectrum(kn, medium, cluster$positions, Alpha,
-                                   cluster$angles, Incidence, Axes,
-                                   Scattering$nodes,
-                                   Scattering$weights,
-                                   polarisation, cg, born,
-                                   maxiter, tol, progress)
-
-
-
+  
+  res <- cpp_dispersion_spectrum(kn, medium, cluster$positions, Alpha,
+                                 cluster$angles, Incidence, Axes,
+                                 Scattering$nodes,
+                                 Scattering$weights,
+                                 polarisation, cg, born,
+                                 maxiter, tol, progress)
+  
+  
   Incidence <- Incidence[rep(seq_len(Ni), Nl)]
   Axes <- Axeso[rep(seq_len(Ni), Nl)]
   wavelength <- rep(material$wavelength, each = Ni)
-
+  
   val <- list(cext1 = as.vector(res[, 1, , drop = TRUE]),
               cabs1 = as.vector(res[, 2, , drop = TRUE]),
               csca1 = as.vector(res[, 3, , drop = TRUE]),
               cext2 = as.vector(res[, 4, , drop = TRUE]),
               cabs2 = as.vector(res[, 5, , drop = TRUE]),
               csca2 = as.vector(res[, 6, , drop = TRUE]))
-
-
+  
+  
   ## checking consistency of csca
   sca1 <- c(val[["csca1"]], val[["csca2"]])
   sca2 <- c(val[["cext1"]], val[["cext2"]]) - c(val[["cabs1"]], val[["cabs2"]])
@@ -250,15 +245,15 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
   if(error_csca > 1e-3)
     warning(sprintf('consistency check: cext - cabs differs from csca by %.1f %%, try increasing Nsca [%i]',
                     100*error_csca, Nsca))
-
+  
   ## dichroism
   val[["dext"]] <- val[["cext1"]] - val[["cext2"]]
   val[["dabs"]] <- val[["cabs1"]] - val[["cabs2"]]
   val[["dsca"]] <- val[["csca1"]] - val[["csca2"]]
-
+  
   ## combine results in long format
   ## a bit verbose, but doesn't rely on extra packages
-
+  
   results <-
     rbind(data.frame(wavelength = wavelength, Incidence = Incidence,
                      Axes=Axes,
@@ -305,13 +300,13 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
                      value = val[["dsca"]],
                      variable = "scattering", type = "dichroism",
                      polarisation = "3"))
-
+  
   if(polarisation == 0L)
     results$polarisation <- factor(results$polarisation, labels = c("p", "s", "p-s"))
-
+  
   if(polarisation == 1L)
     results$polarisation <- factor(results$polarisation, labels = c("R", "L", "R-L"))
-
+  
   ## reorder levels
   results$type <- factor(results$type, levels=c("cross-section", "dichroism"))
   invisible(results)
@@ -343,9 +338,9 @@ spectrum_shell <- function (cluster, material, medium = 1.33,
                             cg = FALSE, born=FALSE,
                             maxiter = 30, tol=1e-4,
                             progress=FALSE, verbose=TRUE)
-
+  
 {
-
+  
   .NotYetImplemented()
-
+  
 }
