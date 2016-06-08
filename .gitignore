@@ -1,12 +1,7 @@
-*.png
-*.html
 *.md
 .DS_Store
 .Rhistory
 src/*.o
 src/*.so
-inst/publis
-inst/develop
 .Rproj.user
-
 *.Rproj
