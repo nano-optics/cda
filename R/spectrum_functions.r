@@ -310,35 +310,3 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
   results$type <- factor(results$type, levels=c("cross-section", "dichroism"))
   invisible(results)
 }
-
-##
-## Functions to run full simulations over multiple wavelengths
-##
-
-
-##' Spectral simulation of a spherical shell of particles
-##'
-##' Particles are arranged in a spherical shell around a central core (currently void).
-##' A typical application will be to model the response of molecular layers.
-##' @title spectrum_shell
-##' @inheritParams spectrum_oa
-##' @param core list
-##' @return data.frame
-##' @note Core is not yet implemented (will rely on Mie theory)
-##' @export
-##' @family user_level cda spectrum
-##' @author baptiste Auguie
-spectrum_shell <- function (cluster, material, medium = 1.33,
-                            core = NULL,
-                            quadrature = c("gl","qmc","random", "cheap"), Nq=100,
-                            iterative=FALSE, precision=1e-3, Qmax=1e4, dN=Nq,
-                            method = c("solve", "cg", "oos"),
-                            Nsca = 50,
-                            maxiter = 30, tol=1e-4,
-                            progress=FALSE, verbose=TRUE)
-  
-{
-  
-  .NotYetImplemented()
-  
-}
