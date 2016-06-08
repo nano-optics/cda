@@ -4,16 +4,8 @@
 .travis.yml
 travis-tool.sh
 
-wiki/.*png$
-wiki/.*html$
-wiki/.*r$
-wiki/.*\.md$
-publis/
-tmp/
-presentation/
-develop/
-src/*\.o
-src/*\.so
+src/*\.o$
+src/*\.so$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 dev/

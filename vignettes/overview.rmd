@@ -1,9 +1,13 @@
 ---
 title: "Overview of the cda package"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-author: "baptiste Auguie"
+author: "baptiste Auguié"
+vignette: >
+  %\VignetteIndexEntry{overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 output:
-  html_vignette:
+  rmarkdown::html_vignette:
     toc: true
     toc_depth: 2
     fig_width: 7
@@ -11,10 +15,6 @@ output:
     fig_caption: true
 ---
 
-<!-- 
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{overview}
--->
 
 ```{r start, message=FALSE, echo=FALSE, results='hide'}
 library(rgl)
