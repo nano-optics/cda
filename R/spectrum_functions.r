@@ -15,13 +15,11 @@
 ##' @param iterative logical, increase N until convergence (QMC only)
 ##' @param precision relative diff between two runs (QMC only)
 ##' @param Qmax maximum N if convergence not attained (QMC only)
-##' @param method linear system (ls), or order-of-scattering (oos - not implemented)
 ##' @param dN iterative increase in N (QMC only)
 ##' @param Nsca quadrature points for scattering cross-section
-##' @param cg logical use conjugate gradient solver
-##' @param born logical first Born approx as cg guess
-##' @param maxiter integer termination of conjugate gradient solver
-##' @param tol double, tolerance of conjugate gradient solver
+##' @param method linear system (solve), conjugate-gradient (cg), or order-of-scattering (oos)
+##' @param maxiter integer termination of iterative solver
+##' @param tol double, tolerance of iterative solver
 ##' @param progress print progress lines
 ##' @param verbose display messages
 ##' @importFrom reshape2 melt
@@ -34,14 +32,14 @@
 spectrum_oa <- function(cluster, material, medium=1.33,
                         quadrature = c("gl","qmc","random", "cheap"), Nq=100,
                         iterative=FALSE, precision=1e-3, Qmax=1e4, dN=Nq,
-                        method = c("ls", "oos"),
+                        method = c("solve", "cg", "oos"),
                         Nsca = 50,
-                        cg = FALSE, born=FALSE,
                         maxiter = 30, tol=1e-4,
                         progress=FALSE, verbose=TRUE){
   
   quadrature <- match.arg(quadrature)
   method <- match.arg(method)
+  inversion <- switch(method, "solve" = 0L, "cg" = 1L, "oos" = 2L)
   
   ## check whether material parameters correspond to
   ## epsilon (NPs) pr alpha (dyes)
@@ -64,13 +62,14 @@ spectrum_oa <- function(cluster, material, medium=1.33,
   
   Scattering <- quadrature_sphere(Nq=Nsca, "gl")
   
+  
   results <- cpp_oa_spectrum(kn, medium, cluster$positions, Alpha,
                              cluster$angles,
                              Incidence$nodes,
                              Incidence$weights,
                              Scattering$nodes,
                              Scattering$weights,
-                             cg, born, maxiter, tol, progress)
+                             inversion, maxiter, tol, progress)
   
   ## iterative improvement: add new points
   ## until convergence or Qmax reached
@@ -90,7 +89,7 @@ spectrum_oa <- function(cluster, material, medium=1.33,
                                 Incidence$weights,
                                 Scattering$nodes,
                                 Scattering$weights,
-                                cg, born, maxiter,
+                                inversion, maxiter,
                                 tol, progress)
       
       ## average of the two results
@@ -153,12 +152,10 @@ spectrum_oa <- function(cluster, material, medium=1.33,
 ##' @param Incidence angular directions of incident field
 ##' @param Axes incident field rotation axis
 ##' @param polarisation linear or circular polarisation
-##' @param method linear system (ls), or order-of-scattering (oos - not implemented)
 ##' @param Nsca number of quadrature points in calculation of csca
-##' @param cg logical, use conjugate gradient solver
-##' @param born logical, use first Born approx as cg guess
-##' @param maxiter integer termination of conjugate gradient solver
-##' @param tol double, tolerance of conjugate gradient solver
+##' @param method linear system (solve), conjugate-gradient (cg), or order-of-scattering (oos)
+##' @param maxiter integer termination of iterative solver
+##' @param tol double, tolerance of iterative solver
 ##' @param progress logical, display progress bar
 ##' @return data.frame
 ##' @note The incident wavevector is along the z direction.
@@ -168,12 +165,14 @@ spectrum_oa <- function(cluster, material, medium=1.33,
 spectrum_dispersion <- function (cluster, material, medium = 1.33,
                                  Incidence=0, Axes='z',
                                  polarisation=c("linear", "circular"),
-                                 method = c("ls", "oos"),
-                                 cg = FALSE, born = FALSE,
+                                 method = c("solve", "cg", "oos"),
                                  Nsca = 50,
                                  maxiter=30, tol=1e-4,
                                  progress = FALSE)
 {
+  
+  method <- match.arg(method)
+  inversion <- switch(method, "solve" = 0L, "cg" = 1L, "oos" = 2L)
   
   ## check whether material parameters correspond to
   ## epsilon (NPs) pr alpha (dyes)
@@ -222,7 +221,7 @@ spectrum_dispersion <- function (cluster, material, medium = 1.33,
                                  cluster$angles, Incidence, Axes,
                                  Scattering$nodes,
                                  Scattering$weights,
-                                 polarisation, cg, born,
+                                 polarisation, inversion,
                                  maxiter, tol, progress)
   
   
@@ -333,9 +332,8 @@ spectrum_shell <- function (cluster, material, medium = 1.33,
                             core = NULL,
                             quadrature = c("gl","qmc","random", "cheap"), Nq=100,
                             iterative=FALSE, precision=1e-3, Qmax=1e4, dN=Nq,
-                            method = c("ls", "oos"),
+                            method = c("solve", "cg", "oos"),
                             Nsca = 50,
-                            cg = FALSE, born=FALSE,
                             maxiter = 30, tol=1e-4,
                             progress=FALSE, verbose=TRUE)
   

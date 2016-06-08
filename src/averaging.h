@@ -10,7 +10,7 @@ arma::rowvec cpp_oa(const arma::mat& R,
                     const arma::colvec& IncidenceWeights,
                     const arma::mat& ScatteringNodes,
                     const arma::colvec& ScatteringWeights,
-                    const bool cg, const bool born,
+                    const int inversion,
                     const int maxiter, const double tol);
 
 #endif

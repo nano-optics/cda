@@ -5,9 +5,8 @@
 \title{spectrum_dispersion}
 \usage{
 spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
-  Axes = "z", polarisation = c("linear", "circular"), method = c("ls",
-  "oos"), cg = FALSE, born = FALSE, Nsca = 50, maxiter = 30,
-  tol = 1e-04, progress = FALSE)
+  Axes = "z", polarisation = c("linear", "circular"), method = c("solve",
+  "cg", "oos"), Nsca = 50, maxiter = 30, tol = 1e-04, progress = FALSE)
 }
 \arguments{
 \item{cluster}{list describing a cluster}
@@ -22,17 +21,13 @@ spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
 
 \item{polarisation}{linear or circular polarisation}
 
-\item{method}{linear system (ls), or order-of-scattering (oos - not implemented)}
-
-\item{cg}{logical, use conjugate gradient solver}
-
-\item{born}{logical, use first Born approx as cg guess}
+\item{method}{linear system (solve), conjugate-gradient (cg), or order-of-scattering (oos)}
 
 \item{Nsca}{number of quadrature points in calculation of csca}
 
-\item{maxiter}{integer termination of conjugate gradient solver}
+\item{maxiter}{integer termination of iterative solver}
 
-\item{tol}{double, tolerance of conjugate gradient solver}
+\item{tol}{double, tolerance of iterative solver}
 
 \item{progress}{logical, display progress bar}
 }

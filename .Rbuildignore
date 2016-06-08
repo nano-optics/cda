@@ -12,8 +12,8 @@ publis/
 tmp/
 presentation/
 develop/
-src/*.o
-src/*.so
+src/*\.o
+src/*\.so
 ^.*\.Rproj$
 ^\.Rproj\.user$
 dev/

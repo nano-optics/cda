@@ -6,6 +6,7 @@
 #include "cdaglobal.h"
 #include "averaging.h"
 #include "cg.h"
+#include "iterative.h"
 #include "incident.h"
 #include "cross_sections.h"
 
@@ -27,10 +28,9 @@ using namespace std;
 // IncidenceWeights:  Ni vector of incident field quadrature weights
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
-// cg: logical flag to use conjugate gradient solver
-// born: logical flag, use first Born approx for cg solver
-// maxiter:  max number of cg iterations
-// tol:  cg tolerance
+// inversion: integer flag to use different inversion methods
+// maxiter:  max number of iterations
+// tol:  tolerance
 // [[Rcpp::export]]
 arma::rowvec cpp_oa(const arma::mat& R,
                     const arma::cx_mat& A,
@@ -41,7 +41,7 @@ arma::rowvec cpp_oa(const arma::mat& R,
                     const arma::colvec& IncidenceWeights,
                     const arma::mat& ScatteringNodes,
                     const arma::colvec& ScatteringWeights,
-                    const bool cg, const bool born,
+                    const int inversion,
                     const int maxiter, const double tol)
 {
 
@@ -66,18 +66,22 @@ arma::rowvec cpp_oa(const arma::mat& R,
 
   arma::colvec xsec(Ni); // temporary storage of cross-sections
 
-  if(cg) {
-    arma::cx_mat guess = arma::zeros<arma::cx_mat>(3*N,2*Ni);
-    if(born){ // first Born approximation
-      guess = Ein;
-    }
-    Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
-  } else {
+  if(inversion == 0) { // standard method
     Eloc = solve(A, Ein);
+    cpp_polarization_update(Eloc, AlphaBlocks, P);
+  } else if (inversion == 1){ // CG inversion
+    arma::cx_mat guess = arma::zeros<arma::cx_mat>(3*N,2*Ni);
+    Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
+    cpp_polarization_update(Eloc, AlphaBlocks, P);
+  } else if (inversion == 2){ // OOS solution (no inversion)
+    int niter;
+    // note: A is actually G here, not the same as above cases
+    // we solve (I-G)E=Einc with G, G^2, G^3 etc.
+    niter = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
+                              tol, maxiter, Eloc, P);
+    // Eloc and P have now been updated by OOS
   }
-  // Rcpp::Rcout << A << "\n";
-  cpp_polarization_update(Eloc, AlphaBlocks, P);
-  // Rcpp::Rcout << P << "\n";
+  
 
   // cross section for all quadrature angles
   // averaged for polarisation and dichroism
@@ -111,10 +115,9 @@ arma::rowvec cpp_oa(const arma::mat& R,
 // IncidenceWeights:  Ni vector of incident field quadrature weights
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
-// cg: logical flag to use conjugate gradient solver
-// born: logical flag, use first Born approx for cg solver
-// maxiter:  max number of cg iterations
-// tol:  cg tolerance
+// inversion: integer flag to use different inversion methods
+// maxiter:  max number of iterations
+// tol:  tolerance
 // progress: logical flag to display progress bars
 // [[Rcpp::export]]
 arma::mat cpp_oa_spectrum(const arma::colvec kn,
@@ -126,7 +129,7 @@ arma::mat cpp_oa_spectrum(const arma::colvec kn,
                           const arma::colvec& IncidenceWeights,
                           const arma::mat& ScatteringNodes,
                           const arma::colvec& ScatteringWeights,
-                          const bool cg, const bool born,
+                          const int inversion,
                           const int maxiter,
                           const double tol,
                           const bool progress)
@@ -152,8 +155,7 @@ arma::mat cpp_oa_spectrum(const arma::colvec kn,
 
     tmp = cpp_oa(R, A, AlphaBlocks, kn(ll), medium,
                 IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights,
-                cg, born, maxiter, tol);
-    //Rcpp::Rcout << tmp << "\n";
+                inversion, maxiter, tol);
     res.row(ll) = 1.0/Nr * tmp;
   }
   if(progress)

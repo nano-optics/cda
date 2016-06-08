@@ -27,10 +27,10 @@ Axes <- rep(c("x", "y", "z"), each=nn)
 d <- spectrum_dispersion(cl, gold, medium=1.33, 
                                      polarisation = "circular",
                                      Incidence=Incidence, Axes=Axes,
-                                     method = 'ls')
+                                     method = 'solve')
 
 dr <- spectrum_oa(cl, gold, medium=1.33, quadrature = "qmc",
-                             Nq = 300, method = 'ls')
+                             Nq = 300, method = 'solve')
 
 dd <- subset(d, type=="dichroism" & !(variable == "absorption"))
 ddr <- subset(dr, type=="dichroism" & !(variable == "absorption"))

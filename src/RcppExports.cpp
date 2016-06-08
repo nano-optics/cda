@@ -19,8 +19,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_oa
-arma::rowvec cpp_oa(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const bool cg, const bool born, const int maxiter, const double tol);
-RcppExport SEXP cda_cpp_oa(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP cgSEXP, SEXP bornSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
+arma::rowvec cpp_oa(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int inversion, const int maxiter, const double tol);
+RcppExport SEXP cda_cpp_oa(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -33,17 +33,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::colvec& >::type IncidenceWeights(IncidenceWeightsSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type ScatteringNodes(ScatteringNodesSEXP);
     Rcpp::traits::input_parameter< const arma::colvec& >::type ScatteringWeights(ScatteringWeightsSEXP);
-    Rcpp::traits::input_parameter< const bool >::type cg(cgSEXP);
-    Rcpp::traits::input_parameter< const bool >::type born(bornSEXP);
+    Rcpp::traits::input_parameter< const int >::type inversion(inversionSEXP);
     Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
     Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
-    __result = Rcpp::wrap(cpp_oa(R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, cg, born, maxiter, tol));
+    __result = Rcpp::wrap(cpp_oa(R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol));
     return __result;
 END_RCPP
 }
 // cpp_oa_spectrum
-arma::mat cpp_oa_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const bool cg, const bool born, const int maxiter, const double tol, const bool progress);
-RcppExport SEXP cda_cpp_oa_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP cgSEXP, SEXP bornSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
+arma::mat cpp_oa_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int inversion, const int maxiter, const double tol, const bool progress);
+RcppExport SEXP cda_cpp_oa_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -56,12 +55,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::colvec& >::type IncidenceWeights(IncidenceWeightsSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type ScatteringNodes(ScatteringNodesSEXP);
     Rcpp::traits::input_parameter< const arma::colvec& >::type ScatteringWeights(ScatteringWeightsSEXP);
-    Rcpp::traits::input_parameter< const bool >::type cg(cgSEXP);
-    Rcpp::traits::input_parameter< const bool >::type born(bornSEXP);
+    Rcpp::traits::input_parameter< const int >::type inversion(inversionSEXP);
     Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
     Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< const bool >::type progress(progressSEXP);
-    __result = Rcpp::wrap(cpp_oa_spectrum(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, cg, born, maxiter, tol, progress));
+    __result = Rcpp::wrap(cpp_oa_spectrum(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol, progress));
     return __result;
 END_RCPP
 }
@@ -196,8 +194,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // cpp_dispersion
-arma::mat cpp_dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int polarisation, const bool cg, const bool born, const int maxiter, const double tol);
-RcppExport SEXP cda_cpp_dispersion(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP cgSEXP, SEXP bornSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
+arma::mat cpp_dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int polarisation, const int inversion, const int maxiter, const double tol);
+RcppExport SEXP cda_cpp_dispersion(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -211,17 +209,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::mat& >::type ScatteringNodes(ScatteringNodesSEXP);
     Rcpp::traits::input_parameter< const arma::colvec& >::type ScatteringWeights(ScatteringWeightsSEXP);
     Rcpp::traits::input_parameter< const int >::type polarisation(polarisationSEXP);
-    Rcpp::traits::input_parameter< const bool >::type cg(cgSEXP);
-    Rcpp::traits::input_parameter< const bool >::type born(bornSEXP);
+    Rcpp::traits::input_parameter< const int >::type inversion(inversionSEXP);
     Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
     Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
-    __result = Rcpp::wrap(cpp_dispersion(R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol));
+    __result = Rcpp::wrap(cpp_dispersion(R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol));
     return __result;
 END_RCPP
 }
 // cpp_dispersion_spectrum
-arma::cube cpp_dispersion_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::vec& ScatteringWeights, const int polarisation, const bool cg, const bool born, const int maxiter, const double tol, const bool progress);
-RcppExport SEXP cda_cpp_dispersion_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP cgSEXP, SEXP bornSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
+arma::cube cpp_dispersion_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::vec& ScatteringWeights, const int polarisation, const int inversion, const int maxiter, const double tol, const bool progress);
+RcppExport SEXP cda_cpp_dispersion_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -235,12 +232,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::mat& >::type ScatteringNodes(ScatteringNodesSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type ScatteringWeights(ScatteringWeightsSEXP);
     Rcpp::traits::input_parameter< const int >::type polarisation(polarisationSEXP);
-    Rcpp::traits::input_parameter< const bool >::type cg(cgSEXP);
-    Rcpp::traits::input_parameter< const bool >::type born(bornSEXP);
+    Rcpp::traits::input_parameter< const int >::type inversion(inversionSEXP);
     Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
     Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< const bool >::type progress(progressSEXP);
-    __result = Rcpp::wrap(cpp_dispersion_spectrum(kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol, progress));
+    __result = Rcpp::wrap(cpp_dispersion_spectrum(kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol, progress));
     return __result;
 END_RCPP
 }

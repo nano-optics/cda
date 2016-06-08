@@ -6,9 +6,8 @@
 \usage{
 spectrum_oa(cluster, material, medium = 1.33, quadrature = c("gl", "qmc",
   "random", "cheap"), Nq = 100, iterative = FALSE, precision = 0.001,
-  Qmax = 10000, dN = Nq, method = c("ls", "oos"), Nsca = 50,
-  cg = FALSE, born = FALSE, maxiter = 30, tol = 1e-04,
-  progress = FALSE, verbose = TRUE)
+  Qmax = 10000, dN = Nq, method = c("solve", "cg", "oos"), Nsca = 50,
+  maxiter = 30, tol = 1e-04, progress = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{cluster}{cluster (list)}
@@ -29,17 +28,13 @@ spectrum_oa(cluster, material, medium = 1.33, quadrature = c("gl", "qmc",
 
 \item{dN}{iterative increase in N (QMC only)}
 
-\item{method}{linear system (ls), or order-of-scattering (oos - not implemented)}
+\item{method}{linear system (solve), conjugate-gradient (cg), or order-of-scattering (oos)}
 
 \item{Nsca}{quadrature points for scattering cross-section}
 
-\item{cg}{logical use conjugate gradient solver}
+\item{maxiter}{integer termination of iterative solver}
 
-\item{born}{logical first Born approx as cg guess}
-
-\item{maxiter}{integer termination of conjugate gradient solver}
-
-\item{tol}{double, tolerance of conjugate gradient solver}
+\item{tol}{double, tolerance of iterative solver}
 
 \item{progress}{print progress lines}
 

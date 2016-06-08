@@ -7,10 +7,10 @@ arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn,
 arma::cx_mat cpp_interaction_static(const arma::mat& R);
 
 arma::cx_cube cpp_alpha_blocks(const arma::cx_colvec& Alpha,
-				                       const arma::mat& Angles);
+                               const arma::mat& Angles);
 
 arma::cx_mat cpp_polarization(const arma::cx_mat& E,
-															const arma::cx_cube& AlphaBlocks);
+                              const arma::cx_cube& AlphaBlocks);
 
 
 #endif

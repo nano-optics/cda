@@ -7,6 +7,7 @@
 #include "cdaglobal.h"
 #include "dispersion.h"
 #include "cg.h"
+#include "iterative.h"
 #include "incident.h"
 #include "cross_sections.h"
 
@@ -28,10 +29,9 @@ using namespace std;
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
 // polarisation: integer flag to switch between linear and circular polarisation
-// cg: logical flag to use conjugate gradient solver
-// born: logical flag, use first Born approx for cg solver
-// maxiter:  max number of cg iterations
-// tol:  cg tolerance
+// inversion: integer flag to use different inversion methods
+// maxiter:  max number of iterations
+// tol:  tolerance
 // [[Rcpp::export]]
 arma::mat cpp_dispersion(const arma::mat& R,
                          const arma::cx_mat& A,
@@ -42,7 +42,7 @@ arma::mat cpp_dispersion(const arma::mat& R,
                             const arma::mat& ScatteringNodes,
                             const arma::colvec& ScatteringWeights,
                             const int polarisation,
-                            const bool cg, const bool born,
+                            const int inversion,
                             const int maxiter, const double tol)
 {
   const int N = R.n_cols, Ni = Incidence.n_elem;
@@ -67,17 +67,22 @@ arma::mat cpp_dispersion(const arma::mat& R,
   arma::mat res(Ni, 6) ;
   arma::colvec xsec(2*Ni); // temporary storage of cross-sections
 
-  if(cg) {
-    arma::cx_mat guess = arma::zeros<arma::cx_mat>(3*N,2*Ni);
-    if(born){ // first Born approximation
-      guess = Ein;
-    }
-    Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
-  } else {
+  if(inversion == 0) { // standard method
     Eloc = solve(A, Ein);
+    cpp_polarization_update(Eloc, AlphaBlocks, P);
+  } else if (inversion == 1){ // CG inversion
+    arma::cx_mat guess = arma::zeros<arma::cx_mat>(3*N,2*Ni);
+    Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
+    cpp_polarization_update(Eloc, AlphaBlocks, P);
+  } else if (inversion == 2){ // OOS solution (no inversion)
+    int niter;
+    // note: A is actually G here, not the same as above cases
+    // we solve (I-G)E=Einc with G, G^2, G^3 etc.
+    niter = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
+                              tol, maxiter, Eloc, P);
+    // Eloc and P have now been updated by OOS
   }
-  cpp_polarization_update(Eloc, AlphaBlocks, P);
-
+  
   // return angle-dependent cext, cabs, csca
   // cext
   xsec = cpp_extinction(kn, P, Ein);
@@ -113,10 +118,9 @@ arma::mat cpp_dispersion(const arma::mat& R,
 // ScatteringNodes:  2xNs matrix of scattered field directions
 // ScatteringWeights:  Ns vector of scattered field quadrature weights
 // polarisation: integer flag to switch between linear and circular polarisation
-// cg: logical flag to use conjugate gradient solver
-// born: logical flag, use first Born approx for cg solver
-// maxiter:  max number of cg iterations
-// tol:  cg tolerance
+// inversion: integer flag to use different inversion methods
+// maxiter:  max number of iterations
+// tol:  tolerance
 // progress: logical flag to display progress bars
 // [[Rcpp::export]]
 arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
@@ -129,8 +133,7 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
              const arma::mat& ScatteringNodes,
 			       const arma::vec& ScatteringWeights,
 			       const int polarisation,
-             const bool cg,
-             const bool born,
+             const int inversion,
              const int maxiter,
              const double tol,
              const bool progress)
@@ -154,7 +157,7 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
       cpp_interaction_matrix_update(R, kn(ll), AlphaBlocks, A);
 
       tmp = cpp_dispersion(R, A, AlphaBlocks, kn(ll), medium,
-      Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, cg, born, maxiter, tol);
+      Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol);
       // Rcpp::Rcout << tmp << "\n";
 
       res.slice(ll) = 1.0/Nr * tmp;
