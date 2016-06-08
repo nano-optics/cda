@@ -26,13 +26,13 @@ Axes <- rep(c("x", "y", "z"), each=nn)
 d <- spectrum_dispersion(cl, gold, medium=1.33, 
                                      polarisation = "linear",
                                      Incidence=Incidence, Axes=Axes,
-                                     method = 'ls')
+                                     method = 'solve')
 
 id <- c(1, 1+nn, 1+2*nn)
 dr <- spectrum_dispersion(clr, gold, medium=1.33, 
                                     polarisation = "linear",
                                     Incidence=Incidence[id], Axes=Axes[id],
-                                    method = 'ls')
+                                    method = 'solve')
 dd <- subset(d, type=="cross-section" & variable == "extinction")
 ddr <- subset(dr, type=="cross-section" & variable == "extinction")
 

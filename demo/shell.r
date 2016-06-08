@@ -17,14 +17,14 @@ model_shell <- function(rho=1, R0=5, d=0.5, ...){
   N <- dye_coverage(rho, R0+d)
   message(N)
   cl =  cluster_shell(N, R0=R0, d=d, 1, 1, 1, orientation = "radial", position = 'fibonacci');
-  xsec = spectrum_oa(cl, dye, ..., quadrature = 'cheap',  method = "ls")
+  xsec = spectrum_oa(cl, dye, ..., quadrature = 'cheap',  method = "solve")
 }
 
 shells <- mdply(data.frame(rho=c( 0.1, 1, 1.5)), 
                 model_shell, medium=medium, .progress='text')
 
 cl <- cluster_single(1, 1, 1)
-ref <- spectrum_oa(cl, dye, medium=medium, quadrature = 'qmc', Nq = 100, method = "ls")
+ref <- spectrum_oa(cl, dye, medium=medium, quadrature = 'qmc', Nq = 100, method = "solve")
 
 p <- ggplot(subset(shells, type=="cross-section" & variable =="extinction"), 
             aes(wavelength, value)) +

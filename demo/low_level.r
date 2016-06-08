@@ -36,7 +36,7 @@ Scattering <- quadrature_sphere(Nq=50, "gl")
 res1 <- cda:::cpp_dispersion_spectrum(kn, medium, cl$positions, Alpha, 
                                cl$angles, matrix(0.0), 0L, 
                                Scattering$nodes, Scattering$weights, 
-                               0L, TRUE, TRUE, 
+                               0L, 0L, 
                                50, 1e-4, FALSE)
 
 res <- cda::spectrum_dispersion(cl, material, medium = medium)

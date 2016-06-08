@@ -16,7 +16,7 @@ model_dimer <- function(d, orientation="side", ...){
   cl =  cluster_dimer(d, 1, 0, 0, 0, 0, 0) else
     cl =  cluster_dimer(d, 0, 0, 1, 0, 0, 0)
     
-  xsec = spectrum_oa(cl, dye, ..., quadrature = 'qmc', Nq = 100, method = "ls")
+  xsec = spectrum_oa(cl, dye, ..., quadrature = 'qmc', Nq = 100, method = "solve")
 }
 
 dimers <- mdply(expand.grid(d=c(seq(0.7, 2, by=0.2)), 
@@ -25,7 +25,7 @@ dimers <- mdply(expand.grid(d=c(seq(0.7, 2, by=0.2)),
                 model_dimer, medium=medium)
 
 cl <- cluster_single(1,0,0)
-ref <- spectrum_oa(cl, dye, medium=medium, quadrature = 'qmc', Nq = 100, method = "ls")
+ref <- spectrum_oa(cl, dye, medium=medium, quadrature = 'qmc', Nq = 100, method = "solve")
 
 
 p <- ggplot(subset(dimers, type=="cross-section" & variable =="extinction"), 
