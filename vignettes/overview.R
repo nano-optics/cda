@@ -1,6 +1,11 @@
+## ----start, message=FALSE, echo=FALSE, results='hide'--------------------
+library(rgl)
+library(knitr)
+knitr::knit_hooks$set(rgl = hook_rgl)
+knitr::read_demo("clusters", package="cda")
+knitr::read_demo("dimer_cd", package="cda")
 
-## ---- visuals ---------------
-
+## ----visuals, rgl=TRUE---------------------------------------------------
 library(cda)
 library(rgl)
 
@@ -98,4 +103,31 @@ cl6(); next3d()
 cl7(); next3d()
 cl8()
 par3d(windowRect=c(0, 100, 800, 500))
+
+## ----setup, results='hide', echo=FALSE-----------------------------------
+library(cda)
+library(dielectric)
+library(ggplot2)
+library(gridExtra)
+library(reshape2)
+library(plyr)
+theme_set(theme_bw() + theme(strip.background=element_blank()))
+
+## ----demo, results='hide'------------------------------------------------
+# dielectric function
+material <- epsAu(seq(500, 800))
+
+# cluster geometry
+cl <- cluster_dimer(d = 50, a=30, b=10, c=10, dihedral = pi/4)
+
+# simulation
+results <- spectrum_oa(cl, material)
+
+## ----plot, echo=FALSE----------------------------------------------------
+p <- ggplot(results, aes(wavelength, value, color=variable)) + 
+  facet_grid(type~., scales="free") + geom_line() + 
+  labs(x = "wavelength /nm", y = expression(sigma/nm^2), 
+       colour = "variable")
+
+p
 

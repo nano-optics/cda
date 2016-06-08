@@ -1,4 +1,7 @@
-## ---- setup,echo=FALSE ---------------
+## ----start, message=FALSE, echo=FALSE, results='hide'--------------------
+knitr::read_demo("helix_cd", package="cda")
+
+## ----setup, results='hide', echo=FALSE-----------------------------------
 library(cda)
 library(rgl)
 library(dielectric)
@@ -8,10 +11,7 @@ library(plyr)
 
 theme_set(theme_bw() + theme(strip.background=element_blank()))
 
-
-
-## ---- demo ---------------
-
+## ----demo, results='hide'------------------------------------------------
 wvl <- seq(400, 700)
 gold <- epsAu(wvl)
 
@@ -35,7 +35,7 @@ simulation <- function(N=3, scale=1, ar=1, ...){
 params <- expand.grid(N=seq(3, 7), ar= c(1, 1.1))
 comparison <- mdply(params, simulation, .progress = "text")
 
-## ---- plot,echo=TRUE,fig.width=8 ---------------
+## ----plot, echo=FALSE, fig.height=4--------------------------------------
 symmetrise_scale <- function(p, axis = c("y", "x")){
   axis <- match.arg(axis)
   gb <- ggplot_build(p)
@@ -59,5 +59,4 @@ p <-
        x=expression(wavelength*" /"*nm), colour="# particles") 
 
 symmetrise_scale(p)
-
 

@@ -1,4 +1,7 @@
-## ---- setup,echo=FALSE ---------------
+## ----start, message=FALSE, echo=FALSE, results='hide'--------------------
+knitr::read_demo("dispersion", package="cda")
+
+## ----setup, results='hide', echo=FALSE-----------------------------------
 library(cda)
 library(rgl)
 library(dielectric)
@@ -8,9 +11,7 @@ library(plyr)
 
 theme_set(theme_bw() + theme(strip.background=element_blank()))
 
-
-## ---- demo ---------------
-
+## ----demo, results='hide'------------------------------------------------
 # dielectric function
 wvl <- seq(400, 800, length=200)
 gold <- epsAu(wvl)
@@ -34,9 +35,7 @@ dr <- spectrum_dispersion(clr, gold, medium=1.33,
                                     Incidence=Incidence[id], Axes=Axes[id],
                                     method = 'solve')
 
-
-## ---- plot,echo=TRUE,fig.width=8 ---------------
-
+## ----plot, echo=FALSE----------------------------------------------------
 dd <- subset(d, type=="cross-section" & variable == "extinction")
 ddr <- subset(dr, type=="cross-section" & variable == "extinction")
 
@@ -49,6 +48,4 @@ ggplot(dd, aes(wavelength, value, colour=factor(Incidence*180/pi))) +
        x=expression(wavelength*" /"*nm), colour="angle")
 
 p
-
-
 

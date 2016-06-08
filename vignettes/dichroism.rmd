@@ -1,6 +1,30 @@
-# Dichroism in clusters of plasmonic particles
+---
+title: "Dichroism in clusters of plasmonic particles"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "baptiste Auguie"
+output:
+  html_vignette:
+    toc: true
+    toc_depth: 2
+    fig_width: 7
+    fig_height: 4
+    fig_caption: true
+---
+
 <!-- 
 %\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{dichroism}
 -->
 
+```{r start, message=FALSE, echo=FALSE, results='hide'}
+knitr::read_demo("helix_cd", package="cda")
+```
+
+```{r setup, results='hide', echo=FALSE}
+```
+
+```{r demo, results='hide'}
+```
+
+```{r plot, echo=FALSE, fig.height=4}
+```
