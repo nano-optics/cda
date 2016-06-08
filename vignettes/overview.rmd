@@ -1,0 +1,6 @@
+# Overview of the cda package
+<!-- 
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{overview}
+-->
+

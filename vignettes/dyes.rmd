@@ -1,0 +1,6 @@
+# Optical response of shells of dye molecules
+<!-- 
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{dyes}
+-->
+

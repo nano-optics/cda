@@ -1,0 +1,6 @@
+# Angular dispersion of plasmon resonances
+<!-- 
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{dispersion}
+-->
+

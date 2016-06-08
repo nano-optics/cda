@@ -1,0 +1,6 @@
+# Dichroism in clusters of plasmonic particles
+<!-- 
+%\VignetteEngine{knitr::rmarkdown}
+%\VignetteIndexEntry{dichroism}
+-->
+

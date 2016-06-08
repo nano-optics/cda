@@ -12,7 +12,6 @@
     expikr <- exp(1i*kr)
     Ei[,ii] <- as.vector(matrix(c(E0_r[1]*expikr, E0_r[2]*expikr, 
                        E0_r[3]*expikr), nrow=3, byrow=T))
-    
   }
   
   Ei
