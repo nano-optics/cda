@@ -10,3 +10,4 @@ shell   absorption spectrum of a spherical shell of dye molecules
 dimer_dye   absorption spectrum of a dimer of dyes
 low_level   exposing low-level steps in the calculations
 method   testing order-of-scattering and conjugate gradient methods to solve the coupled-dipole equations
+quadrature   testing the accuracy of different quadrature methods
