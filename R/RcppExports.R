@@ -25,6 +25,10 @@ cpp_interaction_matrix <- function(R, kn, AlphaBlocks) {
     .Call('cda_cpp_interaction_matrix', PACKAGE = 'cda', R, kn, AlphaBlocks)
 }
 
+cpp_propagator <- function(R, kn, AlphaBlocks) {
+    .Call('cda_cpp_propagator', PACKAGE = 'cda', R, kn, AlphaBlocks)
+}
+
 cpp_alpha_blocks_update <- function(Alpha, Angles, AlphaBlocks) {
     invisible(.Call('cda_cpp_alpha_blocks_update', PACKAGE = 'cda', Alpha, Angles, AlphaBlocks))
 }
@@ -35,6 +39,10 @@ cpp_polarization_update <- function(E, AlphaBlocks, P) {
 
 cpp_interaction_matrix_update <- function(R, kn, AlphaBlocks, A) {
     invisible(.Call('cda_cpp_interaction_matrix_update', PACKAGE = 'cda', R, kn, AlphaBlocks, A))
+}
+
+cpp_propagator_update <- function(R, kn, AlphaBlocks, G) {
+    invisible(.Call('cda_cpp_propagator_update', PACKAGE = 'cda', R, kn, AlphaBlocks, G))
 }
 
 cpp_cg_solve <- function(A, y, x0, nmax, tol) {

@@ -100,6 +100,19 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_propagator
+arma::cx_mat cpp_propagator(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks);
+RcppExport SEXP cda_cpp_propagator(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type R(RSEXP);
+    Rcpp::traits::input_parameter< const double >::type kn(knSEXP);
+    Rcpp::traits::input_parameter< const arma::cx_cube& >::type AlphaBlocks(AlphaBlocksSEXP);
+    __result = Rcpp::wrap(cpp_propagator(R, kn, AlphaBlocks));
+    return __result;
+END_RCPP
+}
 // cpp_alpha_blocks_update
 void cpp_alpha_blocks_update(const arma::cx_colvec& Alpha, const arma::mat& Angles, arma::cx_cube& AlphaBlocks);
 RcppExport SEXP cda_cpp_alpha_blocks_update(SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP AlphaBlocksSEXP) {
@@ -134,6 +147,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const arma::cx_cube& >::type AlphaBlocks(AlphaBlocksSEXP);
     Rcpp::traits::input_parameter< arma::cx_mat& >::type A(ASEXP);
     cpp_interaction_matrix_update(R, kn, AlphaBlocks, A);
+    return R_NilValue;
+END_RCPP
+}
+// cpp_propagator_update
+void cpp_propagator_update(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks, arma::cx_mat& G);
+RcppExport SEXP cda_cpp_propagator_update(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP, SEXP GSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type R(RSEXP);
+    Rcpp::traits::input_parameter< const double >::type kn(knSEXP);
+    Rcpp::traits::input_parameter< const arma::cx_cube& >::type AlphaBlocks(AlphaBlocksSEXP);
+    Rcpp::traits::input_parameter< arma::cx_mat& >::type G(GSEXP);
+    cpp_propagator_update(R, kn, AlphaBlocks, G);
     return R_NilValue;
 END_RCPP
 }

@@ -84,8 +84,6 @@ cl8 <- function(N=100){
 }
 
 
-
-
 open3d()
 layout3d(matrix(1:8, 2, 4, byrow=TRUE))
 cl1(); next3d()
@@ -97,3 +95,4 @@ cl6(); next3d()
 cl7(); next3d()
 cl8()
 par3d(windowRect=c(0, 100, 800, 500))
+

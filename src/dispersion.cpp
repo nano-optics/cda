@@ -145,17 +145,32 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
     arma::mat tmp(Ni, 6);
 
     // global, will update at each wavelength
-    arma::cx_mat A = arma::eye<arma::cx_mat>( 3*Nr, 3*Nr );
     arma::cx_cube AlphaBlocks = arma::zeros<arma::cx_cube>(3, 3, Nr);
+    
+    // global, will update at each wavelength
+    arma::cx_mat A(3*Nr, 3*Nr );
+    if(inversion < 2) { // full interaction matrix
+      A.eye();
+    } else if (inversion == 2){ // only propagator G = I - A
+      A.zeros();
+    }
 
     for(ll=0; ll<Nl; ll++){ // loop over kn
       if(progress)
 	progress_bar(ll+1,Nl);
-
+      
       // update in place
       cpp_alpha_blocks_update(Alpha.col(ll), Angles, AlphaBlocks);
-      cpp_interaction_matrix_update(R, kn(ll), AlphaBlocks, A);
-
+      
+      // if solve or cg, need full A, otherwise just G
+      if(inversion < 2) { // full interaction matrix
+        // update in place
+        cpp_interaction_matrix_update(R, kn(ll), AlphaBlocks, A);
+      } else if (inversion == 2){ // only propagator G = I - A
+        // update in place
+        cpp_propagator_update(R, kn(ll), AlphaBlocks, A);
+      }
+      
       tmp = cpp_dispersion(R, A, AlphaBlocks, kn(ll), medium,
       Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol);
       // Rcpp::Rcout << tmp << "\n";

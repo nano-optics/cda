@@ -4,7 +4,8 @@
 arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn,
                                     const arma::cx_cube& AlphaBlocks);
 
-arma::cx_mat cpp_interaction_static(const arma::mat& R);
+arma::cx_mat cpp_propagator(const arma::mat& R, const double kn,
+                            const arma::cx_cube& AlphaBlocks);
 
 arma::cx_cube cpp_alpha_blocks(const arma::cx_colvec& Alpha,
                                const arma::mat& Angles);
