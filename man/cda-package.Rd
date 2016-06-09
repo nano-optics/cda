@@ -8,7 +8,11 @@
 Coupled-dipole approximation for electromagnetic scattering by three-dimensional clusters of subwavelength particles
 }
 \details{
-Coupled-dipole simulations for electromagnetic scattering of light by sub-wavelength particles in arbitrary 3-dimensional configurations. Scattering and absorption spectra are simulated by inversion of the interaction matrix, or by an order-of-scattering approximation scheme. High-level functions are provided to simulate spectra with varying angles of incidence, as well as with full angular averaging.
+Coupled-dipole simulations for electromagnetic scattering of light by sub-wavelength 
+particles in arbitrary 3-dimensional configurations. Scattering and absorption spectra 
+are simulated by inversion of the interaction matrix, or by an order-of-scattering 
+approximation scheme. High-level functions are provided to simulate spectra with 
+varying angles of incidence, as well as with full angular averaging.
 }
 \author{
 baptiste Auguie
