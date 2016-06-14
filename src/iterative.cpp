@@ -53,6 +53,8 @@ bool cpp_iterate_field(const arma::cx_mat& E0,
     // still work to do to reach target?
     expectation = (error > tol);
   }
-
+  if(expectation){
+    Rcpp::warning("O-O-S target not reached: rel. err. %.2e in %i iter", error, niter);
+  }
   return(expectation);
 }

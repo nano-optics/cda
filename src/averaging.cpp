@@ -79,9 +79,6 @@ arma::rowvec cpp_oa(const arma::mat& R,
     // we solve (I-G)E=Einc with G, G^2, G^3 etc.
     expectation = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
                                     tol, maxiter, Eloc, P);
-    if(expectation){
-      Rcpp::Rcout << "OOS target not reached" << "\n";
-    }
     // Eloc and P have now been updated by OOS
   }
 
