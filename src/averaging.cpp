@@ -74,14 +74,17 @@ arma::rowvec cpp_oa(const arma::mat& R,
     Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
     cpp_polarization_update(Eloc, AlphaBlocks, P);
   } else if (inversion == 2){ // OOS solution (no inversion)
-    int niter;
+    bool expectation;
     // note: A is actually G here, not the same as above cases
     // we solve (I-G)E=Einc with G, G^2, G^3 etc.
-    niter = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
-                              tol, maxiter, Eloc, P);
+    expectation = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
+                                    tol, maxiter, Eloc, P);
+    if(expectation){
+      Rcpp::Rcout << "OOS target not reached" << "\n";
+    }
     // Eloc and P have now been updated by OOS
   }
-  
+
 
   // cross section for all quadrature angles
   // averaged for polarisation and dichroism
@@ -147,16 +150,16 @@ arma::mat cpp_oa_spectrum(const arma::colvec kn,
   } else if (inversion == 2){ // only propagator G = I - A
     A.zeros();
   }
-  
+
   arma::cx_cube AlphaBlocks = arma::zeros<arma::cx_cube>(3, 3, Nr);
 
   for(ll=0; ll<Nl; ll++){ // loop over kn
     if(progress)
       progress_bar(ll+1,Nl);
-    
+
     // update in place
     cpp_alpha_blocks_update(Alpha.col(ll), Angles, AlphaBlocks);
-    
+
     // if solve or cg, need full A, otherwise just G
     if(inversion < 2) { // full interaction matrix
       // update in place

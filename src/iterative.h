@@ -1,7 +1,7 @@
 #ifndef _OOS_H
 #define _OOS_H
 
-int cpp_iterate_field(const arma::cx_mat& E0,
+bool cpp_iterate_field(const arma::cx_mat& E0,
                       const arma::cx_mat& G,
                       const arma::cx_cube& AlphaBlocks,
                       const double kn,

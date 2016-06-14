@@ -75,14 +75,14 @@ arma::mat cpp_dispersion(const arma::mat& R,
     Eloc = cpp_cg_solve(A, Ein, guess, maxiter, tol);
     cpp_polarization_update(Eloc, AlphaBlocks, P);
   } else if (inversion == 2){ // OOS solution (no inversion)
-    int niter;
+    bool expectation;
     // note: A is actually G here, not the same as above cases
     // we solve (I-G)E=Einc with G, G^2, G^3 etc.
-    niter = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
+    expectation = cpp_iterate_field(Ein, A, AlphaBlocks, kn,
                               tol, maxiter, Eloc, P);
     // Eloc and P have now been updated by OOS
   }
-  
+
   // return angle-dependent cext, cabs, csca
   // cext
   xsec = cpp_extinction(kn, P, Ein);
@@ -146,7 +146,7 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
 
     // global, will update at each wavelength
     arma::cx_cube AlphaBlocks = arma::zeros<arma::cx_cube>(3, 3, Nr);
-    
+
     // global, will update at each wavelength
     arma::cx_mat A(3*Nr, 3*Nr );
     if(inversion < 2) { // full interaction matrix
@@ -158,10 +158,10 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
     for(ll=0; ll<Nl; ll++){ // loop over kn
       if(progress)
 	progress_bar(ll+1,Nl);
-      
+
       // update in place
       cpp_alpha_blocks_update(Alpha.col(ll), Angles, AlphaBlocks);
-      
+
       // if solve or cg, need full A, otherwise just G
       if(inversion < 2) { // full interaction matrix
         // update in place
@@ -170,7 +170,7 @@ arma::cube cpp_dispersion_spectrum(const arma::colvec kn,
         // update in place
         cpp_propagator_update(R, kn(ll), AlphaBlocks, A);
       }
-      
+
       tmp = cpp_dispersion(R, A, AlphaBlocks, kn(ll), medium,
       Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol);
       // Rcpp::Rcout << tmp << "\n";
