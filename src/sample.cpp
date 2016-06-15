@@ -114,7 +114,7 @@ arma::mat sample_hc(const int N,
       }
       if(iter >= maxiter){
         // should warn somewhow
-        Rcpp::Rcout << "warning: max iter reached" << std::endl;
+        Rcpp::warning("max iter reached");
         break;
       }
       todo = (pick.n_elem < N) && (iter < maxiter);
