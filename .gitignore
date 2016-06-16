@@ -1,7 +1,6 @@
-*.md
 .DS_Store
 .Rhistory
-src/*.o
-src/*.so
+src/*\.o
+src/*\.so
 .Rproj.user
 *.Rproj
