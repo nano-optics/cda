@@ -8,7 +8,7 @@ If the issue is not directly related to the `cda` package, this is not the best 
 
 ## Issues directly related to the `cda` package
 
-If you face an issue with the code, please first ensure that you are using the latest version of R and of the cda package.
+If you face an issue with the code, please first ensure that you are using the latest version of R and of the `cda` package.
 
 If you find a bug that is specific to the `cda` package, please do submit an issue (or send an email to the developer) with the following information:
 
