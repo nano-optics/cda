@@ -4,9 +4,11 @@
 .travis.yml
 travis-tool.sh
 
+
 src/*\.o$
 src/*\.so$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 dev/
+vignettes/
 overview.png
