@@ -23,7 +23,7 @@ before_install:
 
 install:
   - ./travis-tool.sh install_aptget r-cran-rcpp r-cran-rcpparmadillo r-cran-statmod r-cran-randtoolbox r-cran-reshape2  r-cran-plyr r-cran-rgl r-cran-ggplot2 r-cran-testthat r-cran-knitr
-  - ./travis-tool.sh install_r dielectric gridExtra RcppFaddeeva
+  - ./travis-tool.sh install_r dielectric gridExtra RcppFaddeeva rglwidget
 
 script:
   - ./travis-tool.sh run_tests
