@@ -10,7 +10,6 @@ URL: https://github.com/baptiste/cda
 BugReports: https://github.com/baptiste/cda/issues
 Type: Package
 LazyLoad: yes
-VignetteBuilder: knitr
 SystemRequirements: GNU make
 LinkingTo: Rcpp, RcppArmadillo
 Suggests:
@@ -18,7 +17,6 @@ Suggests:
     RcppFaddeeva,
     plyr,
     rgl,
-   rglwidget,
     grid,
     ggplot2,
     gridExtra,
