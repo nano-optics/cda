@@ -1,3 +1,10 @@
+
+# cda 2.0.1 (09/2016)
+
+INTERNAL CHANGES
+
+* tests with testthat moved to correct location
+
 # cda 2.0.0 (06/2016)
 
 DOCUMENTATION
