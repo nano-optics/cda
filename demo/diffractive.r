@@ -19,7 +19,7 @@ model <- function(N, cluster, pitch = 500, ...){
   spectrum_dispersion(cluster = cl, material = gold)
 }
 
-params <- expand.grid(N=c(1, 10, 50), 
+params <- expand.grid(N=c(1, 10, 50, 100), 
                       cluster=c("chain","array"), stringsAsFactors = FALSE)
 comparison <- mdply(params, model,.progress="text")
 
