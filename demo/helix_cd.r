@@ -36,18 +36,24 @@ params <- expand.grid(N=seq(3, 7), ar= c(1, 1.1))
 comparison <- mdply(params, simulation, .progress = "text")
 
 ## ---- plot,echo=TRUE,fig.width=8 ---------------
-symmetrise_scale <- function(p, axis = c("y", "x")){
+symmetrise_scale <- function(p, axis = c("y", "x"), facet = "dichroism"){
   axis <- match.arg(axis)
   gb <- ggplot_build(p)
+  layout <- gb$layout$panel_layout
+  vars <- setdiff(names(layout), c("PANEL", "ROW", "COL", "SCALE_X", "SCALE_Y"))
+  facets <- layout[,vars]
+  ranges <- gb$layout$panel_ranges
   type <- switch(axis, "x" = "x.range", "y" = "y.range")
-  lims <- sapply(gb$panel$ranges, "[[", type)
-  fname <- as.character(p$facet$facets)
-  facets <- gb$panel$layout[[fname]]
+  lims <- sapply(ranges, "[[", type)
+  
+  fname <- as.character(vars[1])
   lims2 <- as.vector(t(tcrossprod(apply(abs(lims), 2, max), c(-1,1))))
   dummy <- setNames(data.frame(rep(facets, each=2), lims2), c(fname, axis))
+  if("type" %in% names(dummy))
+  dummy <- dummy[dummy$type == facet, , drop=FALSE]
   switch(axis, 
-         "x" = p + geom_blank(data=dummy, aes(x=x, y=Inf)), 
-         "y" = p + geom_blank(data=dummy, aes(x=Inf, y=y)))
+         "x" = p + geom_blank(data=dummy, aes(x=x, y=Inf), inherit.aes = FALSE), 
+         "y" = p + geom_blank(data=dummy, aes(x=Inf, y=y), inherit.aes = FALSE))
 }
 
 p <- 
