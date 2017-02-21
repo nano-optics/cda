@@ -12,8 +12,8 @@ Description: Coupled-dipole simulations for electromagnetic scattering of
     matrix, or by an order-of-scattering approximation scheme. High-level functions
     are provided to simulate spectra with varying angles of incidence, as well as
     with full angular averaging.
-URL: https://github.com/baptiste/cda
-BugReports: https://github.com/baptiste/cda/issues
+URL: https://github.com/plasmonics/cda
+BugReports: https://github.com/plasmonics/cda/issues
 Type: Package
 LazyLoad: yes
 SystemRequirements: GNU make
