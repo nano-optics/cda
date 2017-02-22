@@ -4,7 +4,7 @@ output:
     html_preview: false
 ---
 
-[![Build Status](https://travis-ci.org/baptiste/cda.png?branch=master)](https://travis-ci.org/baptiste/cda)
+[![Build Status](https://travis-ci.org/plasmonics/cda.png?branch=master)](https://travis-ci.org/plasmonics/cda)
 ![](http://www.r-pkg.org/badges/version/cda)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/cda)
 
@@ -17,5 +17,11 @@ Coupled-dipole simulations for electromagnetic scattering of light by sub-wavele
 knitr::include_graphics("overview.png")
 ```
 
+
+### License
+
+[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-2.0.html)
+
+[![DOI](https://zenodo.org/badge/3128890.svg)](https://zenodo.org/badge/latestdoi/3128890)
 
 
