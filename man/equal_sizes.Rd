@@ -24,11 +24,10 @@ Utility function to create clusters
 \details{
 Identical particles
 }
-\author{
-baptiste Auguie
-}
 \seealso{
 Other user_level cda utility: \code{\link{dye_coverage}},
   \code{\link{equal_angles}}, \code{\link{spheroid_ar}}
 }
-
+\author{
+baptiste Auguie
+}

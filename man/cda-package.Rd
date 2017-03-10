@@ -14,9 +14,6 @@ are simulated by inversion of the interaction matrix, or by an order-of-scatteri
 approximation scheme. High-level functions are provided to simulate spectra with 
 varying angles of incidence, as well as with full angular averaging.
 }
-\author{
-baptiste Auguie
-}
 \references{
 Draine BT. The discrete-dipole approximation and its application to interstellar graphite grains. Astrophysical Journal. 1988.
 ## Any one of the following references should be used to cite and acknowledge the use of this package.
@@ -33,6 +30,8 @@ Array factor (infinite case):
 
 B. Auguie, W.L. Barnes. Collective resonances in gold nanoparticle arrays. Physical Review Letters (2008)
 }
+\author{
+baptiste Auguie
+}
 \keyword{package}
 \keyword{packagelibrary}
-

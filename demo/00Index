@@ -1,3 +1,4 @@
+basic     basic demo
 clusters   generate 3D views of some predefined cluster shapes using RGL rendering
 dimer_linear   extinction spectrum of a dimer of gold nanorods
 dimer_cd   circular dichroism for a chiral dimer of gold nanorods

@@ -46,4 +46,3 @@ The incident wavevector is along the z direction.
 \author{
 baptiste Auguie
 }
-

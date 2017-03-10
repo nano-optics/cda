@@ -45,10 +45,9 @@ deforms, rotate, and translate a sphere
 \dontrun{ require(rgl) ;  ee <- rgl.ellipsoid()
 shapelist3d(ee) }
 }
-\author{
-baptiste Auguie
-}
 \seealso{
 Other user_level rgl: \code{\link{rgl.ellipsoids}}
 }
-
+\author{
+baptiste Auguie
+}

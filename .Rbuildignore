@@ -4,11 +4,14 @@
 .travis.yml
 travis-tool.sh
 
+^.*\.Rproj$
+^\.Rproj\.user$
 
 src/*\.o$
 src/*\.so$
-^.*\.Rproj$
-^\.Rproj\.user$
+
 dev/
 drafts/
+docs/
+
 overview.png

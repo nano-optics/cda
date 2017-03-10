@@ -27,11 +27,10 @@ Bare (intrinsic) polarizability of a dye in vacuum
 \details{
 Sum of lorentz oscillators
 }
-\author{
-baptiste Auguie
-}
 \seealso{
 Other user_level polarisability: \code{\link{alpha_dye}},
   \code{\link{alpha_ellipsoid}}
 }
-
+\author{
+baptiste Auguie
+}

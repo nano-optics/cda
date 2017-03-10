@@ -46,11 +46,10 @@ Orientation-averaged spectrum
 \details{
 OA spectrum
 }
-\author{
-baptiste Auguie
-}
 \references{
 Y. Okada, Efficient numerical orientation quadrature of light scattering properties
 with a quasi-Monte-Carlo method, Journal of Quantitative Spectroscopy and Radiative Transfer, Volume 109, Issue 9, June 2008, Pages 1719-1742.
 }
-
+\author{
+baptiste Auguie
+}

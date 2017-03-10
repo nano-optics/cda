@@ -22,4 +22,3 @@ Exact calculation of the array factor using code from Javier Garcia de Abajo
 in infinite layered 2D arrays)
 }
 \keyword{datasets}
-

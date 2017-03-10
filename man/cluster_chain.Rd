@@ -26,13 +26,12 @@ Linear chain of particles
 \details{
 A cluster describing a linear chain of identical particles
 }
-\author{
-baptiste Auguie
-}
 \seealso{
 Other user_level cluster: \code{\link{cluster_array}},
   \code{\link{cluster_ball}}, \code{\link{cluster_dimer}},
   \code{\link{cluster_helix}}, \code{\link{cluster_shell}},
   \code{\link{cluster_single}}
 }
-
+\author{
+baptiste Auguie
+}

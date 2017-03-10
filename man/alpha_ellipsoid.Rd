@@ -25,9 +25,6 @@ This long-wavelength polarisability approximation uses the Kuwata prescription
 
 The Kuwata prescription includes semi-empirical terms of radiative correction and dynamic depolarisation to better match the fully retarded dipolar response in a reasonable range of (subwavelength) sizes and aspect ratios.
 }
-\author{
-baptiste Auguie
-}
 \references{
 Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
 }
@@ -35,4 +32,6 @@ Kuwata et al. Resonant light scattering from metal nanoparticles: Practical anal
 Other user_level polarisability: \code{\link{alpha_bare}},
   \code{\link{alpha_dye}}
 }
-
+\author{
+baptiste Auguie
+}

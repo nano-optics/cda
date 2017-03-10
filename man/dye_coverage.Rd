@@ -14,11 +14,10 @@ dye_coverage(rho, R)
 \description{
 dye_coverage
 }
-\author{
-baptiste Auguie
-}
 \seealso{
 Other user_level cda utility: \code{\link{equal_angles}},
   \code{\link{equal_sizes}}, \code{\link{spheroid_ar}}
 }
-
+\author{
+baptiste Auguie
+}

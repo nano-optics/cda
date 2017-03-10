@@ -29,4 +29,3 @@ str(S)
 \author{
 baptiste Auguie
 }
-

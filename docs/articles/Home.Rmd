@@ -1,0 +1,31 @@
+The cda package implements the coupled-dipole approximation for electromagnetic scattering by sparse collections of subwavelength particles, with a particular focus on plasmonic nanoparticles in the visible regime. The interaction matrix, and the solution of the linear system of coupled-dipole equations are executed in C++ code for speed; convenient wrapper functions are provided at the R level to generate the particle clusters, calculate the extinction, scattering, and absorption of light by particles with linearly and circularly polarised light. Functions are also provided to calculate orientation-averaged circular dichroism, and display clusters of nanoparticles in three dimensions using OpenGL or povray.
+
+This wiki provides information to start using the package.
+
+[Installation + getting started](wiki/Installation)
+
+## Basic example
+
+[Simulating extinction and optical activity from a dimer of gold nanorods](wiki/basic)
+
+## Demos and tutorials
+
+[clusters](wiki/clusters) generate 3D views of some predefined cluster shapes using RGL rendering or povray
+
+[dimer_linear](wiki/dimer_linear) extinction spectrum of a dimer of gold nanorods
+
+[dimer_cd](wiki/dimer_cd) circular dichroism for a chiral dimer of gold nanorods
+
+[helix_cd](wiki/helix_cd) circular dichroism for a helix of gold nanoparticles
+
+[diffractive_array](wiki/diffractive_chain) extinction spectrum of a linear chain of gold nanorods
+
+[diffractive_chain](wiki/diffractive_array) extinction spectrum of a square array of gold nanorods
+
+[lattice_sum](wiki/lattice_sum) lattice sum for a 2D square array of dipoles
+
+[multiple_incidence](wiki/multiple_incidence) dispersion plot with varying angles of incidence
+
+## Technical aspects and tests
+
+[averaging_method](wiki/averaging_method) compares the performance of GL quadrature, QMC, and basic grid

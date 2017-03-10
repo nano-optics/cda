@@ -23,4 +23,3 @@ Numerical integration points for angular averaging
 \author{
 baptiste Auguie
 }
-

@@ -34,4 +34,3 @@ Positions along a helix
 \author{
 baptiste Auguie
 }
-

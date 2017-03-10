@@ -1,0 +1,29 @@
+---
+title: "Angular dispersion of plasmon resonances"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "baptiste Auguie"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    fig_width: 7
+    fig_height: 4
+    fig_caption: true
+vignette: >
+  %\VignetteIndexEntry{dispersion}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r start, message=FALSE, echo=FALSE, results='hide'}
+knitr::read_demo("dispersion", package="cda")
+```
+
+```{r setup, results='hide', echo=FALSE}
+```
+
+```{r demo, results='hide'}
+```
+
+```{r plot, echo=FALSE}
+```

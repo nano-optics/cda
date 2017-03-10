@@ -1,0 +1,96 @@
+## Installing R
+
+R is open-source, and available for all major platforms. See this [documentation for detailed instructions](http://cran.r-project.org/doc/manuals/R-admin.html), or simply [download and install it](http://www.r-project.org/index.html).
+
+_Optionally_, but highly recommended, you should also install a good script editor, such as [Rstudio](http://rstudio.org/), or emacs (with ESS mode).
+
+## Installing the cda package and its dependencies
+
+The easiest way to install packages is from within R itself; it will download the files from the [central repository](http://cran.r-project.org/index.html) and install the packages in a local library.
+
+### Quick way
+
+```
+install.packages("cda", dependencies = TRUE)
+```
+
+### Alternative: step-by-step way: pre-installing required and suggested dependencies manually
+```
+required <- c("Rcpp", # R/C++ interface
+              "RcppArmadillo", # Rcpp interface with the Armadillo linear algebra C++ library
+              "statmod", # provides Gauss-Legendre quadrature points for orientation-averaging
+              "randtoolbox", # helping functions for Quasi-Monte Carlo integration
+              "reshape2", # data reshaping
+              "plyr", # convenience split-and-apply functions
+              "dielectric", # permittivity of common materials
+              )
+suggested <- c(
+               "rgl", # R interface to OpenGL for 3D visualisation
+               "ggplot2", # plotting and data reshaping
+               "knitr", # literate programming (run code embedded in the wiki files)
+               "testthat", # testing code correctness
+               "gridExtra" # misc. plotting facilities
+               )
+dependencies <- c(required, suggested)
+install.packages(dependencies)
+install.packages("cda")
+```
+
+### Development version
+
+The code under development is available on github; the most recent package can be installed from R,
+
+```
+library(devtools)
+install_github("cda", "baptiste")
+```
+
+On Windows, some tools will be required to compile the C++ code; for convenience here is a link to the [currrent Windows binary](cda.zip).
+
+
+## Loading the package
+
+```
+library(cda)
+?"cda-package" # access to help
+```
+
+## First steps
+```
+## Introductory document
+vignette("CD-theory", package = "cda")
+
+## A few examples
+demo(package = "cda")
+# then run 
+# demo(dimer_cd) # etc.
+```
+
+## Basic example
+
+[Simulating extinction and optical activity from a dimer of gold nanorods](basic)
+
+## Demos and tutorials
+
+[clusters](clusters) generate 3D views of some predefined cluster shapes using RGL rendering or povray
+
+[dimer_linear](dimer_linear) extinction spectrum of a dimer of gold nanorods
+
+[dimer_cd](dimer_cd) circular dichroism for a chiral dimer of gold nanorods
+
+[helix_cd](helix_cd) circular dichroism for a helix of gold nanoparticles
+
+[diffractive_chain](diffractive_chain) extinction spectrum of a linear chain of gold nanorods
+
+[diffractive_array](diffractive_array) extinction spectrum of a square array of gold nanorods
+
+[lattice_sum](lattice_sum) lattice sum for a 2D square array of dipoles
+
+[multiple_incidence](multiple_incidence) dispersion plot with varying angles of incidence
+
+## Technical aspects and tests
+
+[averaging_method](averaging_method) compares the performance of GL quadrature, QMC, and basic grid
+
+
+
