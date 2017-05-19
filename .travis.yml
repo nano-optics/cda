@@ -6,10 +6,16 @@ cache: packages
 r:
   - release
   - devel
+warnings_are_errors: true
 
 repos:
   CRAN: https://cloud.r-project.org
-  ropensci: http://packages.ropensci.org
+
+r_packages:
+  - formatR
+
+r_binary_packages:
+  - rgl
 
 r_github_packages:
   - baptiste/dielectric
