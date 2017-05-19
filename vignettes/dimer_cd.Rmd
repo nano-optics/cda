@@ -1,5 +1,20 @@
-## Circular dichroism of a dimer of nanorods
-_baptiste Auguié -- `r format(Sys.time(), "%d %B, %Y")`_
+---
+title: "Circular dichroism of a dimer of nanorods"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "baptiste Auguie"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+    fig_width: 7
+    fig_height: 4
+    fig_caption: true
+vignette: >
+  %\VignetteIndexEntry{Circular dichroism of a dimer of nanorods}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
 ```{r demo, message=FALSE, echo=FALSE}
 knitr::read_demo("dimer_cd", package="cda")
 knitr::read_chunk("load.R")
