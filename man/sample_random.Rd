@@ -3,12 +3,15 @@
 \name{sample_random}
 \alias{sample_random}
 \alias{sample_hc}
+\alias{sample_landings}
 \alias{sample_fibonacci}
 \title{Generate a random sample of points on the unit sphere}
 \usage{
 sample_random(N)
 
 sample_hc(N, exclusion = 0.1, maxiter = 200L, k = 30L)
+
+sample_landings(N, exclusion = 0.1)
 
 sample_fibonacci(N = 301)
 }
@@ -20,8 +23,12 @@ sample_fibonacci(N = 301)
 \item{maxiter}{maximum number of iterations}
 
 \item{k}{number of extra new points to try at each iteration}
+
+\item{exclusion}{minimum distance allowed between points}
 }
 \value{
+3xN matrix
+
 3xN matrix
 
 3xN matrix
@@ -30,6 +37,8 @@ sample_fibonacci(N = 301)
 Random sample
 
 Random sample with minimum exlusion zone ("hard-core process")
+
+Random sample with minimum exlusion zone enforced
 
 Fibonacci coverage of a sphere
 }
@@ -43,11 +52,14 @@ with a spiral-like pattern based on a Fibonacci sequence
 
 \item \code{sample_hc}: random sample with exclusion zone
 
+\item \code{sample_landings}: random sample with exclusion zone
+
 \item \code{sample_fibonacci}: 
 }}
 
 \examples{
 sample_random(10)
+sample_hc(10)
 sample_hc(10)
 }
 \author{

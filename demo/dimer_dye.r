@@ -9,7 +9,7 @@ theme_set(theme_bw() + theme(strip.background=element_blank()))
 wavelength = seq(450,650)
 medium <- 1.33
 
-dye = alpha_bare(wavelength)
+dye = cda::alpha_bare(wavelength)
 
 model_dimer <- function(d, orientation="side", ...){
   if(orientation=="side-by-side")

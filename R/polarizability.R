@@ -90,12 +90,12 @@ alpha_bare <- function(wavelength=seq(300,800),
   prefact <- nm3/(4*pi*eps0)
   
   lorentz <- function(alpha, lambda, mu) {
-    alpha * wavelength/mu * (1 - 1 / (1 - lambda^2/wavelength^2 - 1i*lambda^2/(wavelength*mu)))
+    alpha * lambda/mu * (1 / (1 - lambda^2/wavelength^2 - 1i*lambda^2/(wavelength*mu)) - 1)
   }
   
   sums <- mapply(lorentz, alpha = alpha_k, lambda = lambda_k,
                  mu = mu_k, SIMPLIFY=TRUE)
-  alpha <- alpha_inf - rowSums(sums)
+  alpha <- alpha_inf + rowSums(sums)
   
  data.frame(wavelength=wavelength, alpha = prefact * alpha)
 }

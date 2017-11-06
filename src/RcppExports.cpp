@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // cpp_array_factor
 arma::cx_colvec cpp_array_factor(const arma::colvec& kn, const arma::mat& R);
-RcppExport SEXP cda_cpp_array_factor(SEXP knSEXP, SEXP RSEXP) {
+RcppExport SEXP _cda_cpp_array_factor(SEXP knSEXP, SEXP RSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // cpp_oa
 arma::rowvec cpp_oa(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int inversion, const int maxiter, const double tol);
-RcppExport SEXP cda_cpp_oa(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
+RcppExport SEXP _cda_cpp_oa(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -42,7 +42,7 @@ END_RCPP
 }
 // cpp_oa_spectrum
 arma::mat cpp_oa_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::mat& IncidenceNodes, const arma::colvec& IncidenceWeights, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int inversion, const int maxiter, const double tol, const bool progress);
-RcppExport SEXP cda_cpp_oa_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
+RcppExport SEXP _cda_cpp_oa_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceNodesSEXP, SEXP IncidenceWeightsSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -65,7 +65,7 @@ END_RCPP
 }
 // cpp_alpha_blocks
 arma::cx_cube cpp_alpha_blocks(const arma::cx_colvec& Alpha, const arma::mat& Angles);
-RcppExport SEXP cda_cpp_alpha_blocks(SEXP AlphaSEXP, SEXP AnglesSEXP) {
+RcppExport SEXP _cda_cpp_alpha_blocks(SEXP AlphaSEXP, SEXP AnglesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -77,7 +77,7 @@ END_RCPP
 }
 // cpp_polarization
 arma::cx_mat cpp_polarization(const arma::cx_mat& E, const arma::cx_cube& AlphaBlocks);
-RcppExport SEXP cda_cpp_polarization(SEXP ESEXP, SEXP AlphaBlocksSEXP) {
+RcppExport SEXP _cda_cpp_polarization(SEXP ESEXP, SEXP AlphaBlocksSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -89,7 +89,7 @@ END_RCPP
 }
 // cpp_interaction_matrix
 arma::cx_mat cpp_interaction_matrix(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks);
-RcppExport SEXP cda_cpp_interaction_matrix(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP) {
+RcppExport SEXP _cda_cpp_interaction_matrix(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -102,7 +102,7 @@ END_RCPP
 }
 // cpp_propagator
 arma::cx_mat cpp_propagator(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks);
-RcppExport SEXP cda_cpp_propagator(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP) {
+RcppExport SEXP _cda_cpp_propagator(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -115,7 +115,7 @@ END_RCPP
 }
 // cpp_alpha_blocks_update
 void cpp_alpha_blocks_update(const arma::cx_colvec& Alpha, const arma::mat& Angles, arma::cx_cube& AlphaBlocks);
-RcppExport SEXP cda_cpp_alpha_blocks_update(SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP AlphaBlocksSEXP) {
+RcppExport SEXP _cda_cpp_alpha_blocks_update(SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP AlphaBlocksSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::cx_colvec& >::type Alpha(AlphaSEXP);
@@ -127,7 +127,7 @@ END_RCPP
 }
 // cpp_polarization_update
 void cpp_polarization_update(const arma::cx_mat& E, const arma::cx_cube& AlphaBlocks, arma::cx_mat& P);
-RcppExport SEXP cda_cpp_polarization_update(SEXP ESEXP, SEXP AlphaBlocksSEXP, SEXP PSEXP) {
+RcppExport SEXP _cda_cpp_polarization_update(SEXP ESEXP, SEXP AlphaBlocksSEXP, SEXP PSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::cx_mat& >::type E(ESEXP);
@@ -139,7 +139,7 @@ END_RCPP
 }
 // cpp_interaction_matrix_update
 void cpp_interaction_matrix_update(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks, arma::cx_mat& A);
-RcppExport SEXP cda_cpp_interaction_matrix_update(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP, SEXP ASEXP) {
+RcppExport SEXP _cda_cpp_interaction_matrix_update(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP, SEXP ASEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type R(RSEXP);
@@ -152,7 +152,7 @@ END_RCPP
 }
 // cpp_propagator_update
 void cpp_propagator_update(const arma::mat& R, const double kn, const arma::cx_cube& AlphaBlocks, arma::cx_mat& G);
-RcppExport SEXP cda_cpp_propagator_update(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP, SEXP GSEXP) {
+RcppExport SEXP _cda_cpp_propagator_update(SEXP RSEXP, SEXP knSEXP, SEXP AlphaBlocksSEXP, SEXP GSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type R(RSEXP);
@@ -165,7 +165,7 @@ END_RCPP
 }
 // cpp_cg_solve
 arma::cx_mat cpp_cg_solve(const arma::cx_mat& A, const arma::cx_mat& y, arma::cx_mat& x0, const double nmax, const double tol);
-RcppExport SEXP cda_cpp_cg_solve(SEXP ASEXP, SEXP ySEXP, SEXP x0SEXP, SEXP nmaxSEXP, SEXP tolSEXP) {
+RcppExport SEXP _cda_cpp_cg_solve(SEXP ASEXP, SEXP ySEXP, SEXP x0SEXP, SEXP nmaxSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -180,7 +180,7 @@ END_RCPP
 }
 // cpp_extinction
 arma::colvec cpp_extinction(const double kn, const arma::cx_mat& P, const arma::cx_mat& Ein);
-RcppExport SEXP cda_cpp_extinction(SEXP knSEXP, SEXP PSEXP, SEXP EinSEXP) {
+RcppExport SEXP _cda_cpp_extinction(SEXP knSEXP, SEXP PSEXP, SEXP EinSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -193,7 +193,7 @@ END_RCPP
 }
 // cpp_absorption
 arma::colvec cpp_absorption(const double kn, const arma::cx_mat& P, const arma::cx_mat& E);
-RcppExport SEXP cda_cpp_absorption(SEXP knSEXP, SEXP PSEXP, SEXP ESEXP) {
+RcppExport SEXP _cda_cpp_absorption(SEXP knSEXP, SEXP PSEXP, SEXP ESEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -206,7 +206,7 @@ END_RCPP
 }
 // cpp_scattering
 arma::colvec cpp_scattering(const arma::mat& R, const arma::mat& angles, const arma::colvec& weights, const double kn, const arma::cx_mat& P);
-RcppExport SEXP cda_cpp_scattering(SEXP RSEXP, SEXP anglesSEXP, SEXP weightsSEXP, SEXP knSEXP, SEXP PSEXP) {
+RcppExport SEXP _cda_cpp_scattering(SEXP RSEXP, SEXP anglesSEXP, SEXP weightsSEXP, SEXP knSEXP, SEXP PSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -221,7 +221,7 @@ END_RCPP
 }
 // cpp_dispersion
 arma::mat cpp_dispersion(const arma::mat& R, const arma::cx_mat& A, const arma::cx_cube& AlphaBlocks, const double kn, const double medium, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::colvec& ScatteringWeights, const int polarisation, const int inversion, const int maxiter, const double tol);
-RcppExport SEXP cda_cpp_dispersion(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
+RcppExport SEXP _cda_cpp_dispersion(SEXP RSEXP, SEXP ASEXP, SEXP AlphaBlocksSEXP, SEXP knSEXP, SEXP mediumSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -244,7 +244,7 @@ END_RCPP
 }
 // cpp_dispersion_spectrum
 arma::cube cpp_dispersion_spectrum(const arma::colvec kn, const double medium, const arma::mat& R, const arma::cx_mat& Alpha, const arma::mat& Angles, const arma::vec& Incidence, const arma::ivec& Axes, const arma::mat& ScatteringNodes, const arma::vec& ScatteringWeights, const int polarisation, const int inversion, const int maxiter, const double tol, const bool progress);
-RcppExport SEXP cda_cpp_dispersion_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
+RcppExport SEXP _cda_cpp_dispersion_spectrum(SEXP knSEXP, SEXP mediumSEXP, SEXP RSEXP, SEXP AlphaSEXP, SEXP AnglesSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP, SEXP ScatteringNodesSEXP, SEXP ScatteringWeightsSEXP, SEXP polarisationSEXP, SEXP inversionSEXP, SEXP maxiterSEXP, SEXP tolSEXP, SEXP progressSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -268,7 +268,7 @@ END_RCPP
 }
 // cpp_incident_field
 arma::cx_mat cpp_incident_field(const arma::cx_colvec& Evec, const arma::colvec& kvec, const arma::mat& R, const arma::mat& Incidence);
-RcppExport SEXP cda_cpp_incident_field(SEXP EvecSEXP, SEXP kvecSEXP, SEXP RSEXP, SEXP IncidenceSEXP) {
+RcppExport SEXP _cda_cpp_incident_field(SEXP EvecSEXP, SEXP kvecSEXP, SEXP RSEXP, SEXP IncidenceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -282,7 +282,7 @@ END_RCPP
 }
 // cpp_incident_field_axis
 arma::cx_mat cpp_incident_field_axis(const arma::cx_colvec& Evec, const arma::colvec& kvec, const arma::mat& R, const arma::colvec& Incidence, const arma::ivec& Axes);
-RcppExport SEXP cda_cpp_incident_field_axis(SEXP EvecSEXP, SEXP kvecSEXP, SEXP RSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP) {
+RcppExport SEXP _cda_cpp_incident_field_axis(SEXP EvecSEXP, SEXP kvecSEXP, SEXP RSEXP, SEXP IncidenceSEXP, SEXP AxesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -297,7 +297,7 @@ END_RCPP
 }
 // sample_random
 arma::mat sample_random(const int N);
-RcppExport SEXP cda_sample_random(SEXP NSEXP) {
+RcppExport SEXP _cda_sample_random(SEXP NSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -308,7 +308,7 @@ END_RCPP
 }
 // sample_hc
 arma::mat sample_hc(const int N, const double exclusion, const int maxiter, const int k);
-RcppExport SEXP cda_sample_hc(SEXP NSEXP, SEXP exclusionSEXP, SEXP maxiterSEXP, SEXP kSEXP) {
+RcppExport SEXP _cda_sample_hc(SEXP NSEXP, SEXP exclusionSEXP, SEXP maxiterSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -320,9 +320,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// sample_landings
+Rcpp::List sample_landings(const int N, const double exclusion);
+RcppExport SEXP _cda_sample_landings(SEXP NSEXP, SEXP exclusionSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< const double >::type exclusion(exclusionSEXP);
+    rcpp_result_gen = Rcpp::wrap(sample_landings(N, exclusion));
+    return rcpp_result_gen;
+END_RCPP
+}
 // cpp_euler_active
 arma::mat cpp_euler_active(const double phi, const double theta, const double psi);
-RcppExport SEXP cda_cpp_euler_active(SEXP phiSEXP, SEXP thetaSEXP, SEXP psiSEXP) {
+RcppExport SEXP _cda_cpp_euler_active(SEXP phiSEXP, SEXP thetaSEXP, SEXP psiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -335,7 +347,7 @@ END_RCPP
 }
 // cpp_euler_passive
 arma::mat cpp_euler_passive(const double phi, const double theta, const double psi);
-RcppExport SEXP cda_cpp_euler_passive(SEXP phiSEXP, SEXP thetaSEXP, SEXP psiSEXP) {
+RcppExport SEXP _cda_cpp_euler_passive(SEXP phiSEXP, SEXP thetaSEXP, SEXP psiSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -348,7 +360,7 @@ END_RCPP
 }
 // cpp_axis_rotation
 arma::mat cpp_axis_rotation(const double angle, const int axis);
-RcppExport SEXP cda_cpp_axis_rotation(SEXP angleSEXP, SEXP axisSEXP) {
+RcppExport SEXP _cda_cpp_axis_rotation(SEXP angleSEXP, SEXP axisSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -357,4 +369,38 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(cpp_axis_rotation(angle, axis));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_cda_cpp_array_factor", (DL_FUNC) &_cda_cpp_array_factor, 2},
+    {"_cda_cpp_oa", (DL_FUNC) &_cda_cpp_oa, 12},
+    {"_cda_cpp_oa_spectrum", (DL_FUNC) &_cda_cpp_oa_spectrum, 13},
+    {"_cda_cpp_alpha_blocks", (DL_FUNC) &_cda_cpp_alpha_blocks, 2},
+    {"_cda_cpp_polarization", (DL_FUNC) &_cda_cpp_polarization, 2},
+    {"_cda_cpp_interaction_matrix", (DL_FUNC) &_cda_cpp_interaction_matrix, 3},
+    {"_cda_cpp_propagator", (DL_FUNC) &_cda_cpp_propagator, 3},
+    {"_cda_cpp_alpha_blocks_update", (DL_FUNC) &_cda_cpp_alpha_blocks_update, 3},
+    {"_cda_cpp_polarization_update", (DL_FUNC) &_cda_cpp_polarization_update, 3},
+    {"_cda_cpp_interaction_matrix_update", (DL_FUNC) &_cda_cpp_interaction_matrix_update, 4},
+    {"_cda_cpp_propagator_update", (DL_FUNC) &_cda_cpp_propagator_update, 4},
+    {"_cda_cpp_cg_solve", (DL_FUNC) &_cda_cpp_cg_solve, 5},
+    {"_cda_cpp_extinction", (DL_FUNC) &_cda_cpp_extinction, 3},
+    {"_cda_cpp_absorption", (DL_FUNC) &_cda_cpp_absorption, 3},
+    {"_cda_cpp_scattering", (DL_FUNC) &_cda_cpp_scattering, 5},
+    {"_cda_cpp_dispersion", (DL_FUNC) &_cda_cpp_dispersion, 13},
+    {"_cda_cpp_dispersion_spectrum", (DL_FUNC) &_cda_cpp_dispersion_spectrum, 14},
+    {"_cda_cpp_incident_field", (DL_FUNC) &_cda_cpp_incident_field, 4},
+    {"_cda_cpp_incident_field_axis", (DL_FUNC) &_cda_cpp_incident_field_axis, 5},
+    {"_cda_sample_random", (DL_FUNC) &_cda_sample_random, 1},
+    {"_cda_sample_hc", (DL_FUNC) &_cda_sample_hc, 4},
+    {"_cda_sample_landings", (DL_FUNC) &_cda_sample_landings, 2},
+    {"_cda_cpp_euler_active", (DL_FUNC) &_cda_cpp_euler_active, 3},
+    {"_cda_cpp_euler_passive", (DL_FUNC) &_cda_cpp_euler_passive, 3},
+    {"_cda_cpp_axis_rotation", (DL_FUNC) &_cda_cpp_axis_rotation, 2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_cda(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }

@@ -124,3 +124,62 @@ arma::mat sample_hc(const int N,
     // but for consistency always return N points regardless
     return(s.cols(span(0,N-1)));
   }
+
+
+arma::vec slerp(const arma::vec p0, const arma::vec p1, const double d){
+  
+  const double  R = norm(p0,2);
+  const double  dt = d/R; // angle corresponding to desired spacing
+  double Omega = as_scalar(acos(norm_dot(p0,p1)));
+  const double t = dt / Omega ;
+  arma::vec p = sin((1-t)*Omega)/sin(Omega) * p0 + sin(t*Omega)/sin(Omega) * p1;
+  return p;
+}
+
+//' @title Generate a sample of points on the unit sphere
+//' @description Random sample with minimum exlusion zone enforced
+//' @param exclusion minimum distance allowed between points
+//' @return 3xN matrix
+//' @describeIn sample_random random sample with exclusion zone
+//' @family sample
+//' @examples 
+//' sample_hc(10)
+//' @export
+// [[Rcpp::export]]
+Rcpp::List sample_landings(const int N,
+                    const double exclusion=0.1){
+  
+  arma::mat result = arma::mat(N,3);
+  arma::mat original = arma::mat(N,3);
+  arma::uvec indices = arma::uvec(N);
+  arma::vec newp = arma::vec(3);
+  
+  // initial step: random points
+  original = sample_random(N);
+  result = original;
+  indices.ones(); // assume monomers until shown otherwise
+  
+  int ii, jj;
+  double dist;
+  bool test;
+  for(ii=0;ii<N;ii++){// loop over all points
+    for(jj=ii+1;jj<N;jj++){//loop over all other points
+      dist = norm(original.col(ii) - original.col(jj), 2);
+      test = (dist < exclusion);
+      if(test) {
+        indices(ii) = 0;
+        indices(jj) = 0;
+        newp = slerp(original.col(ii), original.col(jj), exclusion);
+        original.col(jj) = newp; 
+        break; // this ii point was actually bad
+      }
+    }
+  }
+  
+  return List::create(
+    _["positions"]  = result,
+    _["original"]  = original,
+    _["indices"]  = indices
+  ) ;
+  
+}

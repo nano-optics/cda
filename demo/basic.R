@@ -4,6 +4,7 @@ library(rgl)
 library(ggplot2)
 library(reshape2)
 library(plyr)
+library(dielectric)
 
 ## ----cluster, rgl=TRUE,echo=-12,tidy=FALSE,fig.width=3,fig.height=3,fig.path="basic-"----
 
@@ -12,17 +13,9 @@ wvl <- seq(400, 900)
 gold <- epsAu(wvl)
 
 # define a cluster of particles
-cl <- list(positions = cbind(c(0, 0, 0),
-                      c(0, 0, -100)),
-            angles = cbind(c(0, 0, 0),
-                           c(pi/4, 0, 0)),
-            sizes = cbind(c(30, 10, 10),
-                          c(30, 10, 10)))
-
+cl <- cluster_dimer()
 # visualise
-rgl.ellipsoids(cl$r, cl$sizes, cl$angles, col="gold")
-rgl.viewpoint( theta = 0, phi = 20, fov = 70, zoom = 1)
-rgl_annotate()
+visualise(cl)
 
 
 

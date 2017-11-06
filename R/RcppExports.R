@@ -2,79 +2,79 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 cpp_array_factor <- function(kn, R) {
-    .Call('cda_cpp_array_factor', PACKAGE = 'cda', kn, R)
+    .Call('_cda_cpp_array_factor', PACKAGE = 'cda', kn, R)
 }
 
 cpp_oa <- function(R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol) {
-    .Call('cda_cpp_oa', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol)
+    .Call('_cda_cpp_oa', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol)
 }
 
 cpp_oa_spectrum <- function(kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol, progress) {
-    .Call('cda_cpp_oa_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol, progress)
+    .Call('_cda_cpp_oa_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, IncidenceNodes, IncidenceWeights, ScatteringNodes, ScatteringWeights, inversion, maxiter, tol, progress)
 }
 
 cpp_alpha_blocks <- function(Alpha, Angles) {
-    .Call('cda_cpp_alpha_blocks', PACKAGE = 'cda', Alpha, Angles)
+    .Call('_cda_cpp_alpha_blocks', PACKAGE = 'cda', Alpha, Angles)
 }
 
 cpp_polarization <- function(E, AlphaBlocks) {
-    .Call('cda_cpp_polarization', PACKAGE = 'cda', E, AlphaBlocks)
+    .Call('_cda_cpp_polarization', PACKAGE = 'cda', E, AlphaBlocks)
 }
 
 cpp_interaction_matrix <- function(R, kn, AlphaBlocks) {
-    .Call('cda_cpp_interaction_matrix', PACKAGE = 'cda', R, kn, AlphaBlocks)
+    .Call('_cda_cpp_interaction_matrix', PACKAGE = 'cda', R, kn, AlphaBlocks)
 }
 
 cpp_propagator <- function(R, kn, AlphaBlocks) {
-    .Call('cda_cpp_propagator', PACKAGE = 'cda', R, kn, AlphaBlocks)
+    .Call('_cda_cpp_propagator', PACKAGE = 'cda', R, kn, AlphaBlocks)
 }
 
 cpp_alpha_blocks_update <- function(Alpha, Angles, AlphaBlocks) {
-    invisible(.Call('cda_cpp_alpha_blocks_update', PACKAGE = 'cda', Alpha, Angles, AlphaBlocks))
+    invisible(.Call('_cda_cpp_alpha_blocks_update', PACKAGE = 'cda', Alpha, Angles, AlphaBlocks))
 }
 
 cpp_polarization_update <- function(E, AlphaBlocks, P) {
-    invisible(.Call('cda_cpp_polarization_update', PACKAGE = 'cda', E, AlphaBlocks, P))
+    invisible(.Call('_cda_cpp_polarization_update', PACKAGE = 'cda', E, AlphaBlocks, P))
 }
 
 cpp_interaction_matrix_update <- function(R, kn, AlphaBlocks, A) {
-    invisible(.Call('cda_cpp_interaction_matrix_update', PACKAGE = 'cda', R, kn, AlphaBlocks, A))
+    invisible(.Call('_cda_cpp_interaction_matrix_update', PACKAGE = 'cda', R, kn, AlphaBlocks, A))
 }
 
 cpp_propagator_update <- function(R, kn, AlphaBlocks, G) {
-    invisible(.Call('cda_cpp_propagator_update', PACKAGE = 'cda', R, kn, AlphaBlocks, G))
+    invisible(.Call('_cda_cpp_propagator_update', PACKAGE = 'cda', R, kn, AlphaBlocks, G))
 }
 
 cpp_cg_solve <- function(A, y, x0, nmax, tol) {
-    .Call('cda_cpp_cg_solve', PACKAGE = 'cda', A, y, x0, nmax, tol)
+    .Call('_cda_cpp_cg_solve', PACKAGE = 'cda', A, y, x0, nmax, tol)
 }
 
 cpp_extinction <- function(kn, P, Ein) {
-    .Call('cda_cpp_extinction', PACKAGE = 'cda', kn, P, Ein)
+    .Call('_cda_cpp_extinction', PACKAGE = 'cda', kn, P, Ein)
 }
 
 cpp_absorption <- function(kn, P, E) {
-    .Call('cda_cpp_absorption', PACKAGE = 'cda', kn, P, E)
+    .Call('_cda_cpp_absorption', PACKAGE = 'cda', kn, P, E)
 }
 
 cpp_scattering <- function(R, angles, weights, kn, P) {
-    .Call('cda_cpp_scattering', PACKAGE = 'cda', R, angles, weights, kn, P)
+    .Call('_cda_cpp_scattering', PACKAGE = 'cda', R, angles, weights, kn, P)
 }
 
 cpp_dispersion <- function(R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol) {
-    .Call('cda_cpp_dispersion', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol)
+    .Call('_cda_cpp_dispersion', PACKAGE = 'cda', R, A, AlphaBlocks, kn, medium, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol)
 }
 
 cpp_dispersion_spectrum <- function(kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol, progress) {
-    .Call('cda_cpp_dispersion_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol, progress)
+    .Call('_cda_cpp_dispersion_spectrum', PACKAGE = 'cda', kn, medium, R, Alpha, Angles, Incidence, Axes, ScatteringNodes, ScatteringWeights, polarisation, inversion, maxiter, tol, progress)
 }
 
 cpp_incident_field <- function(Evec, kvec, R, Incidence) {
-    .Call('cda_cpp_incident_field', PACKAGE = 'cda', Evec, kvec, R, Incidence)
+    .Call('_cda_cpp_incident_field', PACKAGE = 'cda', Evec, kvec, R, Incidence)
 }
 
 cpp_incident_field_axis <- function(Evec, kvec, R, Incidence, Axes) {
-    .Call('cda_cpp_incident_field_axis', PACKAGE = 'cda', Evec, kvec, R, Incidence, Axes)
+    .Call('_cda_cpp_incident_field_axis', PACKAGE = 'cda', Evec, kvec, R, Incidence, Axes)
 }
 
 #' @title Generate a random sample of points on the unit sphere
@@ -86,7 +86,7 @@ cpp_incident_field_axis <- function(Evec, kvec, R, Incidence, Axes) {
 #' sample_random(10)
 #' @export
 sample_random <- function(N) {
-    .Call('cda_sample_random', PACKAGE = 'cda', N)
+    .Call('_cda_sample_random', PACKAGE = 'cda', N)
 }
 
 #' @title Generate a sample of points on the unit sphere
@@ -101,18 +101,31 @@ sample_random <- function(N) {
 #' sample_hc(10)
 #' @export
 sample_hc <- function(N, exclusion = 0.1, maxiter = 200L, k = 30L) {
-    .Call('cda_sample_hc', PACKAGE = 'cda', N, exclusion, maxiter, k)
+    .Call('_cda_sample_hc', PACKAGE = 'cda', N, exclusion, maxiter, k)
+}
+
+#' @title Generate a sample of points on the unit sphere
+#' @description Random sample with minimum exlusion zone enforced
+#' @param exclusion minimum distance allowed between points
+#' @return 3xN matrix
+#' @describeIn sample_random random sample with exclusion zone
+#' @family sample
+#' @examples 
+#' sample_hc(10)
+#' @export
+sample_landings <- function(N, exclusion = 0.1) {
+    .Call('_cda_sample_landings', PACKAGE = 'cda', N, exclusion)
 }
 
 cpp_euler_active <- function(phi, theta, psi) {
-    .Call('cda_cpp_euler_active', PACKAGE = 'cda', phi, theta, psi)
+    .Call('_cda_cpp_euler_active', PACKAGE = 'cda', phi, theta, psi)
 }
 
 cpp_euler_passive <- function(phi, theta, psi) {
-    .Call('cda_cpp_euler_passive', PACKAGE = 'cda', phi, theta, psi)
+    .Call('_cda_cpp_euler_passive', PACKAGE = 'cda', phi, theta, psi)
 }
 
 cpp_axis_rotation <- function(angle, axis) {
-    .Call('cda_cpp_axis_rotation', PACKAGE = 'cda', angle, axis)
+    .Call('_cda_cpp_axis_rotation', PACKAGE = 'cda', angle, axis)
 }
 

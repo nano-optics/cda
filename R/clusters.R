@@ -121,7 +121,8 @@ cluster_ball <- function(N, R0=15, a=1, b=1, c=b){
 cluster_array <- function(N, pitch=500, a=50, b=50, c=b){
   
   sqN <- round(sqrt(N))
-  xyz <- expand.grid(x=seq_len(sqN)* pitch, y=seq_len(sqN)* pitch, z=0)
+  xx <- seq_len(sqN)* pitch
+  xyz <- expand.grid(x=xx-mean(xx), y=xx-mean(xx), z=0)
   positions <- t(as.matrix(xyz))
   sizes <- equal_sizes(a=a, b=b, c=c, N=sqN^2)
   angles <- equal_angles(0,0,0, N=sqN^2)
@@ -218,7 +219,7 @@ cluster_dimer <- function(d=100,
 cluster_shell <- function(N=50, R0=30, d=1,
                           a=1, b=1, c=1, # a way to select dipole orientation
                           orientation=c("radial", "flat", "random"),
-                          position = c("fibonacci", "hc", "random"),
+                          position = c("fibonacci", "hc", "random", "landings"),
                           exclusion = 5*N^(-1/4), seed=123, ...){
   
   ## argument check
@@ -233,6 +234,9 @@ cluster_shell <- function(N=50, R0=30, d=1,
   ## point picking
   if(position == "random"){
     positions <- R * sample_random(N)
+  } else if(position == "landings"){
+    tmp <- sample_landings(N, exclusion/R)
+    positions <- R * tmp$positions
   } else if(position == "hc"){
     positions <- R * sample_hc(N, exclusion/R, ...)
   } else if(position == "fibonacci"){
