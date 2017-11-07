@@ -82,3 +82,56 @@ equal_angles <- function(phi, theta, gamma, N){
         gamma = rep(gamma,N))
 }
 
+
+compose_euler <- function( phi1,theta1,psi1, phi2,theta2,psi2 ){
+  
+  cosphi = cos(phi1) ; cospsi = cos(psi1) ; costheta = cos(theta1) 
+  sinphi = sin(phi1) ; sinpsi = sin(psi1) ; sintheta = sin(theta1) 
+  
+  R11 = cosphi*costheta*cospsi - sinphi*sinpsi 
+  R21 = sinphi*costheta*cospsi + cosphi*sinpsi 
+  R31 = -sintheta*cospsi 
+  
+  R12 = -cosphi*costheta*sinpsi - sinphi*cospsi 
+  R22 = -sinphi*costheta*sinpsi + cosphi*cospsi 
+  R32 = sintheta*sinpsi 
+  
+  R13 = cosphi*sintheta 
+  R23 = sinphi*sintheta 
+  R33 = costheta 
+  
+  
+  cosphi = cos(phi2) ; cospsi = cos(psi2) ; costheta = cos(theta2) 
+  sinphi = sin(phi2) ; sinpsi = sin(psi2) ; sintheta = sin(theta2) 
+  
+  S11 = cosphi*costheta*cospsi - sinphi*sinpsi 
+  S21 = sinphi*costheta*cospsi + cosphi*sinpsi 
+  S31 = -sintheta*cospsi 
+  
+  S12 = -cosphi*costheta*sinpsi - sinphi*cospsi 
+  S22 = -sinphi*costheta*sinpsi + cosphi*cospsi 
+  S32 = sintheta*sinpsi 
+  
+  S13 = cosphi*sintheta 
+  S23 = sinphi*sintheta 
+  S33 = costheta 
+  
+  # combined rotation
+  T11 = R11 * S11 + R12 * S21 + R13 * S31 
+  T12 = R11 * S12 + R12 * S22 + R13 * S32 
+  T13 = R11 * S13 + R12 * S23 + R13 * S33 
+  
+  T21 = R21 * S11 + R22 * S21 + R23 * S31 
+  T22 = R21 * S12 + R22 * S22 + R23 * S32 
+  T23 = R21 * S13 + R22 * S23 + R23 * S33 
+  
+  T31 = R31 * S11 + R32 * S21 + R33 * S31 
+  T32 = R31 * S12 + R32 * S22 + R33 * S32 
+  T33 = R31 * S13 + R32 * S23 + R33 * S33 
+  
+  list(theta = acos(T33) ,
+  phi = atan2(T23, T13) ,
+  psi = atan2(T32, -T31) )
+  
+}
+

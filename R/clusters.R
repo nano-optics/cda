@@ -382,3 +382,85 @@ helix <- function(R0=500, pitch=600, N=5,
        angles = rbind(phi, theta, 0),
        R0=R0, smooth=as.matrix(positions2))
 }
+
+##' Sparse shell of nanoparticles around a spherical core
+##'
+##' A cluster describing a discrete shell of nanoparticles in a spherical geometry
+##' @title cluster_pumpkin
+##' @param N number of particles
+##' @param R0 radius of core
+##' @param d distance from core
+##' @param a semi-axis along x
+##' @param b semi-axis along y
+##' @param c semi-axis along z
+##' @param position type of random coverage
+##' @param tilt type of angular orientation
+##' @param cone type of angular orientation
+##' @param exclusion minimum exclusion distance for 'hc' positions
+##' @param seed random seed for reproducibility
+##' @param ... extra arguments (ignored)
+##' @importFrom stats runif
+##' @return list of class cluster with fields: positions, sizes, angles
+##' @author baptiste Auguie
+##' @export
+##' @family user_level cluster
+cluster_pumpkin <- function(N=50, R0=30, cone = 2*pi, d=1, a=1, b=1, c=1, tilt = 0, 
+                            position=c("fibonacci", "hc", "random", "landings"), 
+                            exclusion = 0.7, seed=123, ...){
+  
+  ## argument check
+  position <- match.arg(position)
+  
+  set.seed(seed) # reproducible randomness
+  
+  ## the shell is at a distance d from R0
+  R <- R0 + d
+  
+  ## point picking
+  if(position == "random"){
+    positions <- R * sample_random(N)
+  } else if(position == "landings"){
+    tmp <- sample_landings(N, exclusion/R)
+    id <- tmp$indices
+    positions <- R * tmp$positions
+  } else if(position == "hc"){
+    positions <- R * sample_hc(N, exclusion/R, ...)
+  } else if(position == "fibonacci"){
+    positions <- R * sample_fibonacci(N)
+  }
+  
+  
+  # remove unwanted areas and keep patch
+  th = acos(positions[3,]/R)
+  positions = positions[, th < cone]
+  if (position == 'landings') {
+    dimers = sum((th < cone) & (!id))
+    sprintf('%i dimers created\n', dimers)
+  }
+  
+  
+  # update number
+  N = ncol(positions)
+  
+  
+  # tilt the tensor
+  # idea: compose two rotation matrices: rotate to radial, rotate to cone
+  # then find corresponding Euler angles
+  
+  phi1 = atan2(positions[2,], positions[1,])
+  theta1 = acos(positions[3,]/R)
+  psi1 = psi2 = rep(0,N)
+  phi2 = runif(N, 0,2*pi)
+  theta2 = rep(tilt,N)
+  ea = compose_euler(phi1, theta1, psi1, phi2, theta2, psi2)
+  angles = Re(rbind(ea$phi, ea$theta, ea$psi))
+  
+  sizes <- equal_sizes(a, b, c, N)
+  
+  structure(list(positions = positions,
+                 sizes = sizes,
+                 angles = angles,
+                 R0 = R0, d = d),
+            class="cluster")
+  
+}

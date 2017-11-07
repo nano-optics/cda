@@ -34,8 +34,9 @@ A cluster describing two particles, with dimer axis along z
 \seealso{
 Other user_level cluster: \code{\link{cluster_array}},
   \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
-  \code{\link{cluster_helix}}, \code{\link{cluster_shell}},
-  \code{\link{cluster_single}}
+  \code{\link{cluster_helix}},
+  \code{\link{cluster_pumpkin}},
+  \code{\link{cluster_shell}}, \code{\link{cluster_single}}
 }
 \author{
 baptiste Auguie

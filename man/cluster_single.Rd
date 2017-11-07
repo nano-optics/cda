@@ -35,6 +35,7 @@ cl = cluster_single(10)
 Other user_level cluster: \code{\link{cluster_array}},
   \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
   \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
+  \code{\link{cluster_pumpkin}},
   \code{\link{cluster_shell}}
 }
 \author{
