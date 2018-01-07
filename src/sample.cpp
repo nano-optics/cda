@@ -138,12 +138,11 @@ arma::vec slerp(const arma::vec p0, const arma::vec p1, const double d){
 
 //' @title Generate a sample of points on the unit sphere
 //' @description Random sample with minimum exlusion zone enforced
-//' @param exclusion minimum distance allowed between points
 //' @return 3xN matrix
 //' @describeIn sample_random random sample with exclusion zone
 //' @family sample
 //' @examples 
-//' sample_hc(10)
+//' sample_landings(10)
 //' @export
 // [[Rcpp::export]]
 Rcpp::List sample_landings(const int N,

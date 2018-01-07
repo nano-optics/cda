@@ -106,12 +106,11 @@ sample_hc <- function(N, exclusion = 0.1, maxiter = 200L, k = 30L) {
 
 #' @title Generate a sample of points on the unit sphere
 #' @description Random sample with minimum exlusion zone enforced
-#' @param exclusion minimum distance allowed between points
 #' @return 3xN matrix
 #' @describeIn sample_random random sample with exclusion zone
 #' @family sample
 #' @examples 
-#' sample_hc(10)
+#' sample_landings(10)
 #' @export
 sample_landings <- function(N, exclusion = 0.1) {
     .Call('_cda_sample_landings', PACKAGE = 'cda', N, exclusion)

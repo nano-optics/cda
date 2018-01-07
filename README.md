@@ -1,6 +1,7 @@
 
 [![Build Status](https://travis-ci.org/plasmonics/cda.png?branch=master)](https://travis-ci.org/plasmonics/cda) ![](http://www.r-pkg.org/badges/version/cda) ![](http://cranlogs.r-pkg.org/badges/grand-total/cda)
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 cda package
 ===========
 

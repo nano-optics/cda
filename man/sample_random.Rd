@@ -23,8 +23,6 @@ sample_fibonacci(N = 301)
 \item{maxiter}{maximum number of iterations}
 
 \item{k}{number of extra new points to try at each iteration}
-
-\item{exclusion}{minimum distance allowed between points}
 }
 \value{
 3xN matrix
@@ -60,7 +58,7 @@ with a spiral-like pattern based on a Fibonacci sequence
 \examples{
 sample_random(10)
 sample_hc(10)
-sample_hc(10)
+sample_landings(10)
 }
 \author{
 baptiste Auguie

@@ -8,6 +8,19 @@ output:
 ![](http://www.r-pkg.org/badges/version/cda)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/cda)
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(cda)
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  fig.path = "tools/README/",
+  message = FALSE,
+  warning = FALSE
+)
+```
 
 # cda package
 
@@ -16,7 +29,6 @@ Coupled-dipole simulations for electromagnetic scattering of light by sub-wavele
 ```{r, echo=FALSE, out.width=600, fig.align='center'}
 knitr::include_graphics("overview.png")
 ```
-
 
 ### License
 

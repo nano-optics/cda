@@ -48,6 +48,6 @@ p1 <- ggplot(d1, aes(wavelength, value)) +
   theme_bw(12) + theme(strip.background=element_blank(), 
                        strip.text=element_blank(),
                        legend.position="right",
-                       panel.margin=unit(2,"mm"), panel.grid.minor = element_blank(),
+                       panel.spacing=unit(2,"mm"), panel.grid.minor = element_blank(),
                        panel.grid.major = element_blank())
 p1

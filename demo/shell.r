@@ -14,15 +14,18 @@ medium <- 1.33
 
 dye <- alpha_bare(wavelength)
 
-model_shell <- function(rho=1, R0=3, d=0.5, ...){
+model_shell <- function(rho=1, R0=15, d=0.5, ...){
   
   N <- dye_coverage(rho, R0+d)
   message(N)
-  cl =  cluster_shell(N, R0=R0, d=d, 1, 1, 1, orientation = "radial", position = 'fibonacci');
+  cl =  cluster_pumpkin(N, R0=R0, d=d, 1, 1, 1, 
+                        cone = 10*pi/180,
+                        orientation = "radial", 
+                        position = 'fibonacci');
   xsec = spectrum_oa(cl, dye, ..., quadrature = 'cheap',  method = "solve")
 }
 
-shells <- mdply(data.frame(rho=c( 0.1, 0.5, 1)), 
+shells <- mdply(data.frame(rho=c( 0.1, 0.5, 1, 1.5, 2)), 
                 model_shell, medium=medium, .progress='text')
 
 ref <- spectrum_oa(cluster_single(1, 1, 1), dye, medium=medium, 
