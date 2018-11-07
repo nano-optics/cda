@@ -5,8 +5,9 @@
 \title{spectrum_dispersion}
 \usage{
 spectrum_dispersion(cluster, material, medium = 1.33, Incidence = 0,
-  Axes = "z", polarisation = c("linear", "circular"), method = c("solve",
-  "cg", "oos"), Nsca = 50, maxiter = 30, tol = 1e-04, progress = FALSE)
+  Axes = "z", polarisation = c("linear", "circular"),
+  method = c("solve", "cg", "oos"), Nsca = 50, maxiter = 30,
+  tol = 1e-04, progress = FALSE)
 }
 \arguments{
 \item{cluster}{list describing a cluster}
@@ -46,3 +47,4 @@ The incident wavevector is along the z direction.
 \author{
 baptiste Auguie
 }
+\concept{user_level cda spectrum}

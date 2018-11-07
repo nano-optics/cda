@@ -4,8 +4,8 @@
 \alias{quadrature_sphere}
 \title{quadrature_sphere}
 \usage{
-quadrature_sphere(Nq = 30, quadrature = c("qmc", "gl", "cheap", "random"),
-  init = TRUE)
+quadrature_sphere(Nq = 30, quadrature = c("qmc", "gl", "cheap",
+  "random"), init = TRUE)
 }
 \arguments{
 \item{Nq}{number of integration points}
@@ -23,3 +23,4 @@ Numerical integration points for angular averaging
 \author{
 baptiste Auguie
 }
+\concept{low_level quadrature}

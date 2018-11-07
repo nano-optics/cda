@@ -28,3 +28,4 @@ Other user_level cda utility: \code{\link{dye_coverage}},
 \author{
 baptiste Auguie
 }
+\concept{user_level cda utility}

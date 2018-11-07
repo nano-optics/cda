@@ -4,9 +4,9 @@
 \alias{cluster_helix}
 \title{cluster_helix}
 \usage{
-cluster_helix(N = 5, a = 10, b = 10, c = 20, R0 = 100, pitch = 200,
-  delta = pi/5, delta0 = 0, right = TRUE, angles = c("helix", "random",
-  "fixed"), seed = 123, ...)
+cluster_helix(N = 5, a = 10, b = 10, c = 20, R0 = 100,
+  pitch = 200, delta = pi/5, delta0 = 0, right = TRUE,
+  angles = c("helix", "random", "fixed"), seed = 123, ...)
 }
 \arguments{
 \item{N}{number of particles}
@@ -52,3 +52,4 @@ Other user_level cluster: \code{\link{cluster_array}},
 \author{
 baptiste Auguie
 }
+\concept{user_level cluster}

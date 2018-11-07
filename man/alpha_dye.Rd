@@ -31,3 +31,4 @@ Other user_level polarisability: \code{\link{alpha_bare}},
 \author{
 baptiste Auguie
 }
+\concept{user_level polarisability}

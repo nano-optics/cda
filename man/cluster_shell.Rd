@@ -5,8 +5,9 @@
 \title{cluster_shell}
 \usage{
 cluster_shell(N = 50, R0 = 30, d = 1, a = 1, b = 1, c = 1,
-  orientation = c("radial", "flat", "random"), position = c("fibonacci",
-  "hc", "random", "landings"), exclusion = 5 * N^(-1/4), seed = 123, ...)
+  orientation = c("radial", "flat", "random"),
+  position = c("fibonacci", "hc", "random", "landings"), exclusion = 5
+  * N^(-1/4), seed = 123, ...)
 }
 \arguments{
 \item{N}{number of particles}
@@ -50,3 +51,4 @@ Other user_level cluster: \code{\link{cluster_array}},
 \author{
 baptiste Auguie
 }
+\concept{user_level cluster}

@@ -37,3 +37,4 @@ Other user_level rgl: \code{\link{rgl.ellipsoid}}
 \author{
 baptiste Auguie
 }
+\concept{user_level rgl}

@@ -41,3 +41,4 @@ Other user_level cluster: \code{\link{cluster_array}},
 \author{
 baptiste Auguie
 }
+\concept{user_level cluster}

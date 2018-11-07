@@ -39,3 +39,4 @@ Other user_level polarizability: \code{\link{depolarisation}}
 \author{
 baptiste Auguie
 }
+\concept{user_level polarizability}

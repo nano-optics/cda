@@ -21,3 +21,4 @@ Other user_level cda utility: \code{\link{equal_angles}},
 \author{
 baptiste Auguie
 }
+\concept{user_level cda utility}

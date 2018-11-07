@@ -4,8 +4,8 @@
 \alias{rgl.ellipsoid}
 \title{rgl.ellipsoid}
 \usage{
-rgl.ellipsoid(x = 0, y = 0, z = 0, a = 1, b = 1, c = 1, phi = 0,
-  theta = 0, psi = 0, subdivide = 3, smooth = TRUE, ...)
+rgl.ellipsoid(x = 0, y = 0, z = 0, a = 1, b = 1, c = 1,
+  phi = 0, theta = 0, psi = 0, subdivide = 3, smooth = TRUE, ...)
 }
 \arguments{
 \item{x}{x}
@@ -51,3 +51,4 @@ Other user_level rgl: \code{\link{rgl.ellipsoids}}
 \author{
 baptiste Auguie
 }
+\concept{user_level rgl}

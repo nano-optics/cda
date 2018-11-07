@@ -24,3 +24,4 @@ Helper function for rapid visualisation of cluster geometries.
 \author{
 baptiste Auguie
 }
+\concept{high_level cluster visualise}

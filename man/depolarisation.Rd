@@ -28,3 +28,4 @@ Other user_level polarizability: \code{\link{alpha_kuwata}}
 \author{
 baptiste Auguie
 }
+\concept{user_level polarizability}
