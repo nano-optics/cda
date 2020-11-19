@@ -4,8 +4,15 @@
 \alias{cluster_dimer}
 \title{cluster_dimer}
 \usage{
-cluster_dimer(d = 100, a = 35, b = 12, c = b, dihedral = pi/4,
-  alpha1 = 0, alpha2 = 0)
+cluster_dimer(
+  d = 100,
+  a = 35,
+  b = 12,
+  c = b,
+  dihedral = pi/4,
+  alpha1 = 0,
+  alpha2 = 0
+)
 }
 \arguments{
 \item{d}{center-to-center distance}
@@ -32,11 +39,14 @@ A dimer of two particles
 A cluster describing two particles, with dimer axis along z
 }
 \seealso{
-Other user_level cluster: \code{\link{cluster_array}},
-  \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
-  \code{\link{cluster_helix}},
-  \code{\link{cluster_pumpkin}},
-  \code{\link{cluster_shell}}, \code{\link{cluster_single}}
+Other user_level cluster: 
+\code{\link{cluster_array}()},
+\code{\link{cluster_ball}()},
+\code{\link{cluster_chain}()},
+\code{\link{cluster_helix}()},
+\code{\link{cluster_pumpkin}()},
+\code{\link{cluster_shell}()},
+\code{\link{cluster_single}()}
 }
 \author{
 baptiste Auguie

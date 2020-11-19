@@ -4,8 +4,11 @@
 \alias{quadrature_sphere}
 \title{quadrature_sphere}
 \usage{
-quadrature_sphere(Nq = 30, quadrature = c("qmc", "gl", "cheap",
-  "random"), init = TRUE)
+quadrature_sphere(
+  Nq = 30,
+  quadrature = c("qmc", "gl", "cheap", "random", "grid", "grid2", "fibonacci"),
+  init = TRUE
+)
 }
 \arguments{
 \item{Nq}{number of integration points}

@@ -25,8 +25,10 @@ Utility function to create clusters
 Identical particles
 }
 \seealso{
-Other user_level cda utility: \code{\link{dye_coverage}},
-  \code{\link{equal_sizes}}, \code{\link{spheroid_ar}}
+Other user_level cda utility: 
+\code{\link{dye_coverage}()},
+\code{\link{equal_sizes}()},
+\code{\link{spheroid_ar}()}
 }
 \author{
 baptiste Auguie

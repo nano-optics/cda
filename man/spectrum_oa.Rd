@@ -4,11 +4,23 @@
 \alias{spectrum_oa}
 \title{spectrum_oa}
 \usage{
-spectrum_oa(cluster, material, medium = 1.33, quadrature = c("gl",
-  "qmc", "random", "cheap"), Nq = 100, iterative = FALSE,
-  precision = 0.001, Qmax = 10000, dN = Nq, method = c("solve",
-  "cg", "oos"), Nsca = 50, maxiter = 30, tol = 1e-04,
-  progress = FALSE, verbose = TRUE)
+spectrum_oa(
+  cluster,
+  material,
+  medium = 1.33,
+  quadrature = c("gl", "qmc", "random", "cheap"),
+  Nq = 100,
+  iterative = FALSE,
+  precision = 0.001,
+  Qmax = 10000,
+  dN = Nq,
+  method = c("solve", "cg", "oos"),
+  Nsca = 50,
+  maxiter = 30,
+  tol = 1e-04,
+  progress = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{cluster}{cluster (list)}

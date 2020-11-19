@@ -4,10 +4,19 @@
 \alias{cluster_shell}
 \title{cluster_shell}
 \usage{
-cluster_shell(N = 50, R0 = 30, d = 1, a = 1, b = 1, c = 1,
+cluster_shell(
+  N = 50,
+  R0 = 30,
+  d = 1,
+  a = 1,
+  b = 1,
+  c = 1,
   orientation = c("radial", "flat", "random"),
-  position = c("fibonacci", "hc", "random", "landings"), exclusion = 5
-  * N^(-1/4), seed = 123, ...)
+  position = c("fibonacci", "hc", "random", "landings"),
+  exclusion = 5 * N^(-1/4),
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{N}{number of particles}
@@ -42,11 +51,14 @@ Sparse shell of nanoparticles around a spherical core
 A cluster describing a discrete shell of nanoparticles in a spherical geometry
 }
 \seealso{
-Other user_level cluster: \code{\link{cluster_array}},
-  \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
-  \code{\link{cluster_pumpkin}},
-  \code{\link{cluster_single}}
+Other user_level cluster: 
+\code{\link{cluster_array}()},
+\code{\link{cluster_ball}()},
+\code{\link{cluster_chain}()},
+\code{\link{cluster_dimer}()},
+\code{\link{cluster_helix}()},
+\code{\link{cluster_pumpkin}()},
+\code{\link{cluster_single}()}
 }
 \author{
 baptiste Auguie

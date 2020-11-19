@@ -27,11 +27,14 @@ Square array of particles
 A cluster describing a 2D square array of identical particles
 }
 \seealso{
-Other user_level cluster: \code{\link{cluster_ball}},
-  \code{\link{cluster_chain}}, \code{\link{cluster_dimer}},
-  \code{\link{cluster_helix}},
-  \code{\link{cluster_pumpkin}},
-  \code{\link{cluster_shell}}, \code{\link{cluster_single}}
+Other user_level cluster: 
+\code{\link{cluster_ball}()},
+\code{\link{cluster_chain}()},
+\code{\link{cluster_dimer}()},
+\code{\link{cluster_helix}()},
+\code{\link{cluster_pumpkin}()},
+\code{\link{cluster_shell}()},
+\code{\link{cluster_single}()}
 }
 \author{
 baptiste Auguie

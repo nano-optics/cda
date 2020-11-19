@@ -18,3 +18,4 @@ overview.png
 icon.png
 _pkgdown.yml
 README.Rmd
+^\.github$

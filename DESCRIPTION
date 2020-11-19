@@ -36,4 +36,4 @@ Imports:
     statmod,
     randtoolbox,
     reshape2
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.0

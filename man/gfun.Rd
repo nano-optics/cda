@@ -4,11 +4,13 @@
 \name{gfun}
 \alias{gfun}
 \title{Precomputed array factor for a square lattice at normal incidence}
-\format{A list of two interpolation functions:
+\format{
+A list of two interpolation functions:
 \describe{
   \item{re}{real part of G0}
   \item{im}{imaginary part of G0}
-}}
+}
+}
 \source{
 Javier Garcia de Abajo
 }

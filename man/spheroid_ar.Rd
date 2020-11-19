@@ -22,8 +22,10 @@ V = 4/3 pi rv^3 = 4/3 pi a^2 c
 c = h * a
 }
 \seealso{
-Other user_level cda utility: \code{\link{dye_coverage}},
-  \code{\link{equal_angles}}, \code{\link{equal_sizes}}
+Other user_level cda utility: 
+\code{\link{dye_coverage}()},
+\code{\link{equal_angles}()},
+\code{\link{equal_sizes}()}
 }
 \author{
 baptiste Auguie

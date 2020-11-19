@@ -23,7 +23,8 @@ Depolarisation factor for an ellipsoid
 calculates the 3 depolarisation factors for a general ellipsoid
 }
 \seealso{
-Other user_level polarizability: \code{\link{alpha_kuwata}}
+Other user_level polarizability: 
+\code{\link{alpha_kuwata}()}
 }
 \author{
 baptiste Auguie

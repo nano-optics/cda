@@ -34,7 +34,8 @@ prescription from Kuwata
 Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
 }
 \seealso{
-Other user_level polarizability: \code{\link{depolarisation}}
+Other user_level polarizability: 
+\code{\link{depolarisation}()}
 }
 \author{
 baptiste Auguie

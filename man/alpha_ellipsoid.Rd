@@ -29,8 +29,9 @@ The Kuwata prescription includes semi-empirical terms of radiative correction an
 Kuwata et al. Resonant light scattering from metal nanoparticles: Practical analysis beyond Rayleigh approximation Appl. Phys. Lett. 83, 22 (2003)
 }
 \seealso{
-Other user_level polarisability: \code{\link{alpha_bare}},
-  \code{\link{alpha_dye}}
+Other user_level polarisability: 
+\code{\link{alpha_bare}()},
+\code{\link{alpha_dye}()}
 }
 \author{
 baptiste Auguie

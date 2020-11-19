@@ -4,8 +4,13 @@
 \alias{alpha_bare}
 \title{alpha_bare}
 \usage{
-alpha_bare(wavelength = seq(300, 800), alpha_inf = 9.6e-39,
-  alpha_k = c(5.76e-38), lambda_k = c(526), mu_k = c(10000))
+alpha_bare(
+  wavelength = seq(300, 800),
+  alpha_inf = 9.6e-39,
+  alpha_k = c(5.76e-38),
+  lambda_k = c(526),
+  mu_k = c(10000)
+)
 }
 \arguments{
 \item{wavelength}{wavelength in nm}
@@ -28,8 +33,9 @@ Bare (intrinsic) polarizability of a dye in vacuum
 Sum of lorentz oscillators
 }
 \seealso{
-Other user_level polarisability: \code{\link{alpha_dye}},
-  \code{\link{alpha_ellipsoid}}
+Other user_level polarisability: 
+\code{\link{alpha_dye}()},
+\code{\link{alpha_ellipsoid}()}
 }
 \author{
 baptiste Auguie

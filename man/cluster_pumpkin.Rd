@@ -4,9 +4,20 @@
 \alias{cluster_pumpkin}
 \title{cluster_pumpkin}
 \usage{
-cluster_pumpkin(N = 50, R0 = 30, cone = 2 * pi, d = 1, a = 1,
-  b = 1, c = 1, tilt = 0, position = c("fibonacci", "hc", "random",
-  "landings"), exclusion = 0.7, seed = 123, ...)
+cluster_pumpkin(
+  N = 50,
+  R0 = 30,
+  cone = 2 * pi,
+  d = 1,
+  a = 1,
+  b = 1,
+  c = 1,
+  tilt = 0,
+  position = c("fibonacci", "hc", "random", "landings"),
+  exclusion = 0.7,
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{N}{number of particles}
@@ -43,10 +54,14 @@ Sparse shell of nanoparticles around a spherical core
 A cluster describing a discrete shell of nanoparticles in a spherical geometry
 }
 \seealso{
-Other user_level cluster: \code{\link{cluster_array}},
-  \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}}, \code{\link{cluster_helix}},
-  \code{\link{cluster_shell}}, \code{\link{cluster_single}}
+Other user_level cluster: 
+\code{\link{cluster_array}()},
+\code{\link{cluster_ball}()},
+\code{\link{cluster_chain}()},
+\code{\link{cluster_dimer}()},
+\code{\link{cluster_helix}()},
+\code{\link{cluster_shell}()},
+\code{\link{cluster_single}()}
 }
 \author{
 baptiste Auguie

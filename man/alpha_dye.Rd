@@ -25,8 +25,9 @@ Principal polarisability components for a dye molecule
 The dye is modelled as a sum of Lorentz oscillators
 }
 \seealso{
-Other user_level polarisability: \code{\link{alpha_bare}},
-  \code{\link{alpha_ellipsoid}}
+Other user_level polarisability: 
+\code{\link{alpha_bare}()},
+\code{\link{alpha_ellipsoid}()}
 }
 \author{
 baptiste Auguie

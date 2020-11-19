@@ -4,9 +4,20 @@
 \alias{cluster_helix}
 \title{cluster_helix}
 \usage{
-cluster_helix(N = 5, a = 10, b = 10, c = 20, R0 = 100,
-  pitch = 200, delta = pi/5, delta0 = 0, right = TRUE,
-  angles = c("helix", "random", "fixed"), seed = 123, ...)
+cluster_helix(
+  N = 5,
+  a = 10,
+  b = 10,
+  c = 20,
+  R0 = 100,
+  pitch = 200,
+  delta = pi/5,
+  delta0 = 0,
+  right = TRUE,
+  angles = c("helix", "random", "fixed"),
+  seed = 123,
+  ...
+)
 }
 \arguments{
 \item{N}{number of particles}
@@ -43,11 +54,14 @@ Particles arranged along a helix
 Cluster describing a helical assembly of particles
 }
 \seealso{
-Other user_level cluster: \code{\link{cluster_array}},
-  \code{\link{cluster_ball}}, \code{\link{cluster_chain}},
-  \code{\link{cluster_dimer}},
-  \code{\link{cluster_pumpkin}},
-  \code{\link{cluster_shell}}, \code{\link{cluster_single}}
+Other user_level cluster: 
+\code{\link{cluster_array}()},
+\code{\link{cluster_ball}()},
+\code{\link{cluster_chain}()},
+\code{\link{cluster_dimer}()},
+\code{\link{cluster_pumpkin}()},
+\code{\link{cluster_shell}()},
+\code{\link{cluster_single}()}
 }
 \author{
 baptiste Auguie

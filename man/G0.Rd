@@ -4,12 +4,14 @@
 \name{G0}
 \alias{G0}
 \title{Precomputed array factor for a square lattice at normal incidence}
-\format{A data frame with 1000 rows and 3 variables:
+\format{
+A data frame with 1000 rows and 3 variables:
 \describe{
   \item{wavelength}{normalised wavelength lambda/pitch}
   \item{Qx}{in-plane component of the wavevector (0, since normal incidence)}
   \item{Gxx}{complex value of the array factor}
-}}
+}
+}
 \source{
 Javier Garcia de Abajo
 }

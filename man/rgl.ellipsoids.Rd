@@ -32,7 +32,8 @@ sizes <- equal_sizes(0.04,0.02,0.02,NROW(cl$positions))
 \dontrun{ require(rgl) ; rgl.ellipsoids(cl$positions, sizes, cl$angles, col="gold") }
 }
 \seealso{
-Other user_level rgl: \code{\link{rgl.ellipsoid}}
+Other user_level rgl: 
+\code{\link{rgl.ellipsoid}()}
 }
 \author{
 baptiste Auguie
