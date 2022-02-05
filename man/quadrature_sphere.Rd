@@ -6,7 +6,8 @@
 \usage{
 quadrature_sphere(
   Nq = 30,
-  quadrature = c("qmc", "gl", "cheap", "random", "grid", "grid2", "fibonacci"),
+  quadrature = c("qmc", "gl", "cheap", "random", "grid", "grid2", "fibonacci",
+    "fibonacci2"),
   init = TRUE
 )
 }
