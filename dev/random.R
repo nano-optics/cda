@@ -1,4 +1,4 @@
-library(cd)
+library(cda)
 library(rgl)
 R <- 30
 N <- 2001
